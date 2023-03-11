@@ -1,7 +1,5 @@
 import './App.css';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom'
-import ListWines from "./components/ListWines"
-import CreateWine from "./components/CreateWine"
 import Signup from './components/Signup/Signup';
 
 function App() {
