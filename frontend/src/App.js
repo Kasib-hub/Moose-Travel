@@ -8,7 +8,6 @@ function App() {
 
       <HashRouter>
       <Link to="/signup">Signup</Link>
-      <p>The Key: {process.env.REACT_APP_MAPS_API_KEY}</p>
       <br></br>
         <Routes>
           <Route path='/signup' element={<Signup />} />
