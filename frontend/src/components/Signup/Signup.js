@@ -8,6 +8,7 @@ const handleSubmit = (e) => {
     "email": e.target.username.value,
     "password": e.target.username.value
   }
+  console.log(userInfo)
 }
 
 function Signup() {
