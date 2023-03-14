@@ -1,19 +1,60 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
+import Alert from 'react-bootstrap/Alert';
 
-const handleSubmit = (e) => {
-  e.preventDefault()
-  const userInfo = {
-    "username": e.target.username.value,
-    "email": e.target.username.value,
-    "password": e.target.username.value
-  }
-  console.log(userInfo)
-}
+
 
 function Signup() {
+
+  const [errors, setErrors] = useState()
+
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const userObj = {
+      "username": e.target.username.value,
+      "email": e.target.email.value,
+      "password": e.target.password.value
+    }
+    console.log(userObj)
+    signUpUser(userObj)
+  }
+  
+  const signUpUser = async (userObj) => {
+    const base_url = process.env.REACT_APP_BASE_URL
+    const url = `http://${base_url}/api/signup/`
+    const context = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userObj)
+    }
+    const resp = await fetch(url, context)
+    const body = await resp.json()
+    if (resp.status === 400) {
+      setErrors(body)
+    } else {
+      alert('Signed Up Successfully!')
+      navigate("/")
+    }
+  }
+
+
   return (
     <>
+    {/* this would look nice as bootstrap error message */}
+    
+      {
+        errors && 
+        <Alert key="danger" variant="danger">
+          {errors.username}
+        </Alert>
+      }
+    
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>User Name</Form.Label>
