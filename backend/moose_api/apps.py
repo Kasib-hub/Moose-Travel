@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class WineApiConfig(AppConfig):
+class MooseApiConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "wine_api"
+    name = "moose_api"
