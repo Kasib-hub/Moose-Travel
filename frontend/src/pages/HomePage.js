@@ -1,10 +1,9 @@
-import Map from "../components/Map/Map";
+import Map from "../components/Map/Map"
 
 function HomePage() {
   return (
     <>
-      This is the homepage
-      <Map />
+      <p>This is the Homepage rendering map</p>
     </>
   );
 }

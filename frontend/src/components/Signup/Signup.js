@@ -2,13 +2,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 const handleSubmit = (e) => {
-  console.log(e.target.email.value)
+  e.preventDefault()
+  const userInfo = {
+    "username": e.target.username.value,
+    "email": e.target.username.value,
+    "password": e.target.username.value
+  }
 }
 
 function Signup() {
   return (
     <>
     <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="username">
+        <Form.Label>User Name</Form.Label>
+        <Form.Control type="text" placeholder="Enter username" />
+      </Form.Group>
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email" />

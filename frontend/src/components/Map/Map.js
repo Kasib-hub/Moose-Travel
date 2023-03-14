@@ -4,7 +4,8 @@ import './Map.css'
 
 export default function Map() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries: ['places']
   })
 
   if (!isLoaded) return <h2>Loading...</h2>
@@ -16,10 +17,14 @@ function MapComponent() {
   const marker1 = ({lat: 57.25035, lng: -6.25831})
 
   return (
-    <GoogleMap zoom={15} center={center} mapContainerClassName="map-container">
-      {/* all a marker needs is latitude and longitude */}
-      <MarkerF position={center} />
-      <MarkerF position={marker1}/>
-    </GoogleMap>
+    <>
+      <input type='text' placeholder="find a place" />
+      <GoogleMap zoom={15} center={center} mapContainerClassName="map-container">
+        {/* all a marker needs is latitude and longitude */}
+        <MarkerF position={center} />
+        <MarkerF position={marker1}/>
+      </GoogleMap>
+    </>
+
   );
 }
