@@ -17,7 +17,6 @@ function HomePage() {
         <span> | </span>
         <Link to='/signup'>Signup</Link>
         <span> | </span>
-        <Link to='/logout'>Logout</Link>
     </>
   );
 }
