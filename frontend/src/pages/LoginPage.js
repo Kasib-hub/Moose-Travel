@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useContext, useState } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useContext } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import AuthContext from '../context/AuthContext';
 
@@ -11,8 +10,6 @@ function LoginPage() {
 
   return (
     <>
-    {/* this would look nice as bootstrap error message */}
-    
       {
         errors && 
         <Alert key="danger" variant="danger">

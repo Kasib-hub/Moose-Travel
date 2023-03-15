@@ -6,14 +6,11 @@ const AuthContext = createContext()
 
 export default AuthContext;
 
-
 export const AuthProvider = ({children}) => {
-
-  
 
   const navigate = useNavigate()
 
-  // callback sets the state on the initial load not every single time
+  // callback sets the state on the initial load not every single time state changes
   let [authTokens, setAuthTokens] = useState( () => {
       return localStorage.getItem('authTokens') 
       ? JSON.parse(localStorage.getItem('authTokens'))
@@ -54,6 +51,7 @@ export const AuthProvider = ({children}) => {
       setErrors(body)
     } else {
       // structure = body.access or refresh token
+      // storing user information from the decoded token to AuthContext; user info available through entire app that way.
       console.log(body)
       alert("Login Successful!")
       setAuthTokens(body)
