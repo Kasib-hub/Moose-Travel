@@ -6,7 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 
 
 
-function Signup() {
+function LoginPage() {
 
   const [errors, setErrors] = useState()
 
@@ -20,28 +20,27 @@ function Signup() {
       "password": e.target.password.value
     }
     console.log(userObj)
-    signUpUser(userObj)
   }
   
-  const signUpUser = async (userObj) => {
-    const base_url = process.env.REACT_APP_BASE_URL
-    const url = `http://${base_url}/api/signup/`
-    const context = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userObj)
-    }
-    const resp = await fetch(url, context)
-    const body = await resp.json()
-    if (resp.status === 400) {
-      setErrors(body)
-    } else {
-      alert('Signed Up Successfully!')
-      navigate("/")
-    }
-  }
+  // const signUpUser = async (userObj) => {
+  //   const BASE_URL = process.env.REACT_APP_BASE_URL
+  //   const url = `http://${BASE_URL}/api/signup/`
+  //   const context = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(userObj)
+  //   }
+  //   const resp = await fetch(url, context)
+  //   const body = await resp.json()
+  //   if (resp.status === 400) {
+  //     setErrors(body)
+  //   } else {
+  //     alert('Signed Up Successfully!')
+  //     navigate("/")
+  //   }
+  // }
 
 
   return (
@@ -54,7 +53,7 @@ function Signup() {
           {errors.username}
         </Alert>
       }
-    
+    <h2>&#9992; Login for Flights! &#9992;</h2>
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>User Name</Form.Label>
@@ -72,11 +71,11 @@ function Signup() {
         <Form.Control type="password" placeholder="Password" />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+        Login
       </Button>
     </Form>
     </>
   );
 }
 
-export default Signup;
+export default LoginPage;

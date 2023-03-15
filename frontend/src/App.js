@@ -1,19 +1,19 @@
 import './App.css';
-import { HashRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import HomePage from './pages/HomePage';
-import Signup from './components/Signup/Signup';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+
 function App() {
   return (
     <div className="App">
-
-      <HashRouter>
-      <Link to="/signup">Signup</Link>
-      <br></br>
+      <Router>
         <Routes>
-          <Route path='/signup' element={<Signup />} />
           <Route path='/' element={<HomePage />} />
+          <Route path='/signup' element={<SignUpPage />} />
+          <Route path='/login' element={<LoginPage />} />
         </Routes>
-      </HashRouter>
+      </Router>
      
     </div>
   );
