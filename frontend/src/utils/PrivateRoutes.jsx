@@ -3,11 +3,11 @@ import { Outlet, Navigate } from 'react-router-dom'
 
 // rest takes all of the parameters from a route, you then replace a route with it
 const PrivateRoutes = () => {
-  const authenticated = False
+  const authenticated = true
   return (
     // dont redirect to the same page!
     // this is saying, if the user is authenticated let them see the homepage, otherwise, go to the login page. The page that triggers all of this is nested within private routes
-    authenticated ? <Outlet /> : <Navigate to='/signup' />
+    authenticated ? <Outlet /> : <Navigate to='/login' />
   )
 }
 

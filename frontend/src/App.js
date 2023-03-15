@@ -1,18 +1,33 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import PrivateRoutes from './utils/PrivateRoutes';
+import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 
 function App() {
+  
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/login' element={<LoginPage />} />
-        </Routes>
+        <AuthProvider>
+          
+          {/* navbar would go here */}
+          <Routes>
+
+            <Route element={<PrivateRoutes />}>
+            
+              <Route path='/' element={<HomePage />} />
+            </Route>
+
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+            
+          </Routes>
+
+        </AuthProvider>
+
       </Router>
      
     </div>

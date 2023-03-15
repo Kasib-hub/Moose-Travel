@@ -1,14 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert';
-
-
+import AuthContext from '../context/AuthContext';
 
 function LoginPage() {
-
-  const [errors, setErrors] = useState()
+  let {loginUser} = useContext(AuthContext)
+  let {errors} = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -21,27 +20,6 @@ function LoginPage() {
     }
     console.log(userObj)
   }
-  
-  // const signUpUser = async (userObj) => {
-  //   const BASE_URL = process.env.REACT_APP_BASE_URL
-  //   const url = `http://${BASE_URL}/api/signup/`
-  //   const context = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(userObj)
-  //   }
-  //   const resp = await fetch(url, context)
-  //   const body = await resp.json()
-  //   if (resp.status === 400) {
-  //     setErrors(body)
-  //   } else {
-  //     alert('Signed Up Successfully!')
-  //     navigate("/")
-  //   }
-  // }
-
 
   return (
     <>
@@ -50,25 +28,25 @@ function LoginPage() {
       {
         errors && 
         <Alert key="danger" variant="danger">
-          {errors.username}
+          {errors.detail}
         </Alert>
       }
     <h2>&#9992; Login for Flights! &#9992;</h2>
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={loginUser}>
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>User Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" />
+        <Form.Control type="text" placeholder="Enter username" required/>
       </Form.Group>
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+        <Form.Control type="email" placeholder="Enter email" required/>
         <Form.Text className="text-muted">
           We'll never share your email with anyone else.
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control type="password" placeholder="Password" required/>
       </Form.Group>
       <Button variant="primary" type="submit">
         Login
