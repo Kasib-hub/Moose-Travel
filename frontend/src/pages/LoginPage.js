@@ -9,18 +9,6 @@ function LoginPage() {
   let {loginUser} = useContext(AuthContext)
   let {errors} = useContext(AuthContext)
 
-  const navigate = useNavigate()
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const userObj = {
-      "username": e.target.username.value,
-      "email": e.target.email.value,
-      "password": e.target.password.value
-    }
-    console.log(userObj)
-  }
-
   return (
     <>
     {/* this would look nice as bootstrap error message */}

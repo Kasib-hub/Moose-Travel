@@ -16,19 +16,20 @@ export const AuthProvider = ({children}) => {
   // callback sets the state on the initial load not every single time
   let [authTokens, setAuthTokens] = useState( () => {
       return localStorage.getItem('authTokens') 
-    ? JSON.parse(localStorage.getItem('authTokens'))
-    : null
+      ? JSON.parse(localStorage.getItem('authTokens'))
+      : null
     }
   )
 
   let [user, setUser] = useState( () => {
-    return localStorage.getItem('authTokens') 
-  ? jwt_decode(localStorage.getItem('authTokens'))
-  : null
-  }
-    
+      return localStorage.getItem('authTokens') 
+      ? jwt_decode(localStorage.getItem('authTokens'))
+      : null
+    }
   )
+
   let [errors, setErrors] = useState(null)
+  let [loading, setLoading] = useState(true)
 
   const loginUser = async (e) => {
     e.preventDefault()
@@ -62,11 +63,49 @@ export const AuthProvider = ({children}) => {
     }
   }
 
+  // if response ok, update tokens and user info. Else, logout the user
+  const updateToken = async () => {
+    console.log('token updated')
+    const BASE_URL = process.env.REACT_APP_BASE_URL
+    const url = `http://${BASE_URL}/api/token/refresh/`
+    const context = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+
+      },
+      body: JSON.stringify({'refresh': authTokens?.refresh})
+    }
+    const resp = await fetch(url, context)
+    const body = await resp.json()
+    if (resp.status === 200) {
+      setAuthTokens(body)
+      setUser(jwt_decode(body.access))
+      localStorage.setItem('authTokens', JSON.stringify(body))
+    } else {
+      // put logout here
+      alert('not authenticated, logout the user')
+    }
+    if (loading) {setLoading(false)}
+  }
+
   let contextData = {
     loginUser:loginUser,
+    // logoutUser:logoutUser,
+    authTokens:authTokens,
     errors:errors,
     user:user,
   }
+
+  // clear the stacked intervals to call updateToken, this way it is only called once per interval (4 min)
+  useEffect(() => {
+    if(loading) {updateToken()}
+
+    let interval = setInterval(() => {
+        if(authTokens) updateToken()
+      }, 240000)
+      return () => clearInterval(interval)
+  }, [authTokens, loading])
 
   return (
     <AuthContext.Provider value={contextData}>

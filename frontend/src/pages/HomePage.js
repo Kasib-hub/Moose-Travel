@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 function HomePage() {
 
-  let {user} = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
 
   return (
     <>
@@ -15,6 +15,8 @@ function HomePage() {
         <Link to='/login'>Login</Link>
         <span> | </span>
         <Link to='/signup'>Signup</Link>
+        <span> | </span>
+        <Link to='/logout'>Logout</Link>
     </>
   );
 }
