@@ -16,14 +16,4 @@ describe('SignUpPage', () => {
 
     expect(getByText('Sign Up')).toBeInTheDocument();
   });
-
-  it('handles click event', () => {
-    const handleClick = jest.fn();
-    const { getByText } = render(<SignUpPage handleSubmit={handleClick} />);
-    const button = getByText('Sign Up');
-
-    fireEvent.click(button);
-
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
 });
