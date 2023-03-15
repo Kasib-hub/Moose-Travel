@@ -4,12 +4,12 @@ import { useContext } from 'react';
 
 function HomePage() {
 
-  let {name} = useContext(AuthContext)
+  let {user} = useContext(AuthContext)
 
   return (
     <>
       <p>This is the Homepage - links to other pages</p>
-      <p>Hello {name}</p>
+      {user && <p>Hello {user.username} your id is {user.user_id}</p>}
         <Link to='/'>Home</Link>
         <span> | </span>
         <Link to='/login'>Login</Link>

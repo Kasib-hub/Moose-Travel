@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { json, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import jwt_decode from "jwt-decode"
 
 const AuthContext = createContext()
 
@@ -7,10 +8,26 @@ export default AuthContext;
 
 
 export const AuthProvider = ({children}) => {
+
+  
+
   const navigate = useNavigate()
 
-  let [authTokens, setAuthTokens] = useState(null)
-  let [user, setUser] = useState(null)
+  // callback sets the state on the initial load not every single time
+  let [authTokens, setAuthTokens] = useState( () => {
+      return localStorage.getItem('authTokens') 
+    ? JSON.parse(localStorage.getItem('authTokens'))
+    : null
+    }
+  )
+
+  let [user, setUser] = useState( () => {
+    return localStorage.getItem('authTokens') 
+  ? jwt_decode(localStorage.getItem('authTokens'))
+  : null
+  }
+    
+  )
   let [errors, setErrors] = useState(null)
 
   const loginUser = async (e) => {
@@ -35,13 +52,20 @@ export const AuthProvider = ({children}) => {
     if (!resp.ok) {
       setErrors(body)
     } else {
+      // structure = body.access or refresh token
+      console.log(body)
       alert("Login Successful!")
+      setAuthTokens(body)
+      setUser(jwt_decode(body.access))
+      localStorage.setItem('authTokens', JSON.stringify(body))
+      navigate('/')
     }
   }
 
   let contextData = {
     loginUser:loginUser,
     errors:errors,
+    user:user,
   }
 
   return (
