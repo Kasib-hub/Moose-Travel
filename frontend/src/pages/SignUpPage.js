@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert';
 
-
-
-function Signup() {
+function SignUpPage() {
 
   const [errors, setErrors] = useState()
 
@@ -24,8 +22,8 @@ function Signup() {
   }
   
   const signUpUser = async (userObj) => {
-    const base_url = process.env.REACT_APP_BASE_URL
-    const url = `http://${base_url}/api/signup/`
+    const BASE_URL = process.env.REACT_APP_BASE_URL
+    const url = `http://${BASE_URL}/api/signup/`
     const context = {
       method: "POST",
       headers: {
@@ -43,40 +41,37 @@ function Signup() {
     }
   }
 
-
   return (
     <>
-    {/* this would look nice as bootstrap error message */}
-    
       {
         errors && 
         <Alert key="danger" variant="danger">
           {errors.username}
         </Alert>
       }
-    
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="username">
-        <Form.Label>User Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="email">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+      <h2>&#9992; Sign up for Flights! &#9992;</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="username">
+          <Form.Label>User Name</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" required/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" required/>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" required/>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Sign Up
+        </Button>
+      </Form>
     </>
   );
 }
 
-export default Signup;
+export default SignUpPage;
