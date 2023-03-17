@@ -17,7 +17,7 @@ urlpatterns = [
     path('itinerary/', itinerary, name='itinerary'), 
     # view, save, update and delete flight
     path('flight/', flight, name='flight'),  
-    # view, save, update and delete hotel
+    # view, save, update and delete hotel 
     path('hotel/', hotel, name='hotel'), 
     # # save, update and delete rental
     path('rental/', rental, name='rental'), 

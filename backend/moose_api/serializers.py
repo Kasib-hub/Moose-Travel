@@ -58,7 +58,7 @@ class FlightSerializer(serializers.ModelSerializer):
         instance.arrival_date= validated_data.get('arrival_date', instance.arrival_date)
         instance.departure_date= validated_data.get('departure_date', instance.departure_date)
         instance.save()
-        return instance
+        return instance 
     
 class RentalSerializer(serializers.ModelSerializer):
     class Meta:

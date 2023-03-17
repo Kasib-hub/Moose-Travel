@@ -7,7 +7,7 @@ admin.site.register(Flight)
 admin.site.register(Rental)
 admin.site.register(Affinity)
 admin.site.register(Sight)
-
+ 
 # superuser:
 # username: moosetravel
 # passworf: moosetravel123
