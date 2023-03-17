@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom"
 import jwt_decode from "jwt-decode"
 
@@ -60,12 +60,19 @@ export const AuthProvider = ({children}) => {
     }
   }
 
+  const logoutUser = useCallback(() => {
+    setAuthTokens(null)
+    setUser(null)
+    localStorage.removeItem('authTokens')
+    navigate('/login')
+  }, [navigate])
+
   // if response ok, update tokens and user info. Else, logout the user
 
 
   let contextData = {
     loginUser:loginUser,
-    // logoutUser:logoutUser,
+    logoutUser:logoutUser,
     authTokens:authTokens,
     errors:errors,
     user:user,
@@ -92,8 +99,7 @@ export const AuthProvider = ({children}) => {
         setUser(jwt_decode(body.access))
         localStorage.setItem('authTokens', JSON.stringify(body))
       } else {
-        // put logout here - so it will clear the tokens
-        alert('not authenticated, logout the user')
+        logoutUser()
       }
     }
 
@@ -102,7 +108,7 @@ export const AuthProvider = ({children}) => {
         if(authTokens) {updateToken()}
       }, 600000)
       return () => clearInterval(interval)
-  }, [authTokens])
+  }, [authTokens, logoutUser])
 
   return (
     <AuthContext.Provider value={contextData}>
