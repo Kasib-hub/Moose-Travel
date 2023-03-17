@@ -1,23 +1,28 @@
 import './App.css';
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoutes from './utils/PrivateRoutes';
+import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
-import Signup from './components/Signup/Signup';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
 
 function App() {
   return (
     <div className="App">
-      <HashRouter>
-        <Link to="/signup">Signup</Link>
-        <br />
-        <Link to="/flight-search">Flight Search</Link>
-        <br />
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/flight-search" element={<FlightSearch />} />
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </HashRouter>
+      <Router>
+        <AuthProvider>
+          {/* navbar would go here */}
+          <Routes>
+            <Route element={<PrivateRoutes />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/flight-search" element={<FlightSearch />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
     </div>
   );
 }
