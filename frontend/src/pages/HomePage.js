@@ -5,7 +5,7 @@ import { useContext } from 'react';
 // dummy homepage - we'll have these in a navBar
 function HomePage() {
 
-  let {user} = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
 
   return (
     <>
@@ -17,6 +17,7 @@ function HomePage() {
         <span> | </span>
         <Link to='/signup'>Signup</Link>
         <span> | </span>
+        <button onClick={logoutUser}>Logout</button>
     </>
   );
 }
