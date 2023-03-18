@@ -14,13 +14,13 @@ function AutoCompleteInput() {
   const handleOriginSelection = (e) => {
     let regex = /\((.*?)\)/g
     let newStr = e.target.value.match(regex)
-    setOrigin(newStr[0].replace(/[\(\)\[\]]/g, ""))
+    setOrigin(newStr[0].replace(/[()[]]/g, ""))
   }
 
   const handleDestinationSelection = (e) => {
     let regex = /\((.*?)\)/g
     let newStr = e.target.value.match(regex)
-    setDestination(newStr[0].replace(/[\(\)\[\]]/g, ""))
+    setDestination(newStr[0].replace(/[()[]]/g, ""))
   }
 
   const handleOriginInput = (e) => {
