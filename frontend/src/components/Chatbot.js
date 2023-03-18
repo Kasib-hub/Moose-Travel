@@ -2,7 +2,7 @@ import { useReducer, useState } from "react";
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react'
 
-const API_KEY = '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'
+const API_KEY = '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'
 
 function Chatbot() {
     const [typing, setTyping] = useState(false);
@@ -103,15 +103,15 @@ function Chatbot() {
 
 
     return (
-        <div style={{ position: 'relative', height: "800px", width: '700px'}}>
+        <div style={{ width: '100%' , height: '100%'}}>
             <MainContainer>
                 <ChatContainer>
-                    <MessageList scrollBehavior='smooth' typingIndicator={typing ? <TypingIndicator content="Your travel AI is typing..."/> : null } >
+                    <MessageList style={{backgroundColor: "#014d4e"}} scrollBehavior='smooth' typingIndicator={typing ? <TypingIndicator content="Your travel AI is typing..."/> : null } >
                         {messages.map((message, index) => {  //itterate through everything stored in the message list
                             return <Message key={index} model={message} /> //give it a message model
                         })}
                     </MessageList>
-                    <MessageInput placeholder="Type here..." onSend={handleSend}/>: {/* user input */}
+                    <MessageInput style={{backgroundColor: "#017f80"}} attachButton='false' placeholder="Type here..." onSend={handleSend}/>: {/* user input */}
                 </ChatContainer>
             </MainContainer>
         </div>

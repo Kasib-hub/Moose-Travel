@@ -4,6 +4,11 @@ import ListWines from "./components/ListWines"
 import CreateWine from "./components/CreateWine"
 import { useEffect } from 'react';
 import Chatbot from './components/Chatbot';
+import FlightSearch from './components/FlightSearch';
+import HotelSearch from './components/HotelSearch';
+import SupportEngine from './components/SupportEngine/SupportEngine'
+import RoundTripSearch from './components/RoundTripSearch';
+import DirectFlightSearch from './components/DirectFlightSearch';
 
 const apiKey = 'prtl6749387986743898559646983194';
 const origin = 'ATL-sky'; // Atlanta airport code
@@ -50,7 +55,17 @@ function App() {
         </Routes>
       </HashRouter> */}
      
-      <Chatbot/>
+      {/* <Chatbot/> */}
+
+      {/* <FlightSearch/> */}
+
+      {/* <HotelSearch/> */}
+
+      <RoundTripSearch />
+
+      <DirectFlightSearch />
+
+      <SupportEngine />      
 
     </div>
   );
