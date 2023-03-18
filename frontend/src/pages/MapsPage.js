@@ -4,10 +4,19 @@ import AutoCompleteInput from '../components/AutoComplete/AutoCompleteInput';
 
 function MapsPage() {
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(e.target.origin.value)
+    console.log(e.target.destination.value)
+  }
+
   return (
     <>
-      <p>This is the MapsPage - shows off autocomplete also</p>
-      <AutoCompleteInput />
+      <p>showing off autocomplete and map componenets</p>
+      <form onSubmit={handleSubmit}>
+        <AutoCompleteInput />
+        <input type='submit' value='test'/>
+      </form>
       <Map />
       
     </>

@@ -4,26 +4,43 @@ import './AutoComplete.css'
 
 function AutoCompleteInput() {
 
-  const [iataCode, setIataCode] = useState("")
+  const [origin, setOrigin] = useState("")
+  const [destination, setDestination] = useState("")
 
   const options = {
     types:['airport']
   }
 
-  const handleSelection = (e) => {
+  const handleOriginSelection = (e) => {
     let regex = /\((.*?)\)/g
     let newStr = e.target.value.match(regex)
-    setIataCode(newStr[0].replace(/[\(\)\[\]]/g, ""))
+    setOrigin(newStr[0].replace(/[\(\)\[\]]/g, ""))
   }
 
-  const handleInput = (e) => {
-    setIataCode(e.target.value)
+  const handleDestinationSelection = (e) => {
+    let regex = /\((.*?)\)/g
+    let newStr = e.target.value.match(regex)
+    setDestination(newStr[0].replace(/[\(\)\[\]]/g, ""))
+  }
+
+  const handleOriginInput = (e) => {
+    setOrigin(e.target.value)
+  }
+
+  const handleDestinationInput = (e) => {
+    setDestination(e.target.value)
   }
 
   return (
+    <>
       <Autocomplete options={options}>
-        <input id="placeholder_id" type='text' placeholder="find a place" onBlur={handleSelection} onChange={handleInput} value={iataCode}/>
+        <input id="origin" type='text' placeholder="enter origin" onBlur={handleOriginSelection} onChange={handleOriginInput} value={origin}/>
       </Autocomplete>
+      <Autocomplete options={options}>
+        <input id="destination" type='text' placeholder="enter destination" onBlur={handleDestinationSelection} onChange={handleDestinationInput} value={destination}/>
+      </Autocomplete>
+    </>
+
   );
 }
 
