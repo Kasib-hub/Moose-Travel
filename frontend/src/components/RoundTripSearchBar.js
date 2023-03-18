@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 
-function RoundTripSearch() {
+function RoundTripSearchBar() {
 
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
 
@@ -15,8 +15,8 @@ function RoundTripSearch() {
     }, [setReturnDate])
 
     return (
-        <div class="search-form">
-            <form>
+        <div class="search-div">
+            <form className="search-form">
 
                 <div class="search-input">
                     <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Location</p>
@@ -58,4 +58,4 @@ function RoundTripSearch() {
     );
 }
 
-export default RoundTripSearch;
+export default RoundTripSearchBar;

@@ -7,8 +7,13 @@ import Chatbot from './components/Chatbot';
 import FlightSearch from './components/FlightSearch';
 import HotelSearch from './components/HotelSearch';
 import SupportEngine from './components/SupportEngine/SupportEngine'
-import RoundTripSearch from './components/RoundTripSearch';
-import DirectFlightSearch from './components/DirectFlightSearch';
+import RoundTripSearchBar from './components/RoundTripSearchBar';
+import DirectFlightSearchBar from './components/DirectFlightSearchBar';
+import HotelSearchBar from './components/HotelSearchBar';
+import MultiFlightSearchBar from './components/MultiFlightSearchBar';
+import FlightSearchSelection from './components/FlightSearchSelection';
+import { TransitionGroup } from "react-transition-group";
+import { useState } from 'react';
 
 const apiKey = 'prtl6749387986743898559646983194';
 const origin = 'ATL-sky'; // Atlanta airport code
@@ -41,31 +46,24 @@ const date = new Date().toISOString().slice(0, 10); // today's date in ISO forma
 
 
 function App() {
+
+  const [currentComponent, setCurrentComponent] = useState(0);
+
+  const handleFormSubmit = () => {
+    setCurrentComponent(currentComponent + 1);
+  };
+
   return (
     <div className="App">
 
-      {/* <HashRouter>
-      <h1>Notional Nav barzz</h1>
-      <Link to="/all-wines">List Wines</Link>
-      <br></br>
-      <Link to="/create">Create Wine</Link>
-        <Routes>
-          <Route path="/all-wines" element={ <ListWines />} />
-          <Route path="/create" element={ <CreateWine />} />
-        </Routes>
-      </HashRouter> */}
-     
-      {/* <Chatbot/> */}
+      {currentComponent === 0 && (
+        <HotelSearchBar onSubmit={handleFormSubmit} />
+      )}
 
-      {/* <FlightSearch/> */}
+      {currentComponent === 1 && (
+        <FlightSearchSelection />
+      )}
 
-      {/* <HotelSearch/> */}
-
-      <RoundTripSearch />
-
-      <DirectFlightSearch />
-
-      <SupportEngine />      
 
     </div>
   );

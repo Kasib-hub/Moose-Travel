@@ -37,7 +37,7 @@
   }
 }
 
-.search-form {
+.search-div {
   position: relative;
   left: 20%;
   width: 55%;
@@ -104,3 +104,69 @@
 .search-button button:hover {
   background-color: #222;
 }
+
+.flightTypeSelectionDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.deleteButton {
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+  font-size: 16px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.hotel-search {
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+  font-size: 16px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-search {
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+  font-size: 16px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* .fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+} */
