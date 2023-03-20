@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
+import DashBoard from './pages/DashBoard';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/dashboard" element={<DashBoard />} />
           </Routes>
         </AuthProvider>
       </Router>
