@@ -153,6 +153,12 @@
   transition: background-color 0.3s;
 }
 
+.search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* .fade-enter {
   opacity: 0;
 }

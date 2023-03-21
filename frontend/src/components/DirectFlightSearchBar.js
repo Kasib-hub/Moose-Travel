@@ -2,10 +2,14 @@ import moment from 'moment';
 import { useState } from 'react';
 import Moment from 'react-moment';
 import { CSSTransition } from "react-transition-group";
+import { useNavigate } from 'react-router';
 
-function DirectFlightSearchBar({ onSubmit }) {
 
-    const handleSubmit = () => {
+function DirectFlightSearchBar() {
+
+    const navigate = useNavigate();
+
+    const handleSubmit = ({ onSubmit }) => {
         // Handle form submission here
         // When done, move to the next component
         // e.g. using React Router: history.push("/component2");
@@ -14,8 +18,8 @@ function DirectFlightSearchBar({ onSubmit }) {
 
     return (
         <div class="search-div">
-            <CSSTransition classNames="fade" timeout={500}>
-                <form className="search-form" onSubmit={handleSubmit}>
+
+                <form className="search-form" onSubmit={() => navigate("/hotel-question")}>
                     <div class="search-input">
                         <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Location</p>
                         <input type="text" placeholder="Where do you want to go?" />
@@ -41,8 +45,6 @@ function DirectFlightSearchBar({ onSubmit }) {
                     </div>
 
                 </form>
-
-            </CSSTransition>
 
         </div>
     );

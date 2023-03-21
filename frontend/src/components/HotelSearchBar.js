@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import { useNavigate } from 'react-router';
+import AnimatedPage from "./AnimatedPage";
+
 
 const HotelSearchBar = ({ onSubmit }) => {
+
+  const navigate = useNavigate();
+
   const [hotels, setHotels] = useState([
     { id: 1, from: "", to: "", departureDate: "", returnDate: "" },
   ]);
@@ -35,9 +40,10 @@ const HotelSearchBar = ({ onSubmit }) => {
   };
 
   return (
+    // <AnimatedPage>
     <div class="search-div">
-        <CSSTransition classNames="fade" timeout={500}>
-            <form onSubmit={handleSearch}>
+
+            <form onSubmit={() => navigate("/genres")}>
             {hotels.map((hotel) => (
 
                     <div key={hotel.id} className="search-form">
@@ -107,8 +113,9 @@ const HotelSearchBar = ({ onSubmit }) => {
             </button>
             <button type="submit" className="hotel-search">Search</button>
             </form>
-        </CSSTransition>
+    
     </div>
+    // </AnimatedPage>
   );
 };
 

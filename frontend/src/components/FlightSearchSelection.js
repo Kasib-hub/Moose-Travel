@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import DirectFlightSearchBar from "./DirectFlightSearchBar";
 import RoundTripSearchBar from "./RoundTripSearchBar";
 import MultiFlightSearchBar from "./MultiFlightSearchBar";
-import { CSSTransition } from "react-transition-group";
+import AnimatedPage from "./AnimatedPage";
 
-const FlightSearchSelection = ({ onSubmit }) => {
+const FlightSearchSelection = ({ onSubmit }, props) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionChange = (event) => {
@@ -12,8 +12,8 @@ const FlightSearchSelection = ({ onSubmit }) => {
   };
 
   return (
+    // <AnimatedPage>
     <div>
-     <CSSTransition classNames="fade" timeout={500}>
         <div className="flightTypeSelectionDiv"> 
             <div>
                 <label>
@@ -51,10 +51,10 @@ const FlightSearchSelection = ({ onSubmit }) => {
         </div> 
 
         {selectedOption === "direct" && <DirectFlightSearchBar />}
-        {selectedOption === "round-trip" && <RoundTripSearchBar />}
-        {selectedOption === "multi-trip" && <MultiFlightSearchBar />}
-      </CSSTransition>
+        {selectedOption === "round-trip" && <RoundTripSearchBar onSubmit={() => window.location.href = '/'}/>}
+        {selectedOption === "multi-trip" && <MultiFlightSearchBar onSubmit={() => window.location.href = '/'}/>}
     </div>
+    // </AnimatedPage>
   );
 };
 

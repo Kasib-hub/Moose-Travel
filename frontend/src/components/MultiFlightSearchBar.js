@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router';
+
 
 const MultiFlightSearchBar = () => {
+
+  const navigate = useNavigate();
+
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: "", returnDate: "" },
   ]);
@@ -32,7 +37,7 @@ const MultiFlightSearchBar = () => {
 
   return (
     <div class="search-div">
-        <form onSubmit={handleSearch}>
+        <form onSubmit={() => navigate("/hotel-question")}>
 
         {flights.map((flight) => (
 

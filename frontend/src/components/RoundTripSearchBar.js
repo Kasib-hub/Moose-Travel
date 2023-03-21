@@ -1,9 +1,12 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
+import { useNavigate } from 'react-router';
+
 
 function RoundTripSearchBar() {
 
+    const navigate = useNavigate();
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
 
     const handleDateChange = (event) => {
@@ -16,7 +19,7 @@ function RoundTripSearchBar() {
 
     return (
         <div class="search-div">
-            <form className="search-form">
+            <form className="search-form" onSubmit={() => navigate("/hotel-question")}>
 
                 <div class="search-input">
                     <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Location</p>
