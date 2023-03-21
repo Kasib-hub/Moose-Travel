@@ -107,7 +107,7 @@ def flight(request):
     elif request.method == 'DELETE':
         flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
-        Flight.delete()
+        flight.delete()
         return Response('Flight has been deleted.')
 
 # view, create, update or delete hotel
