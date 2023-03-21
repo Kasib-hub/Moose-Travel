@@ -165,7 +165,7 @@ def rental(request):
     elif request.method == 'DELETE':
         rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
-        Rental.delete()
+        rental.delete()
         return Response('Rental has been deleted.')
 
 # view, create, update or delete affinity
@@ -194,7 +194,7 @@ def affinity(request):
     elif request.method == 'DELETE':
         affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
-        Affinity.delete()
+        affinity.delete()
         return Response('Rental has been deleted.')
     
 # view, create, update or delete sight
@@ -223,5 +223,5 @@ def sight(request):
     elif request.method == 'DELETE':
         sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
-        Sight.delete()
+        sight.delete()
         return Response('Rental has been deleted.')
