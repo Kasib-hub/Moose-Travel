@@ -136,7 +136,7 @@ def hotel(request):
     elif request.method == 'DELETE':
         hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
-        Hotel.delete()
+        hotel.delete()
         return Response('Hotel has been deleted.')
 
 # view, create, update or delete rental
