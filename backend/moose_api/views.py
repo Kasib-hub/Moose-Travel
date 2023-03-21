@@ -33,7 +33,7 @@ class SignupView(CreateAPIView):
     # this is all it needs to make a user. Doesn't use other stuff because?? remember serializer maps model to json
     # try adding email since its included in the modesl
     def perform_create(self, serializer):   
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             username = serializer.validated_data["username"]
             password = serializer.validated_data["password"]
             email = serializer.validated_data["email"]
@@ -65,13 +65,13 @@ def itinerary(request):
         itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
         serializer = ItinerarySerializer(instance = itinerary,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = ItinerarySerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
@@ -94,13 +94,13 @@ def flight(request):
         flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
         serializer = FlightSerializer(instance = flight,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = FlightSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
@@ -123,13 +123,13 @@ def hotel(request):
         hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
         serializer = HotelSerializer(instance = hotel,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = HotelSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
@@ -152,13 +152,13 @@ def rental(request):
         rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
         serializer = RentalSerializer(instance = rental,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = RentalSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
@@ -181,13 +181,13 @@ def affinity(request):
         affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
         serializer = AffinitySerializer(instance = affinity,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = AffinitySerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
@@ -210,13 +210,13 @@ def sight(request):
         sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
         serializer = SightSerializer(instance = sight,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = SightSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
