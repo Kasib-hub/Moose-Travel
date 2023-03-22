@@ -1,6 +1,7 @@
 
 import AuthContext from '../context/AuthContext';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { getAllItineraries } from '../api/Itinerary/Itinerary';
 
 // dummy homepage - we'll have these in a navBar
 function ApiExample() {
@@ -57,33 +58,50 @@ function ApiExample() {
         "pick_up_date": "2022-09-30",
         "return_date": "2022-11-30"
       },
+      {
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "rental_company": "Alamo",
+        "pick_up_location": "Franfurt",
+        "return_location": "Paris",
+        "pick_up_date": "2022-09-30",
+        "return_date": "2022-11-30"
+      },
     ],
 
+    "affinity": [
+      {
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "affinity_type": "Budgets"
+      },
+      {
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "affinity_type": "Food"
+      },
+    ],
 
-
+    "sight": [
+      {
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "sight_name": "Eiffel Tower"
+      },
+      {
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "sight_name": "Louvre"
+      },
+    ]
   }
 
-  
-  
-  // const signUpUser = async (userObj) => {
-  //   const BASE_URL = process.env.REACT_APP_BASE_URL
-  //   const url = `http://${BASE_URL}/api/signup/`
-  //   const context = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(userObj)
-  //   }
-  //   const resp = await fetch(url, context)
-  //   const body = await resp.json()
-  //   if (resp.status === 400) {
-  //     setErrors(body)
-  //   } else {
-  //     alert('Signed Up Successfully!')
-  //     navigate("/")
-  //   }
-  // }
+  useEffect(() => {
+    const fetchItineraries = async () => {
+      const fetchedItineraries = await getAllItineraries(authTokens.access)
+      console.log(fetchedItineraries)
+    }
+  }, [])
 
   return (
     <>
