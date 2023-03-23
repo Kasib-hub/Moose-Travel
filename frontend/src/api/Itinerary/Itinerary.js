@@ -1,8 +1,7 @@
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const getAllItineraries = async (token) => {
-  
-  const BASE_URL = process.env.REACT_APP_BASE_URL
-  const url = `http://${BASE_URL}/api/itinerary/`
+  const url = `http://${BASE_URL}/api/itinerarys/`
   const context = {
     method: "GET",
     headers: {
@@ -10,18 +9,23 @@ const getAllItineraries = async (token) => {
       "Authorization": `Bearer ${token}`
     }
   }
-  const resp = await fetch(url, context)
-  const body = await resp.json()
-  if (resp.status === 400) {
-    alert(JSON.stringify(body))
-  } else {
-    return body
+  try {
+    const res = await fetch(url, context)
+    if (!res.ok) throw new Error(`${res.status} (${res.statusText})`)
+    const body = await res.json()
+    if (!res.status === 400) {
+      alert(JSON.stringify(body))
+    } else {
+      return body
+    }
+  } catch (error) {
+    alert(error)
   }
 }
 
 const createItinerary = async (data ,token) => {
   
-  const BASE_URL = process.env.REACT_APP_BASE_URL
+  
   const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
     method: "POST",
@@ -31,10 +35,12 @@ const createItinerary = async (data ,token) => {
     },
     body: JSON.stringify(data)
   }
-  const resp = await fetch(url, context)
-  const body = await resp.json()
-  if (resp.status === 400) {
-    alert(JSON.stringify(body))
+  const res = await fetch(url, context)
+  const body = await res.json()
+  if (res.status === 400) {
+    alert(`Error: ${JSON.stringify(body)}`)
+  } else if (!res.ok) {
+    alert(`${res.status} (${res.statusText})`)
   } else {
     return body
   }

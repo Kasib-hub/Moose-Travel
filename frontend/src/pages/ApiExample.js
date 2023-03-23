@@ -13,7 +13,7 @@ function ApiExample() {
   const itineraryObject = {
     "itinerary": {
       "itinerary_name": "This is no Moose",
-      "user_id": user.user_id,
+      "user_id": 10,
     },
   
     "flight":[ 
