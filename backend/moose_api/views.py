@@ -42,23 +42,17 @@ class SignupView(CreateAPIView):
             except:
                 return Response({'error': 'Username already exists'})
 
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        'api/token',
-        'api/token/refresh'
-
-    ]
-
-    return Response(routes)
-
 # view, create,update or delete itinerary
 @api_view(['GET','POST','PUT','DELETE'])
-def itinerary(request):
+def itinerary(request, itinerary_id=None):
     # see all
     if request.method == 'GET':
-        itineraries = Itinerary.objects.all()
-        serializer = ItinerarySerializer(itineraries, many = True)
+        if itinerary_id:
+            data = Itinerary.objects.get(id=itinerary_id)
+            serializer = ItinerarySerializer(data)
+        else:
+            itineraries = Itinerary.objects.all()
+            serializer = ItinerarySerializer(itineraries, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -83,11 +77,15 @@ def itinerary(request):
 
 # view, create, update or delete flight
 @api_view(['GET','POST','PUT','DELETE'])
-def flight(request):
+def flight(request, itinerary_id, flight_id=None):
     # see all 
     if request.method == 'GET':
-        flights = Flight.objects.all()
-        serializer = FlightSerializer(flights, many = True)
+        if flight_id:
+            data = Flight.objects.get(id=flight_id)
+            serializer = FlightSerializer(data)
+        else:
+            flights = Flight.objects.filter(itinerary_id=itinerary_id)
+            serializer = FlightSerializer(flights, many = True)
         return Response(serializer.data)
     #update
     elif request.method == 'PUT':
@@ -112,11 +110,15 @@ def flight(request):
 
 # view, create, update or delete hotel
 @api_view(['GET','POST','PUT','DELETE'])
-def hotel(request):
+def hotel(request, itinerary_id, hotel_id=None):
     # see all 
     if request.method == 'GET':
-        hotels = Hotel.objects.all()
-        serializer = HotelSerializer(hotels, many = True)
+        if hotel_id:
+            data = Hotel.objects.get(id=hotel_id)
+            serializer = HotelSerializer(data)
+        else:
+            hotels = Hotel.objects.filter(itinerary_id=itinerary_id)
+            serializer = HotelSerializer(hotels, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
