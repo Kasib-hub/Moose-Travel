@@ -1,7 +1,7 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const getAllItineraries = async (token) => {
-  const url = `http://${BASE_URL}/api/itinerarys/`
+  const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
     method: "GET",
     headers: {
@@ -9,22 +9,13 @@ const getAllItineraries = async (token) => {
       "Authorization": `Bearer ${token}`
     }
   }
-  try {
-    const res = await fetch(url, context)
-    if (!res.ok) throw new Error(`${res.status} (${res.statusText})`)
-    const body = await res.json()
-    if (!res.status === 400) {
-      alert(JSON.stringify(body))
-    } else {
-      return body
-    }
-  } catch (error) {
-    alert(error)
-  }
+  const res = await fetch(url, context)
+  if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+  else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+  else {return body}
 }
 
 const createItinerary = async (data ,token) => {
-  
   
   const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
@@ -37,13 +28,9 @@ const createItinerary = async (data ,token) => {
   }
   const res = await fetch(url, context)
   const body = await res.json()
-  if (res.status === 400) {
-    alert(`Error: ${JSON.stringify(body)}`)
-  } else if (!res.ok) {
-    alert(`${res.status} (${res.statusText})`)
-  } else {
-    return body
-  }
+  if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+  else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+  else {return body}
 }
 
 export {
