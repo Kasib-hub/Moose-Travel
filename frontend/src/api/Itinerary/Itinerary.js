@@ -39,6 +39,7 @@ const createItinerary = async (data ,token) => {
 }
 
 const editItinerary = async (data ,token) => {
+  // first filter on all itineraries find the one or many that match on user_id and then.. match it on what? if a user has multiple itineraries how can we match on itinerary id without first having a way to directly access it?
   
   const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
