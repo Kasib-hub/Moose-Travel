@@ -41,23 +41,17 @@ class SignupView(CreateAPIView):
             except:
                 return Response({'error': 'Username already exists'})
 
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        'api/token',
-        'api/token/refresh'
-
-    ]
-
-    return Response(routes)
-
 # view, create,update or delete itinerary
 @api_view(['GET','POST','PUT','DELETE'])
-def itinerary(request):
+def itinerary(request, itinerary_id=None):
     # see all
     if request.method == 'GET':
-        itineraries = Itinerary.objects.all()
-        serializer = ItinerarySerializer(itineraries, many = True)
+        if itinerary_id:
+            data = Itinerary.objects.get(id=itinerary_id)
+            serializer = ItinerarySerializer(data)
+        else:
+            itineraries = Itinerary.objects.all()
+            serializer = ItinerarySerializer(itineraries, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -82,11 +76,15 @@ def itinerary(request):
 
 # view, create, update or delete flight
 @api_view(['GET','POST','PUT','DELETE'])
-def flight(request):
+def flight(request, itinerary_id, flight_id=None):
     # see all 
     if request.method == 'GET':
-        flights = Flight.objects.all()
-        serializer = FlightSerializer(flights, many = True)
+        if flight_id:
+            data = Flight.objects.get(id=flight_id)
+            serializer = FlightSerializer(data)
+        else:
+            flights = Flight.objects.filter(itinerary_id=itinerary_id)
+            serializer = FlightSerializer(flights, many = True)
         return Response(serializer.data)
     #update
     elif request.method == 'PUT':
@@ -111,11 +109,15 @@ def flight(request):
 
 # view, create, update or delete hotel
 @api_view(['GET','POST','PUT','DELETE'])
-def hotel(request):
+def hotel(request, itinerary_id, hotel_id=None):
     # see all 
     if request.method == 'GET':
-        hotels = Hotel.objects.all()
-        serializer = HotelSerializer(hotels, many = True)
+        if hotel_id:
+            data = Hotel.objects.get(id=hotel_id)
+            serializer = HotelSerializer(data)
+        else:
+            hotels = Hotel.objects.filter(itinerary_id=itinerary_id)
+            serializer = HotelSerializer(hotels, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -140,11 +142,15 @@ def hotel(request):
 
 # view, create, update or delete rental
 @api_view(['GET','POST','PUT','DELETE'])
-def rental(request):
+def rental(request, itinerary_id, rental_id=None):
     # see all 
     if request.method == 'GET':
-        rentals = Rental.objects.all()
-        serializer = RentalSerializer(rentals, many = True)
+        if rental_id:
+            data = Rental.objects.get(id=rental_id)
+            serializer = RentalSerializer(data)
+        else:
+            rentals = Rental.objects.filter(itinerary_id=itinerary_id)
+            serializer = RentalSerializer(rentals, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -169,11 +175,15 @@ def rental(request):
 
 # view, create, update or delete affinity
 @api_view(['GET','POST','PUT','DELETE'])
-def affinity(request):
+def affinity(request, itinerary_id, affinity_id=None):
     # see all 
     if request.method == 'GET':
-        affinities = Affinity.objects.all()
-        serializer = AffinitySerializer(affinities, many = True)
+        if affinity_id:
+            data = Affinity.objects.get(id=affinity_id)
+            serializer = AffinitySerializer(data)
+        else:
+            affinities = Affinity.objects.filter(itinerary_id=itinerary_id)
+            serializer = AffinitySerializer(affinities, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -194,15 +204,19 @@ def affinity(request):
         affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
         affinity.delete()
-        return Response('Rental has been deleted.')
+        return Response('affinity has been deleted.')
     
 # view, create, update or delete sight
 @api_view(['GET','POST','PUT','DELETE'])
-def sight(request):
+def sight(request, itinerary_id, sight_id=None):
     # see all 
     if request.method == 'GET':
-        sights = Sight.objects.all()
-        serializer = SightSerializer(sights, many = True)
+        if sight_id:
+            data = Sight.objects.get(id=sight_id)
+            serializer = SightSerializer(data)
+        else:
+            sights = Sight.objects.filter(itinerary_id=itinerary_id)
+            serializer = SightSerializer(sights, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
@@ -223,4 +237,4 @@ def sight(request):
         sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
         sight.delete()
-        return Response('Rental has been deleted.')
+        return Response('Sight has been deleted.')
