@@ -1,7 +1,7 @@
 
 import AuthContext from '../context/AuthContext';
 import { useContext, useEffect, useState } from 'react';
-import { getAllItineraries } from '../api/Itinerary/Itinerary';
+import { getAllItineraries, createItinerary } from '../api/Itinerary/Itinerary';
 
 // dummy homepage - we'll have these in a navBar
 function ApiExample() {
@@ -12,10 +12,10 @@ function ApiExample() {
 
   const itineraryObject = {
     "itinerary": {
-      "itinerary_name": "moose from the frontend!",
+      "itinerary_name": "This is no Moose",
       "user_id": user.user_id,
     },
-
+  
     "flight":[ 
       {
         "itinerary_id": 1,
@@ -36,7 +36,7 @@ function ApiExample() {
         "departure_date": "2022-11-30"
       },
     ],
-
+  
     "hotel": [
       {
         "itinerary_id": 1,
@@ -47,7 +47,7 @@ function ApiExample() {
         "check_out_date": "2022-11-30"
       },
     ],
-
+  
     "rental": [
       {
         "itinerary_id": 1,
@@ -68,7 +68,7 @@ function ApiExample() {
         "return_date": "2022-11-30"
       },
     ],
-
+  
     "affinity": [
       {
         "itinerary_id": 1,
@@ -81,7 +81,7 @@ function ApiExample() {
         "affinity_type": "Food"
       },
     ],
-
+  
     "sight": [
       {
         "itinerary_id": 1,
@@ -96,15 +96,26 @@ function ApiExample() {
     ]
   }
 
+  // getting all itineraries as test
   useEffect(() => {
     const fetchItineraries = async () => {
       const fetchedItineraries = await getAllItineraries(authTokens.access)
-      console.log(fetchedItineraries)
+      console.log(fetchedItineraries) // console.log or set to state.
     }
+
+    fetchItineraries()
   }, [])
+
+  // POST to make itinerary
+  const postItinerary = async () => {
+    const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
+    console.log(postedItinerary)
+  }
+ 
 
   return (
     <>
+      <button onClick={postItinerary}>post an itinerary</button>
       <p>Api-Example</p>
     </>
   );
