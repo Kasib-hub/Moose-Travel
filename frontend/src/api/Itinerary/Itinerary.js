@@ -20,7 +20,23 @@ const getAllItineraries = async (token) => {
   else {return body}
 }
 
-const createItinerary = async (data ,token) => {
+const getItineraryByID = async (token, itineraryID) => {
+  const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
+  const context = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  }
+  const res = await fetch(url, context)
+  const body = await res.json()
+  if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+  else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+  else {return body}
+}
+
+const createItinerary = async (token, data) => {
   
   const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
@@ -38,10 +54,10 @@ const createItinerary = async (data ,token) => {
   else {return body}
 }
 
-const editItinerary = async (data ,token) => {
+const editItinerary = async (token, data, itineraryID) => {
   // first filter on all itineraries find the one or many that match on user_id and then.. match it on what? if a user has multiple itineraries how can we match on itinerary id without first having a way to directly access it?
   
-  const url = `http://${BASE_URL}/api/itinerary/`
+  const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
   const context = {
     method: "PUT",
     headers: {
@@ -57,9 +73,9 @@ const editItinerary = async (data ,token) => {
   else {return body}
 }
 
-const deleteItinerary = async (data ,token) => {
+const deleteItinerary = async (token, data, itineraryID) => {
   
-  const url = `http://${BASE_URL}/api/itinerary/`
+  const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
   const context = {
     method: "DELETE",
     headers: {
@@ -77,5 +93,8 @@ const deleteItinerary = async (data ,token) => {
 
 export {
   getAllItineraries,
-  createItinerary
+  getItineraryByID,
+  createItinerary,
+  editItinerary,
+  deleteItinerary
 };

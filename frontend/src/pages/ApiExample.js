@@ -1,7 +1,7 @@
 
 import AuthContext from '../context/AuthContext';
 import { useContext, useEffect, useState } from 'react';
-import { getAllItineraries, createItinerary } from '../api/Itinerary/Itinerary';
+import { getAllItineraries, createItinerary, getItineraryByID, editItinerary, deleteItinerary } from '../api/Itinerary/Itinerary';
 
 // dummy homepage - we'll have these in a navBar
 function ApiExample() {
@@ -102,14 +102,19 @@ function ApiExample() {
       const fetchedItineraries = await getAllItineraries(authTokens.access)
       console.log(fetchedItineraries) // console.log or set to state.
     }
-
     fetchItineraries()
   }, [])
 
-  // POST to make itinerary
-  const postItinerary = async () => {
-    const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
-    console.log(postedItinerary)
+    // POST to make itinerary
+    const postItinerary = async () => {
+      const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
+      console.log(postedItinerary)
+    }
+
+  // Get by ID itinerary
+  const fetchItinerary = async () => {
+    const fetchedItinerary = await getItineraryByID(authTokens.access, )
+    console.log(fetchedItinerary)
   }
  
 

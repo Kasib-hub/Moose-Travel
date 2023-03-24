@@ -57,7 +57,7 @@ def itinerary(request, itinerary_id=None):
     elif request.method == 'PUT':
         itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
-        serializer = ItinerarySerializer(instance = itinerary,data=request.data)
+        serializer = ItinerarySerializer(instance = itinerary,data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
