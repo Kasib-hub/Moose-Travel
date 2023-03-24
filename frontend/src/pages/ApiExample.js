@@ -96,31 +96,29 @@ function ApiExample() {
     ]
   }
 
-  // getting all itineraries as test
-  useEffect(() => {
-    const fetchItineraries = async () => {
-      const fetchedItineraries = await getAllItineraries(authTokens.access)
-      console.log(fetchedItineraries) // console.log or set to state.
-    }
-    fetchItineraries()
-  }, [])
-
-    // POST to make itinerary
-    const postItinerary = async () => {
-      const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
-      console.log(postedItinerary)
-    }
+  // POST to make itinerary
+  const postItinerary = async () => {
+    const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
+    console.log(postedItinerary)
+  }
 
   // Get by ID itinerary
   const fetchItinerary = async () => {
-    const fetchedItinerary = await getItineraryByID(authTokens.access, )
+    const fetchedItinerary = await getItineraryByID(authTokens.access, 2)
     console.log(fetchedItinerary)
+  }
+
+  // Edit Itinerary
+  const editItinerary = async () => {
+    const fixedItinerary = await editItinerary(authTokens.access, itineraryObject.itinerary, )
+    console.log(fixedItinerary)
   }
  
 
   return (
     <>
       <button onClick={postItinerary}>post an itinerary</button>
+      <button onClick={fetchItinerary}>fetch an itinerary</button>
       <p>Api-Example</p>
     </>
   );

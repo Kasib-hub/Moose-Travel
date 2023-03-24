@@ -55,9 +55,8 @@ def itinerary(request, itinerary_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
-        serializer = ItinerarySerializer(instance = itinerary,data=request.data, partial=True)
+        serializer = ItinerarySerializer(instance = itinerary,data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
@@ -69,7 +68,6 @@ def itinerary(request, itinerary_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
         itinerary.delete()
         return Response('Itinerary has been deleted.')
@@ -88,7 +86,6 @@ def flight(request, itinerary_id, flight_id=None):
         return Response(serializer.data)
     #update
     elif request.method == 'PUT':
-        flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
         serializer = FlightSerializer(instance = flight,data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -102,7 +99,6 @@ def flight(request, itinerary_id, flight_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
         flight.delete()
         return Response('Flight has been deleted.')
@@ -121,7 +117,6 @@ def hotel(request, itinerary_id, hotel_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
         serializer = HotelSerializer(instance = hotel,data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -135,7 +130,6 @@ def hotel(request, itinerary_id, hotel_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
         hotel.delete()
         return Response('Hotel has been deleted.')
@@ -154,7 +148,6 @@ def rental(request, itinerary_id, rental_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
         serializer = RentalSerializer(instance = rental,data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -168,7 +161,6 @@ def rental(request, itinerary_id, rental_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
         rental.delete()
         return Response('Rental has been deleted.')
@@ -187,7 +179,6 @@ def affinity(request, itinerary_id, affinity_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
         serializer = AffinitySerializer(instance = affinity,data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -201,7 +192,6 @@ def affinity(request, itinerary_id, affinity_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
         affinity.delete()
         return Response('affinity has been deleted.')
@@ -220,7 +210,6 @@ def sight(request, itinerary_id, sight_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
         serializer = SightSerializer(instance = sight,data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -234,7 +223,6 @@ def sight(request, itinerary_id, sight_id=None):
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
         sight.delete()
         return Response('Sight has been deleted.')

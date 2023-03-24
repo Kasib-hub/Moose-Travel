@@ -12,7 +12,7 @@ class SignupSerializer(ModelSerializer):
 class ItinerarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Itinerary
-        fields = "__all__"
+        fields = '__all__'
 
     def create(self, validated_data):
         return Itinerary.objects.create(**validated_data)

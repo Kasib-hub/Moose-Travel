@@ -73,7 +73,7 @@ const editItinerary = async (token, data, itineraryID) => {
   else {return body}
 }
 
-const deleteItinerary = async (token, data, itineraryID) => {
+const deleteItinerary = async (token, itineraryID) => {
   
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
   const context = {
@@ -82,7 +82,6 @@ const deleteItinerary = async (token, data, itineraryID) => {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     },
-    body: JSON.stringify(data)
   }
   const res = await fetch(url, context)
   const body = await res.json()
