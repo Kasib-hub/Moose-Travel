@@ -108,7 +108,11 @@ function ApiExample() {
 
   // Edit Itinerary
   const putItinerary = async () => {
-    const fixedItinerary = await editItinerary(authTokens.access, itineraryObject.itinerary, 1)
+    const data = {
+      "itinerary_name": "you got editted from react fool",
+      "user_id": user.user_id
+    }
+    const fixedItinerary = await editItinerary(authTokens.access, data, 1)
     console.log(fixedItinerary)
   }
  
@@ -117,6 +121,7 @@ function ApiExample() {
     <>
       <button onClick={postItinerary}>post an itinerary</button>
       <button onClick={fetchItinerary}>fetch an itinerary</button>
+      <button onClick={putItinerary}>put an itinerary</button>
       <p>Api-Example</p>
     </>
   );
