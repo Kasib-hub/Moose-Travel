@@ -1,14 +1,12 @@
 
 import AuthContext from '../context/AuthContext';
-import { useContext, useEffect, useState } from 'react';
-import { getAllItineraries, createItinerary, getItineraryByID, editItinerary, deleteItinerary } from '../api/Itinerary/Itinerary';
+import { useContext } from 'react';
+import { createItinerary, getItineraryByID} from '../api/Itinerary/Itinerary';
 
 // dummy homepage - we'll have these in a navBar
 function ApiExample() {
 
   let {user, authTokens} = useContext(AuthContext)
-
-  const [errors, setErrors] = useState()
 
   const itineraryObject = {
     "itinerary": {
