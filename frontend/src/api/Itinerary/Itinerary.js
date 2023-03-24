@@ -1,6 +1,3 @@
-// with no ids in the url, we will have to first iterate through entire entries per model and filter each
-// of them by the user_id and then store those objeects ids (not the user_id) in a data structure/state to make the subsequent api calls
-// to DELETE/PUT, a little bit more steps but should still be doable
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
@@ -54,9 +51,7 @@ const createItinerary = async (token, data) => {
   else {return body}
 }
 
-const editItinerary = async (token, data, itineraryID) => {
-  // first filter on all itineraries find the one or many that match on user_id and then.. match it on what? if a user has multiple itineraries how can we match on itinerary id without first having a way to directly access it?
-  
+const editItinerary = async (token, data, itineraryID) => {  
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
   const context = {
     method: "PUT",
@@ -74,7 +69,6 @@ const editItinerary = async (token, data, itineraryID) => {
 }
 
 const deleteItinerary = async (token, itineraryID) => {
-  
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/`
   const context = {
     method: "DELETE",

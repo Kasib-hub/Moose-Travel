@@ -33,7 +33,6 @@ const getAffinityByID = async (token, itineraryID, affinityID) => {
 }
 
 const createAffinity = async (token, data) => {
-  
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/affinity/`
   const context = {
     method: "POST",
@@ -51,8 +50,6 @@ const createAffinity = async (token, data) => {
 }
 
 const editAffinity = async (token, data, itineraryID, affinityID) => {
-  // first filter on all itineraries find the one or many that match on user_id and then.. match it on what? if a user has multiple itineraries how can we match on itinerary id without first having a way to directly access it?
-  
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/affinity/${affinityID}/`
   const context = {
     method: "PUT",
@@ -70,7 +67,6 @@ const editAffinity = async (token, data, itineraryID, affinityID) => {
 }
 
 const deleteAffinity = async (token, itineraryID, affinityID) => {
-  
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/affinity/${affinityID}/`
   const context = {
     method: "DELETE",
