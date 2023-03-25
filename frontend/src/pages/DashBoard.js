@@ -18,7 +18,7 @@ function DashBoard(){
                     show name, email address and address maybe
                 </li>
             </p>
-            <a href="#" class="btn btn-primary">Edit</a> {/* redirect to edit personal info */}
+            <a href="https://www.figma.com/file/WmGLGOiu2lPak743Pu9wyz/Moose-Travel?node-id=0-1&t=7J9BAvOGXDjHa7hd-0" class="btn btn-primary">Edit</a> {/* redirect to edit personal info */}
             </div>
         </div>
         <div class="card card2">
@@ -30,7 +30,7 @@ function DashBoard(){
                     show names of itineraries and link to it
                 </li>
             </p>
-            <a href="#" class="btn btn-primary">Add</a> {/* redirect to edit personal info */}
+            <a href="https://www.figma.com/file/WmGLGOiu2lPak743Pu9wyz/Moose-Travel?node-id=0-1&t=7J9BAvOGXDjHa7hd-0" class="btn btn-primary">Add</a> {/* redirect to edit personal info */}
             </div>
         </div>
         </div>
