@@ -1,17 +1,29 @@
 version: "3.9"
 services:
   api:
-    # you'll obviously use your own account
-    image: kasibhub/backend-prod:$NEW_VERSION 
+    build: ./backend
     ports:
       - "8000:8000"
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
+    depends_on:
+      - db
   nginx:
-  # you'll obviously use your own account
-    image: kasibhub/webserver-prod:$NEW_VERSION
+    build: 
+      context: .
+      dockerfile: ./webserver/Dockerfile
     restart: always
     ports:
       - "80:80"
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 
+volumes:
+  postgres_data:
