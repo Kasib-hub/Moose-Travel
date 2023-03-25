@@ -10,11 +10,20 @@ import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
-
 function App() {
+
+  // loading the google maps script
+  const libraries = ['places']
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries
+  })
+
+  if (!isLoaded) return <h2>Loading...</h2>
+
   return (
     <div className="App">
-
       <Router>
         <AuthProvider>
           {/* navbar would go here */}
