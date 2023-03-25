@@ -4,17 +4,30 @@ import { useNavigate } from 'react-router';
 
 const MultiFlightSearchBar = () => {
 
+  const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
+  const SECRET_KEY = "G9eTXhzEmSjKNTLu"
+  const travel_token = "ZvHeGhGOz2EGG1V8U9NMkEUDGEWz"  
+
   const navigate = useNavigate();
 
   const [flights, setFlights] = useState([
-    { id: 1, from: "", to: "", departureDate: "", returnDate: "" },
+    { id: 1, from: "", to: "", departureDate: ""},
   ]);
+  const [newFlights, setNewFlights] = useState([]);
+
+  const convertFlights = (flights) =>
+    flights.map((flight) => ({
+        id: flight.id,
+        originLocationCode: flight.from,
+        destinationLocationCode: flight.to,
+        departureDateTimeRange: { date: flight.departureDate },
+  }));
 
   const handleAddFlight = () => {
     const newId = flights[flights.length - 1].id + 1;
     setFlights([
       ...flights,
-      { id: newId, from: "", to: "", departureDate: "", returnDate: "" },
+      { id: newId, from: "", to: "", departureDate: ""},
     ]);
   };
 
@@ -24,20 +37,65 @@ const MultiFlightSearchBar = () => {
   };
 
   const handleFlightChange = (id, field, value) => {
+    console.log(value)
     const updatedFlights = [...flights];
     const index = updatedFlights.findIndex((flight) => flight.id === id);
     updatedFlights[index][field] = value;
     setFlights(updatedFlights);
   };
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    // Handle search logic here
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    // Make an API request using the newFlights data
+    //multi-trip search (The API lets you search for up to six origin and destination city pairs)
+    const findMultiFlight = async() => {
+      const newFlights = convertFlights(flights);
+      console.log("newFlights")
+      console.log(newFlights)
+      fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
+          method: `POST`,
+          headers: {
+              'Authorization': `Bearer ${travel_token}`,
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "originDestinations": newFlights,
+              "travelers": [
+                  {
+                      "id": "1",
+                      "travelerType": "ADULT",
+                      "fareOptions": [
+                          "STANDARD"
+                      ]
+                  }
+              ],
+              "sources": [
+                  "GDS"
+              ],
+              "searchCriteria": {
+                  "maxFlightOffers": 10
+              }
+          })
+          
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+        })
+      .catch(error => console.error(error));
+    }  
+  
+    // Call findMultiFlight to send the API request
+    findMultiFlight();
   };
+  
+  console.log("Flights:")
+  console.log(flights)
 
   return (
     <div class="search-div">
-        <form onSubmit={() => navigate("/hotel-question")}>
+        <form onSubmit={handleSubmit}>
 
         {flights.map((flight) => (
 
@@ -72,17 +130,6 @@ const MultiFlightSearchBar = () => {
                             value={flight.departureDate}
                             onChange={(event) =>
                             handleFlightChange(flight.id, "departureDate", event.target.value)
-                            }
-                        />
-                    </div>
-
-                    <div class="search-input">
-                        <label style={{color: 'white', fontSize: '1.3rem'}}>Return Date:</label>
-                        <input
-                            type="date"
-                            value={flight.returnDate}
-                            onChange={(event) =>
-                            handleFlightChange(flight.id, "returnDate", event.target.value)
                             }
                         />
                     </div>

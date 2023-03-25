@@ -28,8 +28,7 @@ function HotelSearch() {
               })
               .catch(error => console.error(error));
           }
-          
-          
+
 
     
     //====================================================================

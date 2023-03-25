@@ -1,7 +1,6 @@
 import moment from 'moment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
-import { CSSTransition } from "react-transition-group";
 import { useNavigate } from 'react-router';
 
 
@@ -9,30 +8,55 @@ function DirectFlightSearchBar() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = ({ onSubmit }) => {
-        // Handle form submission here
-        // When done, move to the next component
-        // e.g. using React Router: history.push("/component2");
-        onSubmit();
+    const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
+    const SECRET_KEY = "G9eTXhzEmSjKNTLu"
+    const travel_token = "RN565RbHaOBqp8GPNTonCFXWA3AG"
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        const origin = e.target.elements.origin.value;
+        const destination = e.target.elements.destination.value;
+        const departureDate = e.target.elements.departureDate.value;
+        const guests = e.target.elements.guests.value;
+      
+        const apiKey = travel_token;
+      
+        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
+          headers: {
+            Authorization: `Bearer ${travel_token}`,
+          },
+        });
+      
+        const data = await response.json();
+        console.log(data);
       };
 
+    // Add to onSubmit when the API fetch works: navigate("/hotel-question")
+
     return (
-        <div class="search-div">
+        <div className="search-div">
 
-                <form className="search-form" onSubmit={() => navigate("/hotel-question")}>
-                    <div class="search-input">
-                        <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Location</p>
-                        <input type="text" placeholder="Where do you want to go?" />
+                <form className="search-form" onSubmit={handleSubmit}>
+
+                    <div className="search-input">
+                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Origin</p>
+                        <input type="text" name="origin" placeholder="Where do you want to go?" />
                     </div>
 
-                    <div class="search-input">
-                        <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p>
-                        <input type="date" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} />
+                    <div className="search-input">
+                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Destination</p>
+                        <input type="text" name="destination" placeholder="Where do you want to go?" />
                     </div>
 
-                    <div class="search-input">
-                        <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
-                        <select>
+                    <div className="search-input">
+                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p>
+                        <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} />
+                    </div>
+
+                    <div className="search-input">
+                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
+                        <select name="guests">
                         <option value="1">1 Guest</option>
                         <option value="2">2 Guests</option>
                         <option value="3">3 Guests</option>
@@ -40,7 +64,7 @@ function DirectFlightSearchBar() {
                         </select>
                     </div>
 
-                    <div class="search-button">
+                    <div className="search-button">
                         <button type="submit">Search</button>
                     </div>
 

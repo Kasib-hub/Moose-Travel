@@ -3,19 +3,23 @@ import { useNavigate } from 'react-router';
 import AnimatedPage from "./AnimatedPage";
 
 
-const HotelSearchBar = ({ onSubmit }) => {
+const HotelSearchBar = () => {
+
+    const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
+    const SECRET_KEY = "G9eTXhzEmSjKNTLu"
+    const travel_token = "RN565RbHaOBqp8GPNTonCFXWA3AG"  
 
   const navigate = useNavigate();
 
   const [hotels, setHotels] = useState([
-    { id: 1, from: "", to: "", departureDate: "", returnDate: "" },
+    { id: 1, cityCode: "", checkInDate: "", checkOutDate: "" },
   ]);
 
   const handleAddHotel = () => {
     const newId = hotels[hotels.length - 1].id + 1;
     setHotels([
       ...hotels,
-      { id: newId, from: "", to: "", departureDate: "", returnDate: "" },
+      { id: newId, cityCode: "", checkInDate: "", checkOutDate: "" },
     ]);
   };
 
@@ -31,70 +35,72 @@ const HotelSearchBar = ({ onSubmit }) => {
     setHotels(updatedHotels);
   };
 
-  const handleSearch = (event) => {
+  
+  const handleSearch = async (event) => {
     event.preventDefault();
-    // Handle search logic here
-    // When done, move to the next component
-    // e.g. using React Router: history.push("/component2");
-    onSubmit();
+  
+    for (const hotel of hotels) {
+      const { cityCode, checkInDate, checkOutDate } = hotel;
+  
+      fetch(`https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${travel_token}`,
+        }
+       })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.error(error));
+    }
   };
 
   return (
-    // <AnimatedPage>
-    <div class="search-div">
 
-            <form onSubmit={() => navigate("/genres")}>
+    <div className="search-div">
+
+            <form onSubmit={handleSearch}>
             {hotels.map((hotel) => (
 
                     <div key={hotel.id} className="search-form">
 
-                        <div class="search-input">
-                            <label style={{color: 'white', fontSize: '1.3rem'}}>From:</label>
+                        <div className="search-input">
+                            <label style={{color: 'white', fontSize: '1.3rem'}}>Location:</label>
                             <input
                                 type="text"
-                                value={hotel.from}
+                                value={hotel.cityCode}
                                 onChange={(event) =>
-                                handleHotelChange(hotel.id, "from", event.target.value)
+                                handleHotelChange(hotel.id, "cityCode", event.target.value)
                                 }
                             />
                         </div>
 
-                        <div class="search-input">
-                            <label style={{color: 'white', fontSize: '1.3rem'}}>To:</label>
-                            <input
-                                type="text"
-                                value={hotel.to}
-                                onChange={(event) =>
-                                handleHotelChange(hotel.id, "to", event.target.value)
-                                }
-                            />
-                        </div>
-
-                        <div class="search-input">
+                        <div className="search-input">
                             <label style={{color: 'white', fontSize: '1.3rem'}}>Check-in Date:</label>
                             <input
                                 type="date"
-                                value={hotel.departureDate}
+                                value={hotel.checkInDate}
                                 onChange={(event) =>
-                                handleHotelChange(hotel.id, "departureDate", event.target.value)
+                                handleHotelChange(hotel.id, "checkInDate", event.target.value)
                                 }
                             />
                         </div>
 
-                        <div class="search-input">
+                        <div className="search-input">
                             <label style={{color: 'white', fontSize: '1.3rem'}}>Check-out Date:</label>
                             <input
                                 type="date"
-                                value={hotel.returnDate}
+                                value={hotel.checkOutDate}
                                 onChange={(event) =>
-                                handleHotelChange(hotel.id, "returnDate", event.target.value)
+                                handleHotelChange(hotel.id, "checkOutDate", event.target.value)
                                 }
                             />
                         </div>
 
-                        <div class="search-input">
-                            <p classname="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
-                            <select>
+                        <div className="search-input">
+                            <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
+                            <select name="guests">
                             <option value="1">1 Guest</option>
                             <option value="2">2 Guests</option>
                             <option value="3">3 Guests</option>
@@ -102,7 +108,7 @@ const HotelSearchBar = ({ onSubmit }) => {
                             </select>
                         </div>
 
-                        <button type="button" onClick={() => handleDeleteHotel(hotel.id)} class="search-button" className="deleteButton">
+                        <button type="button" onClick={() => handleDeleteHotel(hotel.id)} className="deleteButton">
                             Delete Hotel
                         </button>
 
@@ -115,7 +121,7 @@ const HotelSearchBar = ({ onSubmit }) => {
             </form>
     
     </div>
-    // </AnimatedPage>
+
   );
 };
 
