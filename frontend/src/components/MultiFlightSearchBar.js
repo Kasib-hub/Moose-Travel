@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router';
 
 const MultiFlightSearchBar = () => {
 
-  const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
-  const SECRET_KEY = "G9eTXhzEmSjKNTLu"
-  const travel_token = "ZvHeGhGOz2EGG1V8U9NMkEUDGEWz"  
+  const travel_token = "s87hcEdxBysdrGtG3FfW9uQ3OoGB"  
 
   const navigate = useNavigate();
 
@@ -37,7 +35,6 @@ const MultiFlightSearchBar = () => {
   };
 
   const handleFlightChange = (id, field, value) => {
-    console.log(value)
     const updatedFlights = [...flights];
     const index = updatedFlights.findIndex((flight) => flight.id === id);
     updatedFlights[index][field] = value;
@@ -51,8 +48,6 @@ const MultiFlightSearchBar = () => {
     //multi-trip search (The API lets you search for up to six origin and destination city pairs)
     const findMultiFlight = async() => {
       const newFlights = convertFlights(flights);
-      console.log("newFlights")
-      console.log(newFlights)
       fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
           method: `POST`,
           headers: {
@@ -90,8 +85,6 @@ const MultiFlightSearchBar = () => {
     findMultiFlight();
   };
   
-  console.log("Flights:")
-  console.log(flights)
 
   return (
     <div class="search-div">

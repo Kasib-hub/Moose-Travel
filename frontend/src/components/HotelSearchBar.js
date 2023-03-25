@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router';
 import AnimatedPage from "./AnimatedPage";
 
 
 const HotelSearchBar = () => {
 
-    const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
-    const SECRET_KEY = "G9eTXhzEmSjKNTLu"
-    const travel_token = "RN565RbHaOBqp8GPNTonCFXWA3AG"  
+    const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
+    const [searchedHotels, setSearchedHotels] = useState(null)
+    let hotelOffers = []
+    const [guests, setGuests] = useState(1);
 
   const navigate = useNavigate();
 
@@ -40,9 +41,11 @@ const HotelSearchBar = () => {
     event.preventDefault();
   
     for (const hotel of hotels) {
+      let hotelIds = [];
+      let urlFormatHotelIds = '';
       const { cityCode, checkInDate, checkOutDate } = hotel;
   
-      fetch(`https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}`, {
+      fetch(`https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=5&radiusUnit=KM`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${travel_token}`,
@@ -50,9 +53,25 @@ const HotelSearchBar = () => {
        })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            const hotelsInLocation = data["data"];
+            hotelsInLocation.forEach(item => {
+                hotelIds.push(item["hotelId"])
+            })
+            urlFormatHotelIds = hotelIds.join('%2C')
+            return fetch(`https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${urlFormatHotelIds}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adults=${guests}&bestRateOnly=true`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${travel_token}`,
+                }
+            });
         })
-        .catch(error => console.error(error));
+        .then(response => response.json())
+        .then(data => {
+            // Handle the data from the second request
+            hotelOffers.push(data["data"]);
+            console.log(hotelOffers)
+          })
+        .catch(error => console.error('Error:', error));
     }
   };
 
@@ -100,7 +119,7 @@ const HotelSearchBar = () => {
 
                         <div className="search-input">
                             <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
-                            <select name="guests">
+                            <select name="guests" value={guests} onChange={(event) => setGuests(event.target.value)}>
                             <option value="1">1 Guest</option>
                             <option value="2">2 Guests</option>
                             <option value="3">3 Guests</option>
@@ -127,3 +146,4 @@ const HotelSearchBar = () => {
 
 export default HotelSearchBar;
 
+//fetch(`https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=HYATLJ12%2CYZATLB21&adults=1&checkInDate=2023-04-22&bestRateOnly=true`, {
