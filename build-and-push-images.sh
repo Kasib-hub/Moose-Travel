@@ -13,8 +13,8 @@
 BASE_URL=$1
 NEW_VERSION=$2
 
-docker buildx build --platform linux/amd64 --build-arg REACT_APP_BASE_URL=$BASE_URL -t kasibhub/webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
-docker push kasibhub/webserver-prod:$NEW_VERSION
+docker buildx build --platform linux/amd64 --build-arg REACT_APP_BASE_URL=$BASE_URL -t kasibhub/moose-webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
+docker push kasibhub/moose-webserver-prod:$NEW_VERSION
 
-docker buildx build --platform linux/amd64  -t kasibhub/backend-prod:$NEW_VERSION -f backend/Dockerfile ./backend --no-cache
-docker push kasibhub/backend-prod:$NEW_VERSION
+docker buildx build --platform linux/amd64  -t kasibhub/moose-backend-prod:$NEW_VERSION -f backend/Dockerfile ./backend --no-cache
+docker push kasibhub/moose-backend-prod:$NEW_VERSION
