@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG =  True if os.getenv("DEBUG") == "True" else False
 DEBUG = True
 
-ALLOWED_HOSTS = ["api"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

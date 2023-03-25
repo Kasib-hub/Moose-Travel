@@ -3,7 +3,7 @@
 # the images locally
 #########################################
 
-version: "3.9"
+version: "3"
 services:
   api:
     build: ./backend

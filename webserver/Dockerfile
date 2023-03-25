@@ -20,7 +20,7 @@ ARG REACT_APP_MAPS_API_KEY
 ENV REACT_APP_BASE_URL=$REACT_APP_BASE_URL
 ENV REACT_APP_MAPS_API_KEY=$REACT_APP_MAPS_API_KEY
 
-COPY ./frontend/package.json .
+COPY ./frontend/package*.json .
 RUN npm install
 COPY ./frontend .
 RUN npm run build
