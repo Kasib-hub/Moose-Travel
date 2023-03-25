@@ -1,23 +1,36 @@
 import './App.css';
-import { HashRouter, Routes, Route, Link } from 'react-router-dom'
-import ListWines from "./components/ListWines"
-import CreateWine from "./components/CreateWine"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoutes from './utils/PrivateRoutes';
+import { AuthProvider } from './context/AuthContext';
+import HomePage from './pages/HomePage';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import MapsPage from './pages/MapsPage';
+import FlightSearch from './components/FlightSearch/FlightSearch';
+import ApiExample from './pages/ApiExample';
+import { useLoadScript } from '@react-google-maps/api';
+import DashBoard from './pages/DashBoard';
 
 function App() {
   return (
     <div className="App">
 
-      <HashRouter>
-      <h1>Notional Nav barzz</h1>
-      <Link to="/all-wines">List Wines</Link>
-      <br></br>
-      <Link to="/create">Create Wine</Link>
-        <Routes>
-          <Route path="/all-wines" element={ <ListWines />} />
-          <Route path="/create" element={ <CreateWine />} />
-        </Routes>
-      </HashRouter>
-     
+      <Router>
+        <AuthProvider>
+          {/* navbar would go here */}
+          <Routes>
+            <Route element={<PrivateRoutes />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/flight-search" element={<FlightSearch />} />
+              <Route path="/maps" element={<MapsPage />}/>
+              <Route path="/api-example" element={<ApiExample />}/>
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/dashboard" element={<DashBoard />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
     </div>
   );
 }
