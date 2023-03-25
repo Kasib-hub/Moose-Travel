@@ -7,7 +7,7 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import MapsPage from './pages/MapsPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
-
+import DashBoard from './pages/DashBoard';
 function App() {
 
   // loading the google maps script
