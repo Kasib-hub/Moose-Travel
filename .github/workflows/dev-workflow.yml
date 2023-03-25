@@ -1,11 +1,14 @@
 # dev-workflow.yml
-name: CI for Group Projects
+name: CI for Moose Travel
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
+
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
 jobs:
 
