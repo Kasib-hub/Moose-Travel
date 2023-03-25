@@ -5,10 +5,21 @@ import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+import MapsPage from './pages/MapsPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
-import DashBoard from './pages/DashBoard';
 
 function App() {
+
+  // loading the google maps script
+  const libraries = ['places']
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries
+  })
+
+  if (!isLoaded) return <h2>Loading...</h2>
+
   return (
     <div className="App">
       <Router>
@@ -18,6 +29,8 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/flight-search" element={<FlightSearch />} />
+              <Route path="/maps" element={<MapsPage />}/>
+              <Route path="/api-example" element={<ApiExample />}/>
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />

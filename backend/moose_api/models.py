@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Itinerary(models.Model):
     itinerary_name = models.CharField(max_length=250)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    summary = models.TextField(null=True)
 
     def __str__(self) -> str:
         return self.itinerary_name

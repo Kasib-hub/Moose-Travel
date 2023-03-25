@@ -1,4 +1,3 @@
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 #from the simpleJWT Docs 'Customizing token claims'
@@ -33,7 +32,7 @@ class SignupView(CreateAPIView):
     # this is all it needs to make a user. Doesn't use other stuff because?? remember serializer maps model to json
     # try adding email since its included in the modesl
     def perform_create(self, serializer):   
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             username = serializer.validated_data["username"]
             password = serializer.validated_data["password"]
             email = serializer.validated_data["email"]
@@ -42,186 +41,188 @@ class SignupView(CreateAPIView):
             except:
                 return Response({'error': 'Username already exists'})
 
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        'api/token',
-        'api/token/refresh'
-
-    ]
-
-    return Response(routes)
-
 # view, create,update or delete itinerary
 @api_view(['GET','POST','PUT','DELETE'])
-def itinerary(request):
+def itinerary(request, itinerary_id=None):
     # see all
     if request.method == 'GET':
-        itineraries = Itinerary.objects.all()
-        serializer = ItinerarySerializer(itineraries, many = True)
+        if itinerary_id:
+            data = Itinerary.objects.get(id=itinerary_id)
+            serializer = ItinerarySerializer(data)
+        else:
+            itineraries = Itinerary.objects.all()
+            serializer = ItinerarySerializer(itineraries, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
         serializer = ItinerarySerializer(instance = itinerary,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = ItinerarySerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        itinerary_id = request.data['id']
         itinerary = Itinerary.objects.get(id = itinerary_id)
         itinerary.delete()
         return Response('Itinerary has been deleted.')
 
 # view, create, update or delete flight
 @api_view(['GET','POST','PUT','DELETE'])
-def flight(request):
+def flight(request, itinerary_id, flight_id=None):
     # see all 
     if request.method == 'GET':
-        flights = Flight.objects.all()
-        serializer = FlightSerializer(flights, many = True)
+        if flight_id:
+            data = Flight.objects.get(id=flight_id)
+            serializer = FlightSerializer(data)
+        else:
+            flights = Flight.objects.filter(itinerary_id=itinerary_id)
+            serializer = FlightSerializer(flights, many = True)
         return Response(serializer.data)
     #update
     elif request.method == 'PUT':
-        flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
         serializer = FlightSerializer(instance = flight,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = FlightSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        flight_id = request.data['id']
         flight = Flight.objects.get(id = flight_id)
-        Flight.delete()
+        flight.delete()
         return Response('Flight has been deleted.')
 
 # view, create, update or delete hotel
 @api_view(['GET','POST','PUT','DELETE'])
-def hotel(request):
+def hotel(request, itinerary_id, hotel_id=None):
     # see all 
     if request.method == 'GET':
-        hotels = Hotel.objects.all()
-        serializer = HotelSerializer(hotels, many = True)
+        if hotel_id:
+            data = Hotel.objects.get(id=hotel_id)
+            serializer = HotelSerializer(data)
+        else:
+            hotels = Hotel.objects.filter(itinerary_id=itinerary_id)
+            serializer = HotelSerializer(hotels, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
         serializer = HotelSerializer(instance = hotel,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = HotelSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        hotel_id = request.data['id']
         hotel = Hotel.objects.get(id = hotel_id)
-        Hotel.delete()
+        hotel.delete()
         return Response('Hotel has been deleted.')
 
 # view, create, update or delete rental
 @api_view(['GET','POST','PUT','DELETE'])
-def rental(request):
+def rental(request, itinerary_id, rental_id=None):
     # see all 
     if request.method == 'GET':
-        rentals = Rental.objects.all()
-        serializer = RentalSerializer(rentals, many = True)
+        if rental_id:
+            data = Rental.objects.get(id=rental_id)
+            serializer = RentalSerializer(data)
+        else:
+            rentals = Rental.objects.filter(itinerary_id=itinerary_id)
+            serializer = RentalSerializer(rentals, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
         serializer = RentalSerializer(instance = rental,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = RentalSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        rental_id = request.data['id']
         rental = Rental.objects.get(id = rental_id)
-        Rental.delete()
+        rental.delete()
         return Response('Rental has been deleted.')
 
 # view, create, update or delete affinity
 @api_view(['GET','POST','PUT','DELETE'])
-def affinity(request):
+def affinity(request, itinerary_id, affinity_id=None):
     # see all 
     if request.method == 'GET':
-        affinities = Affinity.objects.all()
-        serializer = AffinitySerializer(affinities, many = True)
+        if affinity_id:
+            data = Affinity.objects.get(id=affinity_id)
+            serializer = AffinitySerializer(data)
+        else:
+            affinities = Affinity.objects.filter(itinerary_id=itinerary_id)
+            serializer = AffinitySerializer(affinities, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
         serializer = AffinitySerializer(instance = affinity,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = AffinitySerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        affinity_id = request.data['id']
         affinity = Affinity.objects.get(id = affinity_id)
-        Affinity.delete()
-        return Response('Rental has been deleted.')
+        affinity.delete()
+        return Response('affinity has been deleted.')
     
 # view, create, update or delete sight
 @api_view(['GET','POST','PUT','DELETE'])
-def sight(request):
+def sight(request, itinerary_id, sight_id=None):
     # see all 
     if request.method == 'GET':
-        sights = Sight.objects.all()
-        serializer = SightSerializer(sights, many = True)
+        if sight_id:
+            data = Sight.objects.get(id=sight_id)
+            serializer = SightSerializer(data)
+        else:
+            sights = Sight.objects.filter(itinerary_id=itinerary_id)
+            serializer = SightSerializer(sights, many = True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
         serializer = SightSerializer(instance = sight,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # create
     elif request.method == 'POST':
         serializer = SightSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)
     # delete
     elif request.method == 'DELETE':
-        sight_id = request.data['id']
         sight = Sight.objects.get(id = sight_id)
-        Sight.delete()
-        return Response('Rental has been deleted.')
+        sight.delete()
+        return Response('Sight has been deleted.')
