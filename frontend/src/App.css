@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -176,3 +178,73 @@
   opacity: 0;
   transition: opacity 500ms;
 } */
+
+.dashboard {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath fill='%23333' d='M0 0l4 5 4-5H0z'/%3E%3C/svg%3E");
+  /* position: relative; */
+  min-width: 100%;
+  min-height: 100%;
+  display: absolute;
+  display: flex;
+  align-items: row;
+  flex-direction: row; 
+  justify-content: center;
+  padding: 10px;
+  background-color: #014d4e;
+  border-radius: 50px;
+  margin-top: 1rem;
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+}
+
+.dashboard-title{
+  position: absolute;
+  color:white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.card{
+  opacity: 0.8;
+  position: relative;
+  display: flex;
+  width: 40%;
+  align-items: column;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  border-radius: 25px;
+  margin-top: 5rem;
+  margin-bottom: 20rem; /* change how big the dashboard is */
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+}
+.card:hover{
+  background-color: #d7e0e1;
+  border-color: #013a3c;
+  box-shadow: 0 0 5px 0 black;
+}
+/* .card1{
+  
+  float: left;
+}
+.card2{
+  float: right;
+} */
+
+.btn-primary{
+  border-radius: 20%;
+  color: white;
+  border-color: transparent;
+  background: linear-gradient(to right,#014d4e, #027c7e);
+  box-shadow:#014d4f;
+}
+.btn-primary:hover{
+  background-color: #013a3c;
+  border-color: #013a3c;
+  box-shadow: 0 0 5px 0 black;
+}
+.card-img-top{
+  border-radius: 25px;
+  height: 50%;
+}
+
