@@ -9,9 +9,8 @@ import MapsPage from './pages/MapsPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
-import DashBoard from './pages/DashBoard';
-function App() {
 
+function App() {
   // loading the google maps script
   const libraries = ['places']
 
@@ -26,7 +25,6 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
-          {/* navbar would go here */}
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
@@ -36,7 +34,6 @@ function App() {
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/dashboard" element={<DashBoard />} />
           </Routes>
         </AuthProvider>
       </Router>
