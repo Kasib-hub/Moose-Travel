@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 from .views import MyTokenObtainPairView
 from .views import *
-
 #from the simpleJWT authentication
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
@@ -12,6 +11,7 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'), #takes in the username and password to give an authentication and refresh token
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), #takes in the refresh token -> gives a new refresh token
     path('signup/', views.SignupView.as_view(), name='signup'),
+    path('user/<int:user_id>/', view_or_update_user, name='view_user'),
     #view, create, update and delete itineraries
     path('itinerary/', itinerary, name='itinerary'),
     path('itinerary/<int:itinerary_id>/', itinerary),

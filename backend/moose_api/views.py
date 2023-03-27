@@ -41,6 +41,20 @@ class SignupView(CreateAPIView):
             except:
                 return Response({'error': 'Username already exists'})
 
+# view, update user personal information
+@api_view(['GET','PUT'])
+def view_or_update_user (request, user_id):
+    if request.method == 'GET':
+        user_info = User.objects.get(id=user_id)
+        serializer = UserSerializer(user_info)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        user_info = User.objects.get(id=user_id)
+        serializer = UserSerializer(instance = user_info,data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response(serializer.data)
+    
 # view, create,update or delete itinerary
 @api_view(['GET','POST','PUT','DELETE'])
 def itinerary(request, itinerary_id=None):
