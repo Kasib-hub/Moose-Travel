@@ -32,7 +32,7 @@ const getRentalByID = async (token, itineraryID, rentalID) => {
   else {return body}
 }
 
-const createRental = async (token, data) => {
+const createRental = async (token, data, itineraryID) => {
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/rental/`
   const context = {
     method: "POST",
