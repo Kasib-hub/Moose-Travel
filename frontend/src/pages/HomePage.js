@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 
@@ -6,20 +6,19 @@ function HomePage() {
 
   // let {user, logoutUser, authTokens} = useContext(AuthContext)
   let {user, logoutUser} = useContext(AuthContext)
-  console.log(user)
   //use rest api get user information - name, address
   
   return (
     <>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Moose Travel</a>
+          <Link class="navbar-brand" to={'/signin'}>Moose Travel</Link>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Your Profile</a>
+                <Link class="nav-link" to={`/personal-info/${user.user_id}`}>Your Profile</Link>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Itineraries</a>
