@@ -7,8 +7,3 @@ export DEBUG=True
 docker-compose -f docker-compose.dev.yml up --build -d
 sleep 3
 docker-compose -f docker-compose.dev.yml down
-
-# make sure the postgres container is ready, then run migrations
-sleep 10 
-docker exec moose-travel-api-1  python /src/manage.py makemigrations 
-docker exec moose-travel-api-1  python /src/manage.py migrate
