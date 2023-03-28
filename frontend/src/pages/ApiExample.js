@@ -6,7 +6,7 @@ import { createItinerary, getItineraryByID, editItinerary} from '../api/Itinerar
 // dummy homepage - we'll have these in a navBar
 function ApiExample() {
 
-  let {user, authTokens, getAmadeusToken} = useContext(AuthContext)
+  let {user, authTokens} = useContext(AuthContext)
 
   const itineraryObject = {
     "itinerary": {

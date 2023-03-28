@@ -104,7 +104,7 @@ export const AuthProvider = ({children}) => {
   let contextData = {
     loginUser:loginUser,
     logoutUser:logoutUser,
-    getAmadeusToken:getAmadeusToken,
+    amadeusToken:amadeusToken,
     authTokens:authTokens,
     errors:errors,
     user:user,
