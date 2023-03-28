@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
 
   const navigate = useNavigate()
 
-  // callback sets the state on the initial load not every single time state changes
+  // callback sets the state on the initial load (mount) not every single time state changes
   let [authTokens, setAuthTokens] = useState( () => {
       return localStorage.getItem('authTokens') 
       ? JSON.parse(localStorage.getItem('authTokens'))
@@ -22,6 +22,13 @@ export const AuthProvider = ({children}) => {
       return localStorage.getItem('authTokens') 
       ? jwt_decode(localStorage.getItem('authTokens'))
       : null
+    }
+  )
+
+  let [amadeusToken, setAmadeusToken] = useState( () => {
+      return localStorage.getItem('amadeusToken') 
+      ? localStorage.getItem('amadeusToken')
+      : getAmadeusToken()
     }
   )
 
@@ -67,18 +74,43 @@ export const AuthProvider = ({children}) => {
     navigate('/login')
   }, [navigate])
 
+  const getAmadeusToken = async () => {
+    console.log('amadeus!')
+    const client_id = process.env.REACT_APP_CLIENT_ID
+    const client_secret = process.env.REACT_APP_CLIENT_SECRET
+    const url = `https://test.api.amadeus.com/v1/security/oauth2/token`
+    const data = `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`
+    const context = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data
+    }
+    const resp = await fetch(url, context)
+    const body = await resp.json()
+    if (resp.status === 200) {
+      console.log('token updated')
+      setAmadeusToken(body.access_token)
+      localStorage.setItem('amadeusToken', body.access_token)
+    } else {
+      alert("issue with your amadeus token")
+    }
+  }
+
   // if response ok, update tokens and user info. Else, logout the user
 
 
   let contextData = {
     loginUser:loginUser,
     logoutUser:logoutUser,
+    getAmadeusToken:getAmadeusToken,
     authTokens:authTokens,
     errors:errors,
     user:user,
   }
 
-  
+  // refresh the token every 10 min.
   useEffect(() => {
     const updateToken = async () => {
       
@@ -109,6 +141,16 @@ export const AuthProvider = ({children}) => {
       }, 600000)
       return () => clearInterval(interval)
   }, [authTokens, logoutUser])
+
+  // refresh token from amadeus
+  useEffect(() => {
+
+    // updates every 25 minutes = 1500000ms 
+    let interval = setInterval(() => {
+      if(amadeusToken) {getAmadeusToken()}
+    }, 1500000)
+    return () => clearInterval(interval)
+  }, [amadeusToken])
 
   return (
     <AuthContext.Provider value={contextData}>
