@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) => {
   let [amadeusToken, setAmadeusToken] = useState( () => {
       return localStorage.getItem('amadeusToken') 
       ? localStorage.getItem('amadeusToken')
-      : getAmadeusToken()
+      : null
     }
   )
 
@@ -65,12 +65,15 @@ export const AuthProvider = ({children}) => {
       localStorage.setItem('authTokens', JSON.stringify(body))
       navigate('/')
     }
+    getAmadeusToken()
   }
 
   const logoutUser = useCallback(() => {
     setAuthTokens(null)
     setUser(null)
+    setAmadeusToken(null)
     localStorage.removeItem('authTokens')
+    localStorage.removeItem('amadeusToken')
     navigate('/login')
   }, [navigate])
 
