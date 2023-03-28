@@ -32,7 +32,7 @@ const getAffinityByID = async (token, itineraryID, affinityID) => {
   else {return body}
 }
 
-const createAffinity = async (token, data) => {
+const createAffinity = async (token, data, itineraryID) => {
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/affinity/`
   const context = {
     method: "POST",

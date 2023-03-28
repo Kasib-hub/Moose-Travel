@@ -32,7 +32,7 @@ const getSightByID = async (token, itineraryID, sightID) => {
   else {return body}
 }
 
-const createSight = async (token, data) => {
+const createSight = async (token, data, itineraryID) => {
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/sight/`
   const context = {
     method: "POST",

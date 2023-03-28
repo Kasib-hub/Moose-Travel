@@ -10,6 +10,7 @@ import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
+import AmadeusExample from './pages/AmadeusExample';
 function App() {
 
   // loading the google maps script
@@ -33,10 +34,12 @@ function App() {
               <Route path="/flight-search" element={<FlightSearch />} />
               <Route path="/maps" element={<MapsPage />}/>
               <Route path="/api-example" element={<ApiExample />}/>
+              <Route path="/dashboard" element={<DashBoard />} /> {/* this will likely need to take in id at route  e.g. Route path="/dashboard/:userID"*/}
+              <Route path="/amadeus-example" element={<AmadeusExample />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/dashboard" element={<DashBoard />} />
+            
           </Routes>
         </AuthProvider>
       </Router>
