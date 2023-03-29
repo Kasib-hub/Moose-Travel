@@ -8,7 +8,7 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import MapsPage from './pages/MapsPage';
 import ApiExample from './pages/ApiExample';
-import { useLoadScript } from '@react-google-maps/api';
+// import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
 
