@@ -1,23 +1,17 @@
 
-import './App.css'
-import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react';
-import Chatbot from './components/Chatbot';
-import HotelSearch from './components/HotelSearch';
-import SupportEngine from './components/SupportEngine/SupportEngine'
-import RoundTripSearchBar from './components/RoundTripSearchBar';
-import DirectFlightSearchBar from './components/DirectFlightSearchBar';
-import HotelSearchBar from './components/HotelSearchBar';
-import MultiFlightSearchBar from './components/MultiFlightSearchBar';
-import FlightSearchSelection from './components/FlightSearchSelection';
-import { TransitionGroup } from "react-transition-group";
-import { useState } from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
-import FlyingQuestion from './components/FlyingQuestion';
-import HotelQuestion from './components/HotelQuestion';
-import Genres from './components/Genres';
-import SpecificLocations from './components/SpecificLocations';
-import Itinerary from './components/Itinerary';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoutes from './utils/PrivateRoutes';
+import { AuthProvider } from './context/AuthContext';
+import HomePage from './pages/HomePage';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import MapsPage from './pages/MapsPage';
+import FlightSearch from './components/FlightSearch/FlightSearch';
+import ApiExample from './pages/ApiExample';
+import { useLoadScript } from '@react-google-maps/api';
+import DashBoard from './pages/DashBoard';
+import AmadeusExample from './pages/AmadeusExample';
 
 
 function App() {
