@@ -1,3 +1,4 @@
+
 import './App.css'
 import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
@@ -23,47 +24,28 @@ function App() {
 
 
   return (
-    <BrowserRouter>
-      <Routes> 
-        <Route path="/" element={ <FlyingQuestion/>} />
-        <Route path="/flight-search-selection" element={<FlightSearchSelection />} />
-        <Route path="/hotel-question" element={<HotelQuestion />} />
-        <Route path="/hotel-search-selection" element={<HotelSearchBar />} />
-        <Route path="/genres" element={<Genres />} />
-        <Route path="/specific-locations" element={<SpecificLocations />} />
-        <Route path="/itinerary" element={<Itinerary />} />
-      </Routes> 
-    </BrowserRouter>
+    <div className="App">
+      <Router>
+        <AuthProvider>
+          {/* navbar would go here */}
+          <Routes>
+            <Route element={<PrivateRoutes />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/flight-search" element={<FlightSearch />} />
+              <Route path="/maps" element={<MapsPage />}/>
+              <Route path="/api-example" element={<ApiExample />}/>
+              <Route path="/dashboard" element={<DashBoard />} /> {/* this will likely need to take in id at route  e.g. Route path="/dashboard/:userID"*/}
+              <Route path="/amadeus-example" element={<AmadeusExample />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </div>
   );
 }
 
 export default App;
 
-// function App() {
-
-//   const [currentComponent, setCurrentComponent] = useState(0);
-
-//   const handleFormSubmit = () => {
-//     setCurrentComponent(currentComponent + 1);
-//   };
-
-//   return (
-//     <div className="App">
-
-
-//       {currentComponent === 0 && (
-//         <HotelSearchBar onSubmit={handleFormSubmit} />
-//       )}
-
-//       {currentComponent === 1 && (
-//        <FlightSearchSelection changeHomepageComponent={handleFormSubmit} />
-//       )}
-
-//       {currentComponent === 2 && (
-//         <HotelSearchBar onSubmit={handleFormSubmit} />
-//       )}
-
-
-//     </div>
-//   );
-// }

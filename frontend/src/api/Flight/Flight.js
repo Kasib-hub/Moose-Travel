@@ -32,7 +32,7 @@ const getFlightByID = async (token, itineraryID, flightID) => {
   else {return body}
 }
 
-const createFlight = async (token, data) => {
+const createFlight = async (token, data, itineraryID) => {
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/flight/`
   const context = {
     method: "POST",

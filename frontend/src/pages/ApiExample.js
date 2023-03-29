@@ -11,7 +11,7 @@ function ApiExample() {
   const itineraryObject = {
     "itinerary": {
       "itinerary_name": "This is no Moose",
-      "user_id": 4,
+      "user_id": 1,
     },
   
     "flight":[ 
@@ -96,7 +96,7 @@ function ApiExample() {
 
   // POST to make itinerary
   const postItinerary = async () => {
-    const postedItinerary = await createItinerary(itineraryObject.itinerary, authTokens.access)
+    const postedItinerary = await createItinerary(authTokens.access, itineraryObject.itinerary)
     console.log(postedItinerary)
   }
 
