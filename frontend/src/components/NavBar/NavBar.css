@@ -1,0 +1,5 @@
+.navbar {
+  background-color: var(--leaf);
+  color: var(--cream);
+  padding: 0.5rem;
+}
