@@ -9,7 +9,7 @@ import MapsPage from './pages/MapsPage';
 import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
-import PersonalInfo from './pages/PersonalInformation';
+import EditPersonalInfo from './pages/EditPersonalInfo';
 
 function App() {
   // loading the google maps script
@@ -32,7 +32,7 @@ function App() {
               <Route path="/flight-search" element={<FlightSearch />} />
               <Route path="/maps" element={<MapsPage />}/>
               <Route path="/api-example" element={<ApiExample />}/>
-              <Route path="/personal-info/:userID" element={<PersonalInfo />}/>
+              <Route path="/personal-info/:userID" element={<EditPersonalInfo />}/>
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />

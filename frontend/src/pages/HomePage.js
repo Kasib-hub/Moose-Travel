@@ -6,8 +6,7 @@ function HomePage() {
 
   // let {user, logoutUser, authTokens} = useContext(AuthContext)
   let {user, logoutUser} = useContext(AuthContext)
-  //use rest api get user information - name, address
-  
+    
   return (
     <>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
