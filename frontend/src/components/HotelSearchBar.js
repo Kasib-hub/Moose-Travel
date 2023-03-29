@@ -5,7 +5,7 @@ import AnimatedPage from "./AnimatedPage";
 
 const HotelSearchBar = () => {
 
-    const travel_token = "et4B5bO81s8qKeLHkTHd0Wo5wx8G"
+    const travel_token = "SXMvnz0af6PdbTqfOVf8SofP33QT"
     const [searchedHotels, setSearchedHotels] = useState(null)
     const [hotelOffers, setHotelOffers] = useState(null);
     const [guests, setGuests] = useState(1);
