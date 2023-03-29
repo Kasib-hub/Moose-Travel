@@ -12,6 +12,8 @@ import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
+import SupportEngine from './components/SupportEngine/SupportEngine';
+
 function App() {
 
   // loading the google maps script
@@ -43,6 +45,7 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             
           </Routes>
+          <SupportEngine />
         </AuthProvider>
       </Router>
     </div>

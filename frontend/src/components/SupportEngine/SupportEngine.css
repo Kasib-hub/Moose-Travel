@@ -1,0 +1,18 @@
+
+.cs-message__content {
+  background-color: var(--cream);
+  color: var(--forest);
+}
+
+.cs-typing-indicator {
+  background-color: var(--cream);
+  
+}
+
+.cs-typing-indicator__text {
+  color: var(--forest);
+}
+
+.cs-typing-indicator__dot {
+  background-color: var(--forest);
+}

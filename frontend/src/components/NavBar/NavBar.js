@@ -10,15 +10,18 @@ function NavBar() {
 
   return (
     <div className='navbar'>
-
+      <div>
+        <h2>Moose Travel</h2>
         <Link to='/'>Home</Link>
-        <span> | </span>
         <Link to='/login'>Login</Link>
-        <span> | </span>
         <Link to='/signup'>Signup</Link>
-        <span> | </span>
-        <button onClick={logoutUser}>Logout</button>
-        {user && <p>Hello {user.username} your id is {user.user_id} and your access token is</p>}
+        
+      </div>
+      <div className='user-text'>
+        {user && <p>Welcome {user.username}!</p>}
+      </div>
+      <button onClick={logoutUser}>Logout</button>
+
     </div>
   );
 }
