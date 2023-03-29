@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import { AuthProvider } from './context/AuthContext';
+import NavBar from './components/NavBar/NavBar';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
@@ -28,6 +29,7 @@ function App() {
       <Router>
         <AuthProvider>
           {/* navbar would go here */}
+          <NavBar />
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
