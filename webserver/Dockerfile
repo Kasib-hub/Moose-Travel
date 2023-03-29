@@ -14,10 +14,17 @@ WORKDIR /frontend
 # These two lines will allow us to pass in an environment
 # variable when the image is *built* (not run).  For local
 # development, localhost; for production, your EC2's IP address
-ARG REACT_APP_BASE_URL=localhost
-ENV REACT_APP_BASE_URL=$REACT_APP_BASE_URL
+ARG REACT_APP_BASE_URL
+ARG REACT_APP_MAPS_API_KEY
+ARG REACT_APP_CLIENT_ID
+ARG REACT_APP_CLIENT_SECRET
 
-COPY ./frontend/package.json .
+ENV REACT_APP_BASE_URL=$REACT_APP_BASE_URL
+ENV REACT_APP_MAPS_API_KEY=$REACT_APP_MAPS_API_KEY
+ENV REACT_APP_CLIENT_ID=$REACT_APP_CLIENT_ID 
+ENV REACT_APP_CLIENT_SECRET=$REACT_APP_CLIENT_SECRET 
+
+COPY ./frontend/package*.json .
 RUN npm install
 COPY ./frontend .
 RUN npm run build
