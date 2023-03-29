@@ -24,7 +24,6 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/flight-search" element={<FlightSearch />} />
               <Route path="/maps" element={<MapsPage />}/>
               <Route path="/api-example" element={<ApiExample />}/>
               <Route path="/dashboard" element={<DashBoard />} /> {/* this will likely need to take in id at route  e.g. Route path="/dashboard/:userID"*/}
