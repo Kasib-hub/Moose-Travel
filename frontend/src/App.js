@@ -1,3 +1,4 @@
+
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
@@ -7,24 +8,14 @@ import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import MapsPage from './pages/MapsPage';
-import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
-import { useLoadScript } from '@react-google-maps/api';
+// import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
 import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
 
-  // loading the google maps script
-  const libraries = ['places']
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
-    libraries
-  })
-
-  if (!isLoaded) return <h2>Loading...</h2>
 
   return (
     <div className="App">
@@ -35,7 +26,6 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/flight-search" element={<FlightSearch />} />
               <Route path="/maps" element={<MapsPage />}/>
               <Route path="/api-example" element={<ApiExample />}/>
               <Route path="/dashboard" element={<DashBoard />} /> {/* this will likely need to take in id at route  e.g. Route path="/dashboard/:userID"*/}
@@ -53,3 +43,4 @@ function App() {
 }
 
 export default App;
+
