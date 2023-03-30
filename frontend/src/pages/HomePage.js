@@ -1,16 +1,30 @@
-// import { Link } from 'react-router-dom'
-// import AuthContext from '../context/AuthContext';
-// import { useContext } from 'react';
+import { createItinerary } from "../api/Itinerary/Itinerary";
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
 
-// dummy homepage - we'll have these in a navBar
+
 function HomePage() {
 
-  // let {user, logoutUser, authTokens} = useContext(AuthContext)
+  let {user, authTokens} = useContext(AuthContext)
+
+  const handleClick = async () => {
+    const postedItinerary = await createItinerary(authTokens.access)
+  }
+
+  const postItinerary = async () => {
+    const postedItinerary = await createItinerary(authTokens.access, itineraryObject.itinerary)
+    console.log(postedItinerary)
+  }
 
   return (
-    <>
-      <p>Welcome to the App!</p>
-    </>
+    <div>
+      <h1>Welcome to Moose Travel</h1>
+      <h2>You're Best Travel Partner</h2>
+      <form>
+        <input />
+        <button></button>
+      </form>
+    </div>
   );
 }
 
