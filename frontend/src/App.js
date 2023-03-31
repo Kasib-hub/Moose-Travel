@@ -12,6 +12,7 @@ import ApiExample from './pages/ApiExample';
 // import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
+import ChooseFlight from './pages/ChooseFlight';
 import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
 
 
@@ -25,7 +26,7 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/itinerary/:itineraryID/flights" element={<RentalCarPage />} />
+              <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlight />} />
               <Route path="/maps" element={<MapsPage />} />
               <Route path="/api-example" element={<ApiExample />} />
               <Route path="/dashboard" element={<DashBoard />} />
