@@ -12,11 +12,10 @@ import ApiExample from './pages/ApiExample';
 // import { useLoadScript } from '@react-google-maps/api';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
-import SupportEngine from './components/SupportEngine/SupportEngine';
+import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
+
 
 function App() {
-
-
   return (
     <div className="App">
       <Router>
@@ -26,14 +25,14 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/maps" element={<MapsPage />}/>
-              <Route path="/api-example" element={<ApiExample />}/>
-              <Route path="/dashboard" element={<DashBoard />} /> {/* this will likely need to take in id at route  e.g. Route path="/dashboard/:userID"*/}
+              <Route path="/maps" element={<MapsPage />} />
+              <Route path="/api-example" element={<ApiExample />} />
+              <Route path="/dashboard" element={<DashBoard />} />
               <Route path="/amadeus-example" element={<AmadeusExample />} />
+              <Route path="/rental-car" element={<RentalCarPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            
           </Routes>
           <SupportEngine />
         </AuthProvider>
@@ -43,4 +42,3 @@ function App() {
 }
 
 export default App;
-

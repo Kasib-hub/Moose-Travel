@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import RentalCarForm from '../components/RentalCarForm';
+
+const RentalCarPage = () => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedCar, setSelectedCar] = useState(null);
+
+  const handleSearch = async (searchData) => {
+    const response = await fetch('/api/rental_car_search/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(searchData),
+    });
+
+    const data = await response.json();
+    setSearchResults(data);
+    setSelectedCar(null);
+  };
+
+  const handleCarSelect = (car) => {
+    setSelectedCar(car);
+  };
+
+  const handleRentalSubmit = (rentalData) => {
+    alert(`You have successfully booked ${rentalData.car.make} ${rentalData.car.model} from ${rentalData.pickupDate} to ${rentalData.dropoffDate} at ${rentalData.rentalAgency} for $${rentalData.totalPrice}`);
+    console.log(rentalData);
+  };
+  
+
+  return (
+    <div>
+      <h1>Rental Cars</h1>
+      <RentalCarForm onSearch={handleSearch} />
+      {searchResults.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Rental Agency</th>
+              <th>Daily Rate</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody>
+            {searchResults.map((car) => (
+              <tr key={car.id}>
+                <td>{car.make}</td>
+                <td>{car.model}</td>
+                <td>{car.rental_agency}</td>
+                <td>{car.daily_rate}</td>
+                <td>
+                  <button onClick={() => handleCarSelect(car)}>Select</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      {selectedCar && (
+        <div>
+          <h2>Selected Car: {selectedCar.make} {selectedCar.model}</h2>
+          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RentalCarPage;
