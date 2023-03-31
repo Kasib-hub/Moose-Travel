@@ -25,6 +25,7 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/itinerary/:itineraryID/flights" element={<RentalCarPage />} />
               <Route path="/maps" element={<MapsPage />} />
               <Route path="/api-example" element={<ApiExample />} />
               <Route path="/dashboard" element={<DashBoard />} />
@@ -34,7 +35,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
-          <SupportEngine />
+          {/* <SupportEngine /> */}
         </AuthProvider>
       </Router>
     </div>

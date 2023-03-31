@@ -10,7 +10,6 @@ from .serializers import *
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .sabre import search_rental_cars
 
