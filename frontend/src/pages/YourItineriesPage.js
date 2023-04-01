@@ -21,13 +21,14 @@ function YourItinerariesPage () {
 
   return (
     <div>
-      {userItineraries && console.log(userItineraries)}
       <h1>Your stuff Page</h1>
-      {/* {
+      {
         userItineraries && userItineraries.map((itinerary, idx) => {
-          <ItineraryCard />
+          return (
+            <ItineraryCard key={idx} itinerary_name={itinerary.itinerary_name} summary={itinerary.summary}/>
+          )
         })
-      } */}
+      }
     </div>
     
   )
