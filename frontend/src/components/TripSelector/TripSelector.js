@@ -1,5 +1,5 @@
 import AuthContext from '../../context/AuthContext';
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Airplane from '../../assets/airplane.svg'
 import Car from '../../assets/car.svg'
@@ -13,8 +13,6 @@ function TripSelector({selections, setSelections}) {
   let {user, authTokens} = useContext(AuthContext)
   let {itineraryID} = useParams()
   const navigate = useNavigate()
-
-  // const [selections, setSelections] = useState([])
 
   const handleChange = (e) => {
     // destructuring the value and checked properies of the form of checkboxes

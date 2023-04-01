@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createItinerary } from "../api/Itinerary/Itinerary";
 import AuthContext from '../context/AuthContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -10,7 +10,6 @@ function HomePage() {
 
   let {user, authTokens} = useContext(AuthContext)
 
-  let [itineraryRes, setItineraryRes] = useState()
   const navigate = useNavigate()
 
   // This form POSTS the itinerary
