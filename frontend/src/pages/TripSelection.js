@@ -8,7 +8,7 @@ import FlightSearchSelection from '../components/FlightSearchSelection';
 import TripSelector from '../components/TripSelector/TripSelector';
 
 
-function TripSelection() {
+function TripSelection({selections, setSelections}) {
 
   let {user, authTokens} = useContext(AuthContext)
   let {itineraryID} = useParams()
@@ -19,7 +19,7 @@ function TripSelection() {
   useEffect(() => {
     const itinerary = async (itineraryID) => {
       const grabbedItinerary = await getItineraryByID(authTokens.access, itineraryID)
-      console.log(setItineraryName(grabbedItinerary.itinerary_name))
+      setItineraryName(grabbedItinerary.itinerary_name)
     }
     itinerary(itineraryID)
 
@@ -28,7 +28,7 @@ function TripSelection() {
   return (
     <div>
       <h1>Customize your trip: Name - {itineraryName}</h1>
-      <TripSelector />
+      <TripSelector selections={selections} setSelections={setSelections}/>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FlightSearchSelection from '../components/FlightSearchSelection';
 
 
-function ChooseFlight() {
+function ChooseFlight({selections}) {
 
   let {user, authTokens} = useContext(AuthContext)
   let {itineraryID} = useParams()
@@ -26,6 +26,7 @@ function ChooseFlight() {
 
   return (
     <div>
+      <p>I passed {selections} which are the remaining picks from your choices</p>
       <h1>Choose a flight for {itineraryName}</h1>
       <FlightSearchSelection />
     </div>

@@ -25,10 +25,6 @@ function HomePage() {
     // route to the created page
   }
 
-  // const postItinerary = async () => {
-  //   const postedItinerary = await createItinerary(authTokens.access)
-  //   console.log(postedItinerary)
-  // }
 
   return (
     <div>

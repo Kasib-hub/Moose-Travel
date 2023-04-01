@@ -28,6 +28,7 @@ path {
 .labels {
   display: flex;
   justify-content: space-evenly;
+  color: var(--forest);
 }
 
 button {
