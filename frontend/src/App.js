@@ -11,6 +11,7 @@ import ApiExample from './pages/ApiExample';
 import DashBoard from './pages/DashBoard';
 import AmadeusExample from './pages/AmadeusExample';
 import FlightSearchSelection from './components/FlightSearchSelection.js'
+import HotelSearchBar from './components/HotelSearchBar'
 
 
 
@@ -29,6 +30,7 @@ function App() {
               <Route path="/amadeus-example" element={<AmadeusExample />} />
               {/* <Route path="/rental-car" element={<RentalCarPage />} /> */}
               <Route path="/flight-search-selection" element={<FlightSearchSelection />} />
+              <Route path="/hotel-search-selection" element={<HotelSearchBar />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
