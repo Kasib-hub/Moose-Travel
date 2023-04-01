@@ -12,9 +12,13 @@ function NavBar() {
     <div className='navbar'>
       <div>
         <h2>Moose Travel</h2>
-        <Link to='/'>Home</Link>
-        <Link to='/login'>Login</Link>
-        <Link to='/signup'>Signup</Link>
+        {user && <Link to='/'>New Itinerary</Link>}
+        {user && <Link to='/'>Your Itineraries</Link>}
+        {user && <Link to='/'>Personal Information</Link>}
+
+        {/* conditionally render the login and signup links once logged in */}
+        {!user && <Link to='/login'>Login</Link>}
+        {!user && <Link to='/signup'>Signup</Link>}
         
       </div>
       <div className='user-text'>

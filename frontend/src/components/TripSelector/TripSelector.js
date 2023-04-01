@@ -19,13 +19,14 @@ function TripSelector({selections, setSelections}) {
     : setSelections(selections.filter(element => element !== value)) // filtering out unchecked boxes
   }
 
+  // choose the first element, cleave it, go to next page(route)
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (selections.length === 1) navigate()
     console.log(selections)
     let route = selections[0]
     setSelections(selections.slice(1))
     navigate(route)
-    // choose the first element, cut it off, go to next page
   }
 
   return (
