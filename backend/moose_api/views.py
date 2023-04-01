@@ -54,7 +54,7 @@ def itinerary(request, itinerary_id=None):
             data = Itinerary.objects.get(id=itinerary_id)
             serializer = ItinerarySerializer(data)
         else:
-            itineraries = Itinerary.objects.all()
+            itineraries = Itinerary.objects.filter(user_id=request.user.id)
             serializer = ItinerarySerializer(itineraries, many = True)
         return Response(serializer.data)
     #update 

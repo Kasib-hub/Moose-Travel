@@ -13,7 +13,7 @@ function NavBar() {
       <div>
         <h2>Moose Travel</h2>
         {user && <Link to='/'>New Itinerary</Link>}
-        {user && <Link to='/'>Your Itineraries</Link>}
+        {user && <Link to={`/itinerary/${user.user_id}/your-itineraries`}>Your Itineraries</Link>}
         {user && <Link to='/'>Personal Information</Link>}
 
         {/* conditionally render the login and signup links once logged in */}

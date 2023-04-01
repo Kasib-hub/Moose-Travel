@@ -9,12 +9,14 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import { useState } from 'react';
 // import { useLoadScript } from '@react-google-maps/api';
+import YourItinerariesPage from './pages/YourItineriesPage';
 import TripSelectionPage from './pages/TripSelectionPage';
 import ChooseFlightPage from './pages/ChooseFlightPage';
 import ChooseHotelPage from './pages/ChooseHotelPage'
 import ChooseCarPage from './pages/ChooseCarPage'
 import ChooseActivityPage from './pages/ChooseActivityPage'
 import ChooseRestaurantPage from './pages/ChooseRestaurantPage'
+import RentalCarPage from './pages/RentalCarPage'
 import TripSummaryPage from './pages/TripSummaryPage'
 
 // import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
@@ -34,10 +36,11 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<StartItineraryPage />} />
+              <Route path="/itinerary/:userID/your-itineraries" element={<YourItinerariesPage />} />
               <Route path="/itinerary/:itineraryID/trip-selection" element={<TripSelectionPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlightPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotelPage selections={selections} setSelections={setSelections}/>} />
-              <Route path="/itinerary/:itineraryID/choose-car" element={<ChooseCarPage selections={selections} setSelections={setSelections}/>} />
+              <Route path="/itinerary/:itineraryID/choose-car" element={<RentalCarPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurantPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivityPage selections={selections} setSelections={setSelections}/>} />
               {/* This needs the tripsummary object likely from state */}
