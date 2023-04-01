@@ -1,6 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import Avatar from './Avatar';
 import SupportWindow from "./SupportWindow/SupportWindow";
+import './SupportEngine.css'
 
 const SupportEngine = () => {
 

@@ -29,7 +29,7 @@ class Flight(models.Model):
     departure = models.CharField(max_length=250)
     destination = models.CharField(max_length=250)
     arrival_date = models.DateField(auto_now=False, auto_now_add=False) 
-    departure_date = models.DateField(auto_now=False, auto_now_add=False) 
+    departure_date = models.DateField(auto_now=False, auto_now_add=False, null=True) 
 
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.departure} - {self.destination}"
@@ -59,5 +59,7 @@ class Sight(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
     sight_name = models.CharField(max_length=250)
+    lat = models.CharField(max_length=20)
+    long = models.CharField(max_length=20)
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.sight_name}"

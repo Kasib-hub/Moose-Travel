@@ -1,4 +1,3 @@
-
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const getAllItineraries = async (token) => {
@@ -48,7 +47,10 @@ const createItinerary = async (token, data) => {
   const body = await res.json()
   if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
   else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
-  else {return body}
+  else {
+    alert("Itinerary Created")
+    return body
+  }
 }
 
 const editItinerary = async (token, data, itineraryID) => {  
