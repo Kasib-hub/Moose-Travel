@@ -9,6 +9,11 @@ class SignupSerializer(ModelSerializer):
         model = User
         fields = ["username", "password", "email"]
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password','email']
+
 class ItinerarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Itinerary

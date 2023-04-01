@@ -7,6 +7,12 @@ import NavBar from './components/NavBar/NavBar';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+
+import MapsPage from './pages/MapsPage';
+import ApiExample from './pages/ApiExample';
+// import { useLoadScript } from '@react-google-maps/api';
+import EditPersonalInfo from './pages/EditPersonalInfo';
+
 import { useState } from 'react';
 // import { useLoadScript } from '@react-google-maps/api';
 import TripSelection from './pages/TripSelection';
@@ -16,10 +22,13 @@ import ChooseCar from './pages/ChooseCar'
 import ChooseActivity from './pages/ChooseActivity'
 import ChooseRestaurant from './pages/ChooseRestaurant'
 
-// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
-
-
 function App() {
+  // loading the google maps script
+  // const libraries = ['places']
+
+
+
+// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
 
   // the selections user makes on what forms they want to see when building their trip
   const [selections, setSelections] = useState([])
@@ -28,6 +37,15 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
+
+          <Routes>
+              <Route element={<PrivateRoutes />} />
+              <Route path="/" element={<HomePage />} />
+              {/* <Route path="/flight-search" element={<FlightSearch />} /> */}
+              <Route path="/maps" element={<MapsPage />}/>
+              <Route path="/api-example" element={<ApiExample />}/>
+              <Route path="/personal-info/:userID" element={<EditPersonalInfo />}/>
+          </Routes>
           {/* navbar would go here */}
           <NavBar />
           <Routes>
@@ -39,6 +57,7 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-car" element={<ChooseCar />} />
               <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurant />} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivity />} />
+
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />

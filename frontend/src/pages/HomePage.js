@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
 
+  // let {user, logoutUser, authTokens} = useContext(AuthContext)
+
   let {user, authTokens} = useContext(AuthContext)
 
   const navigate = useNavigate()
@@ -43,3 +45,5 @@ function HomePage() {
 }
 
 export default HomePage;
+
+

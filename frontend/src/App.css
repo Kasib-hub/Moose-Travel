@@ -185,13 +185,13 @@
   box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
 }
 
-.dashboard-title{
+/* .dashboard-title{
   position: absolute;
   color:white;
   margin-bottom: 1rem;
   margin-top: 1rem;
   font-family: 'Courier New', Courier, monospace;
-}
+} */
 
 .card{
   opacity: 0.8;

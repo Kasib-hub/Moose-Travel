@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { useContext } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import AuthContext from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 function LoginPage() {
   let {loginUser} = useContext(AuthContext)
@@ -37,6 +38,7 @@ function LoginPage() {
         Login
       </Button>
     </Form>
+    <p>Doesn't have an account with us? <Link to={'/signup'}>Signup</Link> now!</p>
     </>
   );
 }
