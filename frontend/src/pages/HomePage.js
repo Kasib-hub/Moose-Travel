@@ -9,26 +9,7 @@ function HomePage() {
     
   return (
     <>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <Link class="navbar-brand" to={'/signin'}>Moose Travel</Link>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <Link class="nav-link" to={`/personal-info/${user.user_id}`}>Your Profile</Link>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Itineraries</a>
-              </li>
-              <li class="nav-text">
-                <p>Welcome {user.username}</p>
-              </li>
-            </ul>
-            <button onClick={logoutUser}>Logout</button>
-          </div>
-        </nav>
+    
       <div className='dashboard'>  
         <div class="card card1">
             {/* <img src="..." class="card-img-top" alt="Mooose Smile Face pic"/> */}
