@@ -1,16 +1,14 @@
 import moment from 'moment';
-import { useState, useEffect } from 'react';
-import Moment from 'react-moment';
-import { useNavigate } from 'react-router';
-
+import { useState, useEffect, useContext } from 'react';
+import Card from 'react-bootstrap/Card';
+import AuthContext from '../context/AuthContext';
 
 function DirectFlightSearchBar() {
+    let {amadeusToken} = useContext(AuthContext)
+    const [searchedFlights, setSearchedFlights] = useState(null)
+    let flightOffers = []
 
-    const navigate = useNavigate();
-
-    const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
-    const SECRET_KEY = "G9eTXhzEmSjKNTLu"
-    const travel_token = "RN565RbHaOBqp8GPNTonCFXWA3AG"
+    useEffect(() => { }, [searchedFlights]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,21 +18,30 @@ function DirectFlightSearchBar() {
         const departureDate = e.target.elements.departureDate.value;
         const guests = e.target.elements.guests.value;
       
-        const apiKey = travel_token;
-      
-        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
-          headers: {
-            Authorization: `Bearer ${travel_token}`,
-          },
-        });
-      
-        const data = await response.json();
-        console.log(data);
-      };
+        fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${amadeusToken}`,
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            flightOffers= data["data"]
+            console.log("Data:")
+            console.log(flightOffers)
+            flightOffers = flightOffers.map((flight) => ({
+                origin: origin,
+                destination: destination,
+                price: flight["price"]["grandTotal"],
+          }))
+          setSearchedFlights(flightOffers)
+        })
+    }
 
-    // Add to onSubmit when the API fetch works: navigate("/hotel-question")
+    //navigate("/hotel-question")
 
     return (
+        <div>
         <div className="search-div">
 
                 <form className="search-form" onSubmit={handleSubmit}>
@@ -69,7 +76,16 @@ function DirectFlightSearchBar() {
                     </div>
 
                 </form>
-
+            </div>
+            {searchedFlights && searchedFlights.map((flight, index) => (
+                <div>
+                    <Card key={index}>
+                        <div>Origin: {flight.origin}</div>
+                        <div>Destination: {flight.destination}</div>
+                        <div>Price: {flight.price}</div>
+                    </Card>
+                </div>
+                ))}
         </div>
     );
 }

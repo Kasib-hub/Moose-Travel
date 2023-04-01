@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router';
+import React, { useState, useEffect } from "react";
 
 
 const MultiFlightSearchBar = () => {
 
-  const API_KEY = "HSiSxHpuKA14AG9GKbQgC6cexT9mfaC9"
-  const SECRET_KEY = "G9eTXhzEmSjKNTLu"
-  const travel_token = "ZvHeGhGOz2EGG1V8U9NMkEUDGEWz"  
-
-  const navigate = useNavigate();
-
+  const travel_token = "v4zuAGjtGoQGHBzmv7S67R1IKyoG"  
+  const [returnedFlightList, setReturnedFlightList] = useState(null);
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);
-  const [newFlights, setNewFlights] = useState([]);
+
+  useEffect(() => { 
+    console.log("Returned Flights:");
+    console.log(returnedFlightList);
+  }, [returnedFlightList]);
+
+  
 
   const convertFlights = (flights) =>
     flights.map((flight) => ({
@@ -37,114 +38,129 @@ const MultiFlightSearchBar = () => {
   };
 
   const handleFlightChange = (id, field, value) => {
-    console.log(value)
     const updatedFlights = [...flights];
     const index = updatedFlights.findIndex((flight) => flight.id === id);
     updatedFlights[index][field] = value;
     setFlights(updatedFlights);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    // Make an API request using the newFlights data
+
+   // Make an API request using the newFlights data
     //multi-trip search (The API lets you search for up to six origin and destination city pairs)
     const findMultiFlight = async() => {
-      const newFlights = convertFlights(flights);
-      console.log("newFlights")
-      console.log(newFlights)
-      fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
-          method: `POST`,
-          headers: {
-              'Authorization': `Bearer ${travel_token}`,
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              "originDestinations": newFlights,
-              "travelers": [
-                  {
-                      "id": "1",
-                      "travelerType": "ADULT",
-                      "fareOptions": [
-                          "STANDARD"
-                      ]
-                  }
-              ],
-              "sources": [
-                  "GDS"
-              ],
-              "searchCriteria": {
-                  "maxFlightOffers": 10
-              }
-          })
-          
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log(data);
+        const newFlights = convertFlights(flights);
+        fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
+            method: `POST`,
+            headers: {
+                'Authorization': `Bearer ${travel_token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "originDestinations": newFlights,
+                "travelers": [
+                    {
+                        "id": "1",
+                        "travelerType": "ADULT",
+                        "fareOptions": [
+                            "STANDARD"
+                        ]
+                    }
+                ],
+                "sources": [
+                    "GDS"
+                ],
+                "searchCriteria": {
+                    "maxFlightOffers": 10
+                }
+            })
+            
         })
-      .catch(error => console.error(error));
+        .then(response => response.json())
+        .then(data => {
+            setReturnedFlightList(data["data"]);
+          })
+        .catch(error => console.error(error));
     }  
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   
     // Call findMultiFlight to send the API request
     findMultiFlight();
   };
   
-  console.log("Flights:")
-  console.log(flights)
 
   return (
-    <div class="search-div">
-        <form onSubmit={handleSubmit}>
+    <div>
+        <div className="search-div">
+            <form onSubmit={handleSubmit}>
 
-        {flights.map((flight) => (
+            {flights.map((flight) => (
 
-            <div key={flight.id} className="search-form">
- 
-                    <div class="search-input">
-                        <label style={{color: 'white', fontSize: '1.3rem'}}>From:</label>
-                        <input
-                            type="text"
-                            value={flight.from}
-                            onChange={(event) =>
-                            handleFlightChange(flight.id, "from", event.target.value)
-                            }
-                        />
-                    </div>
+                <div key={flight.id} className="search-form">
+    
+                        <div className="search-input">
+                            <label style={{color: 'white', fontSize: '1.3rem'}}>From:</label>
+                            <input
+                                type="text"
+                                value={flight.from}
+                                onChange={(event) =>
+                                handleFlightChange(flight.id, "from", event.target.value)
+                                }
+                            />
+                        </div>
 
-                    <div class="search-input">
-                        <label style={{color: 'white', fontSize: '1.3rem'}}>To:</label>
-                        <input
-                            type="text"
-                            value={flight.to}
-                            onChange={(event) =>
-                            handleFlightChange(flight.id, "to", event.target.value)
-                            }
-                        />
-                    </div>
+                        <div className="search-input">
+                            <label style={{color: 'white', fontSize: '1.3rem'}}>To:</label>
+                            <input
+                                type="text"
+                                value={flight.to}
+                                onChange={(event) =>
+                                handleFlightChange(flight.id, "to", event.target.value)
+                                }
+                            />
+                        </div>
 
-                    <div class="search-input">
-                        <label style={{color: 'white', fontSize: '1.3rem'}}>Departure Date:</label>
-                        <input
-                            type="date"
-                            value={flight.departureDate}
-                            onChange={(event) =>
-                            handleFlightChange(flight.id, "departureDate", event.target.value)
-                            }
-                        />
-                    </div>
+                        <div className="search-input">
+                            <label style={{color: 'white', fontSize: '1.3rem'}}>Departure Date:</label>
+                            <input
+                                type="date"
+                                value={flight.departureDate}
+                                onChange={(event) =>
+                                handleFlightChange(flight.id, "departureDate", event.target.value)
+                                }
+                            />
+                        </div>
 
-                    <button type="button" onClick={() => handleDeleteFlight(flight.id)} className="deleteButton">
-                        Delete Flight
-                    </button>
-                    
+                        <button type="button" onClick={() => handleDeleteFlight(flight.id)} className="deleteButton">
+                            Delete Flight
+                        </button>
+                        
+                </div>
+            ))}
+            <button type="button" onClick={handleAddFlight} className="add-search">
+                Add Flight
+            </button>
+            <button type="submit" className="hotel-search">Search</button>
+            </form>
+        </div>
+        {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
+            <div key={index}>
+                {flightGroup["itineraries"].map((itenereary, index) => (
+                    itenereary["segments"].map((segment, index) => (
+                        <div key={index}>
+                            <b>Departure</b>
+                            <p>{segment["departure"]["iataCode"]}</p>
+                            <b>Arrival</b>
+                            <p>{segment["arrival"]["iataCode"]}</p>
+                        </div>
+                    ))
+                ))}
+                <b>{flightGroup["price"]["grandTotal"]}</b>
+                <p>---------------------------</p>
             </div>
         ))}
-        <button type="button" onClick={handleAddFlight} className="add-search">
-            Add Flight
-        </button>
-        <button type="submit" className="hotel-search">Search</button>
-        </form>
     </div>
   );
 };

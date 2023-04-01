@@ -11,10 +11,13 @@
 ##############################
 
 BASE_URL=$1
-NEW_VERSION=$2
+MAPS_API_KEY=$2
+CLIENT_ID=$3
+CLIENT_SECRET=$4
+NEW_VERSION=$5
 
-docker buildx build --platform linux/amd64 --build-arg REACT_APP_BASE_URL=$BASE_URL -t kasibhub/webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
-docker push kasibhub/webserver-prod:$NEW_VERSION
+docker buildx build --platform linux/amd64 --build-arg REACT_APP_BASE_URL=$BASE_URL --build-arg REACT_APP_MAPS_API_KEY=$MAPS_API_KEY --build-arg REACT_APP_CLIENT_ID=$CLIENT_ID --build-arg REACT_APP_CLIENT_SECRET=$CLIENT_SECRET -t kasibhub/moose-webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
+docker push kasibhub/moose-webserver-prod:$NEW_VERSION
 
-docker buildx build --platform linux/amd64  -t kasibhub/backend-prod:$NEW_VERSION -f backend/Dockerfile ./backend --no-cache
-docker push kasibhub/backend-prod:$NEW_VERSION
+docker buildx build --platform linux/amd64  -t kasibhub/moose-backend-prod:$NEW_VERSION -f backend/Dockerfile ./backend --no-cache
+docker push kasibhub/moose-backend-prod:$NEW_VERSION
