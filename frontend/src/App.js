@@ -41,7 +41,7 @@ function App() {
           <Routes>
               <Route element={<PrivateRoutes />} />
               <Route path="/" element={<HomePage />} />
-              <Route path="/flight-search" element={<FlightSearch />} />
+              {/* <Route path="/flight-search" element={<FlightSearch />} /> */}
               <Route path="/maps" element={<MapsPage />}/>
               <Route path="/api-example" element={<ApiExample />}/>
               <Route path="/personal-info/:userID" element={<EditPersonalInfo />}/>
