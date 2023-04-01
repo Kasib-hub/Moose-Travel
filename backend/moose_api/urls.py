@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 from .views import MyTokenObtainPairView
 from .views import *
-#from the simpleJWT authentication
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
