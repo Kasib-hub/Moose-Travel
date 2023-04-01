@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DirectFlightSearchBar from "./DirectFlightSearchBar";
 import RoundTripSearchBar from "./RoundTripSearchBar";
 import MultiFlightSearchBar from "./MultiFlightSearchBar";
-import AnimatedPage from "./AnimatedPage";
 
 const FlightSearchSelection = ({ onSubmit }, props) => {
   const [selectedOption, setSelectedOption] = useState(null);

@@ -1,17 +1,12 @@
 import moment from 'moment';
 import { useState, useEffect, useContext } from 'react';
-import Moment from 'react-moment';
-import { useNavigate } from 'react-router';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 
 function DirectFlightSearchBar() {
     let {amadeusToken} = useContext(AuthContext)
-    const navigate = useNavigate();
     const [searchedFlights, setSearchedFlights] = useState(null)
     let flightOffers = []
-
-    const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
 
     useEffect(() => { }, [searchedFlights]);
 
@@ -22,8 +17,6 @@ function DirectFlightSearchBar() {
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
         const guests = e.target.elements.guests.value;
-      
-        const apiKey = travel_token;
       
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
             method: 'GET',

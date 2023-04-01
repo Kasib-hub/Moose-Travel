@@ -6,7 +6,7 @@ import { useContext } from 'react';
 // dummy NavBar - we'll have these in a navBar
 function NavBar() {
 
-  let {user, logoutUser, authTokens} = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
 
   return (
     <div className='navbar'>
