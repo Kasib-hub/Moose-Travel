@@ -3,14 +3,23 @@ import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useNavigate } from 'react-router';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
+import { createFlight } from '../api/Flight/Flight';
+
+
 
 function DirectFlightSearchBar() {
+
+    let { amadeusToken } = useContext(AuthContext)
+    let { user, authTokens } = useContext(AuthContext)
+    //authTokens.access to be passed into create flight
 
     const navigate = useNavigate();
     const [searchedFlights, setSearchedFlights] = useState(null)
     let flightOffers = []
 
-    const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
+    const travel_token = "AefY2m4gLwFY9fZtmBIEbPoR3ny5"
 
     useEffect(() => { }, [searchedFlights]);
 
@@ -27,7 +36,7 @@ function DirectFlightSearchBar() {
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${travel_token}`,
+                "Authorization": `Bearer ${amadeusToken}`,
             }
         })
         .then(response => response.json())
@@ -39,9 +48,24 @@ function DirectFlightSearchBar() {
                 origin: origin,
                 destination: destination,
                 price: flight["price"]["grandTotal"],
+                departureDate: departureDate,
           }))
           setSearchedFlights(flightOffers)
         })
+    }
+
+    const flightToSubmit = (origin, destination, price, departureDate) => {
+       let flightData =  {
+        "departure_date": departureDate,
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "flight_type": "Direct",
+        "departure": origin,
+        "destination": destination,
+        "price" : price,
+        }
+
+        return flightData;
     }
 
     //navigate("/hotel-question")
@@ -85,7 +109,7 @@ function DirectFlightSearchBar() {
             </div>
             {searchedFlights && searchedFlights.map((flight, index) => (
                 <div>
-                    <Card key={index}>
+                    <Card key={index} onClick={() => createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate), 1)}>
                         <div>Origin: {flight.origin}</div>
                         <div>Destination: {flight.destination}</div>
                         <div>Price: {flight.price}</div>

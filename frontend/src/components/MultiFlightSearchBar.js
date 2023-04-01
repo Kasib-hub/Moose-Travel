@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
+import { createFlight } from '../api/Flight/Flight';
 
 
 const MultiFlightSearchBar = () => {
 
+    let { amadeusToken } = useContext(AuthContext)
+    let { user, authTokens } = useContext(AuthContext)
+
+
+  const [listOfIteneraries, setListOfIteneraries] = useState([])
   const travel_token = "v4zuAGjtGoQGHBzmv7S67R1IKyoG"  
   const [returnedFlightList, setReturnedFlightList] = useState(null);
   const navigate = useNavigate();
@@ -54,7 +62,7 @@ const MultiFlightSearchBar = () => {
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
             method: `POST`,
             headers: {
-                'Authorization': `Bearer ${travel_token}`,
+                'Authorization': `Bearer ${amadeusToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -149,7 +157,7 @@ const MultiFlightSearchBar = () => {
         </div>
         {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
             <div key={index}>
-                {flightGroup["itineraries"].map((itenereary, index) => (
+                {flightGroup["itineraries"].map((itenereary, index) => ( 
                     itenereary["segments"].map((segment, index) => (
                         <div key={index}>
                             <b>Departure</b>

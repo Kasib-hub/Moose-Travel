@@ -28,8 +28,9 @@ class Flight(models.Model):
     flight_type = models.CharField(max_length=250) 
     departure = models.CharField(max_length=250)
     destination = models.CharField(max_length=250)
-    arrival_date = models.DateField(auto_now=False, auto_now_add=False) 
-    departure_date = models.DateField(auto_now=False, auto_now_add=False) 
+    price = models.CharField(max_length=250, null=True)
+    return_date = models.DateField(auto_now=False, auto_now_add=False, null=True) 
+    departure_date = models.DateField(auto_now=False, auto_now_add=False, null=True) 
 
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.departure} - {self.destination}"

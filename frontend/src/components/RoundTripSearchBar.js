@@ -3,10 +3,15 @@ import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useNavigate } from 'react-router';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
+import { createFlight } from '../api/Flight/Flight';
 
 
 function RoundTripSearchBar() {
 
+    let { amadeusToken } = useContext(AuthContext)
+    let { user, authTokens } = useContext(AuthContext)
     const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
     const navigate = useNavigate();
     const [searchedFlights, setSearchedFlights] = useState(null)
@@ -40,7 +45,7 @@ function RoundTripSearchBar() {
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${guests}&max=15`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${travel_token}`,
+                Authorization: `Bearer ${amadeusToken}`,
             }
         })
         .then(response => response.json())
@@ -52,11 +57,27 @@ function RoundTripSearchBar() {
                 origin: origin,
                 destination: destination,
                 price: flight["price"]["grandTotal"],
+                departureDate: departureDate,
+                returnDate: returnDate,
           }))
           setSearchedFlights(flightOffers)
         })
     }
 
+    const flightToSubmit = (origin, destination, price, departureDate, returnDate) => {
+        let flightData =  {
+         "departure_date": departureDate,
+         "itinerary_id": 1,
+         "user_id": user.user_id,
+         "flight_type": "Direct",
+         "departure": origin,
+         "destination": destination,
+         "price" : price,
+         "return_date": returnDate,
+         }
+ 
+         return flightData;
+     }
 
     return (
         <div>
@@ -103,12 +124,11 @@ function RoundTripSearchBar() {
 
             {searchedFlights && searchedFlights.map((flight, index) => (
                 <div>
-                    <Card key={index}>
+                    <Card key={index} onClick={() => createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate, flight.returnDate), 1)}>
                         <div>Origin: {flight.origin}</div>
                         <div>Destination: {flight.destination}</div>
                         <div>Price: {flight.price}</div>
                     </Card>
-                    <button>Select</button>
                 </div>
                 ))}
 
