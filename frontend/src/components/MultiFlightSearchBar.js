@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router';
 
 
 const MultiFlightSearchBar = () => {
 
   const travel_token = "v4zuAGjtGoQGHBzmv7S67R1IKyoG"  
   const [returnedFlightList, setReturnedFlightList] = useState(null);
-  const navigate = useNavigate();
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);

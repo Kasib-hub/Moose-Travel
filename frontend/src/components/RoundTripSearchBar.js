@@ -1,14 +1,13 @@
 import moment from 'moment';
-import { useState, useEffect } from 'react';
-import Moment from 'react-moment';
-import { useNavigate } from 'react-router';
+import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../context/AuthContext';
 
 
 function RoundTripSearchBar() {
 
-    const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
-    const navigate = useNavigate();
+    let {authTokens} = useContext(AuthContext)
+
     const [searchedFlights, setSearchedFlights] = useState(null)
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
     let flightOffers = []
@@ -34,13 +33,11 @@ function RoundTripSearchBar() {
         const departureDate = e.target.elements.departureDate.value;
         const returnDate = e.target.elements.returnDate.value;
         const guests = e.target.elements.guests.value;
-      
-        const apiKey = travel_token;
 
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${guests}&max=15`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${travel_token}`,
+                Authorization: `Bearer ${authTokens.access}`,
             }
         })
         .then(response => response.json())
