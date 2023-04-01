@@ -9,7 +9,6 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 
 import MapsPage from './pages/MapsPage';
-import FlightSearch from './components/FlightSearch/FlightSearch';
 import ApiExample from './pages/ApiExample';
 import { useLoadScript } from '@react-google-maps/api';
 import EditPersonalInfo from './pages/EditPersonalInfo';
