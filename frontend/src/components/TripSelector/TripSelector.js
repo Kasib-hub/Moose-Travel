@@ -26,32 +26,49 @@ function TripSelector() {
 
   return (
     <form>
-      <div className='trip-checkbox'>
-        <label>Airplane</label>
-        <button className='trip-btn'><img src={Airplane} alt="Trash Icon" /></button>
-        <input type="checkbox"/>
-      </div>
-      <div className='trip-checkbox'>
-        <label>Airplane</label>
-        <img src={Hotel} alt="Trash Icon" />
-        <input type="checkbox"/>
-      </div>
-      <div className='trip-checkbox'>
-        <label>Airplane</label>
-        <img src={Airplane} alt="Trash Icon" />
-        <input type="checkbox"/>
-      </div>
-      <div className='trip-checkbox'>
-        <label>Airplane</label>
-        <img src={Airplane} alt="Trash Icon" />
-        <input type="checkbox"/>
-      </div>
-      <div className='trip-checkbox'>
-        <label>Airplane</label>
-        <img src={Airplane} alt="Trash Icon" />
-        <input type="checkbox"/>
-      </div>
+      <div className='trip-selector-form'>
+        <div className='trip-checkbox'>
+          <button className='trip-btn'><img src={Airplane} alt="Trash Icon" /></button>
+          <div className='labels'>
+            <input type="checkbox"/>
+            <label>Airplane</label>     
+          </div>
+        </div>
 
+        <div className='trip-checkbox'>
+          <img src={Hotel} alt="Trash Icon" />
+          <div className='labels'>
+            <input type="checkbox"/>
+            <label>Hotel</label> 
+          </div>
+        </div>
+
+        <div className='trip-checkbox'>
+          
+          <img src={Car} alt="Trash Icon" />
+          <div className='labels'>
+            <input type="checkbox"/>
+            <label>Rental Car</label>
+          </div>
+        </div>
+
+        <div className='trip-checkbox'>
+          <img src={Restaurant} alt="Trash Icon" />
+          <div className='labels'>
+            <input type="checkbox"/>
+            <label>Restaurants</label>
+          </div>
+        </div>
+
+        <div className='trip-checkbox'>
+          <img src={Sight} alt="Trash Icon" />
+          <div className='labels'>
+            <input type="checkbox"/>
+            <label>Activites</label>
+          </div>
+        </div>
+      </div>
+      <button className='submit-btn' type='submit'>Start</button>
     </form>
   );
 }

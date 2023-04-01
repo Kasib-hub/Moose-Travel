@@ -10,3 +10,26 @@
 path {
   stroke:coral
 }
+
+.trip-selector-form {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+}
+
+.trip-checkbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button {
+  margin-top: 1rem;
+}
