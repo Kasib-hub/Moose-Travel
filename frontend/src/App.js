@@ -10,7 +10,7 @@ import LoginPage from './pages/LoginPage';
 
 import MapsPage from './pages/MapsPage';
 import ApiExample from './pages/ApiExample';
-import { useLoadScript } from '@react-google-maps/api';
+// import { useLoadScript } from '@react-google-maps/api';
 import EditPersonalInfo from './pages/EditPersonalInfo';
 
 import { useState } from 'react';
@@ -24,7 +24,7 @@ import ChooseRestaurant from './pages/ChooseRestaurant'
 
 function App() {
   // loading the google maps script
-  const libraries = ['places']
+  // const libraries = ['places']
 
 
 

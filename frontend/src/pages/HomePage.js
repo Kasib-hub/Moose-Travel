@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
 
-
   // let {user, logoutUser, authTokens} = useContext(AuthContext)
 
   let {user, authTokens} = useContext(AuthContext)
@@ -48,10 +47,3 @@ function HomePage() {
 export default HomePage;
 
 
-{/* <Link to='/'>Home</Link> */}
-        {/* <span> | </span> */}
-        {/* <Link to='/login'>Login</Link> */}
-        {/* <span> | </span>
-        <Link to='/signup'>Signup</Link>
-        <span> | </span>
-        <button onClick={logoutUser}>Logout</button> */}
