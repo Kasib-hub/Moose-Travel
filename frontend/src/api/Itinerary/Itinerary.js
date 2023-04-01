@@ -1,4 +1,3 @@
-import {useHistory} from 'react-router-dom'
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const getAllItineraries = async (token) => {
