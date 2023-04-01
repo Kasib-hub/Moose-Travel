@@ -1,0 +1,12 @@
+.trip-btn {
+  background-color: var(--celery);
+  border: none;
+}
+
+.trip-btn:hover {
+  background-color: white;
+}
+
+path {
+  stroke:coral
+}

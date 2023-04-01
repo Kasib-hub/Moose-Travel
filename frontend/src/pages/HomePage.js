@@ -21,7 +21,7 @@ function HomePage() {
       "user_id": user.user_id
     }
     const postedItinerary = await createItinerary(authTokens.access, data)
-    postedItinerary && navigate(`/itinerary/${postedItinerary.id}/choose-flight`)
+    postedItinerary && navigate(`/itinerary/${postedItinerary.id}/trip-selection`)
     // route to the created page
   }
 
