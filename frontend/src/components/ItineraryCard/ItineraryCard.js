@@ -1,8 +1,11 @@
-
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 
 // takes in properties of a itinerary from get request to the backend
-function ItineraryCard ({itinerary_name, summary}) {
+function ItineraryCard ({id, itinerary_name, summary}) {
+
+  let navigate = useNavigate()
 
   return (
       <Card>
@@ -11,7 +14,8 @@ function ItineraryCard ({itinerary_name, summary}) {
           <Card.Text>
             {summary ? summary : "No Summary Created"}
           </Card.Text>
-          <button className='submit-btn'>Details</button>
+          {/* navigate to a detail page of the summary */}
+          <Link to={`/itinerary/${id}/trip-summary`}><button className='submit-btn'>Details</button></Link>
         </Card.Body>
       </Card>
     
