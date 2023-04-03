@@ -7,12 +7,8 @@ import NavBar from './components/NavBar/NavBar';
 import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
-
-import MapsPage from './pages/MapsPage';
-import ApiExample from './pages/ApiExample';
 // import { useLoadScript } from '@react-google-maps/api';
-import EditPersonalInfo from './pages/EditPersonalInfo';
-
+// import EditPersonalInfo from './pages/EditPersonalInfo';
 import { useState } from 'react';
 // import { useLoadScript } from '@react-google-maps/api';
 import YourItinerariesPage from './pages/YourItineriesPage';

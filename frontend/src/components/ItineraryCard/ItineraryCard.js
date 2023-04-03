@@ -5,8 +5,6 @@ import Card from 'react-bootstrap/Card';
 // takes in properties of a itinerary from get request to the backend
 function ItineraryCard ({id, itinerary_name, summary}) {
 
-  let navigate = useNavigate()
-
   return (
       <Card>
         <Card.Body>

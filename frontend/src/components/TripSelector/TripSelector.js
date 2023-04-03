@@ -22,7 +22,7 @@ function TripSelector({selections, setSelections}) {
 
   useEffect(() => {
     setSelections([])
-  }, [])
+  }, [setSelections])
 
   // choose the first element, cleave it, go to next page(route)
   const handleSubmit = (e) => {

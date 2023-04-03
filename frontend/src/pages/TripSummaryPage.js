@@ -34,7 +34,7 @@ function TripSummaryPage () {
      setItinerary(fetchedItinerary)
     }
     fetchItinerary()
- }, [])
+ }, [authTokens.access, itineraryID])
 
   useEffect(() => {
      const fetchFlights = async () => {
@@ -42,7 +42,7 @@ function TripSummaryPage () {
       setFlights(fetchedFlights)
      }
      fetchFlights()
-  }, [])
+  }, [authTokens.access, itineraryID])
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -50,7 +50,7 @@ function TripSummaryPage () {
      setHotels(fetchedHotels)
     }
     fetchHotels()
- }, [])
+ }, [authTokens.access, itineraryID])
 
   useEffect(() => {
     const fetchRentals = async () => {
@@ -58,7 +58,7 @@ function TripSummaryPage () {
      setRentals(fetchedRentals)
     }
     fetchRentals()
-  }, [])
+  }, [authTokens.access, itineraryID])
 
   useEffect(() => {
     const fetchAffinities = async () => {
@@ -66,7 +66,7 @@ function TripSummaryPage () {
      setAffinities(fetchedAffinities)
     }
     fetchAffinities()
-  }, [])
+  }, [authTokens.access, itineraryID])
 
   useEffect(() => {
     const fetchSights = async () => {
@@ -74,7 +74,7 @@ function TripSummaryPage () {
      setSights(fetchedSights)
     }
     fetchSights()
-  }, [])
+  }, [authTokens.access, itineraryID])
 
   
 
