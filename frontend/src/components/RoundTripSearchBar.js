@@ -6,12 +6,11 @@ import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
 
 
-function RoundTripSearchBar({ChangeRoute}) {
+function RoundTripSearchBar() {
 
     let { amadeusToken } = useContext(AuthContext)
     let { user, authTokens } = useContext(AuthContext)
-    const travel_token = "6KXp6oaqI0gvTGmUk50v3a9KLdGX"
-    const navigate = useNavigate();
+
     const [searchedFlights, setSearchedFlights] = useState(null)
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
     let flightOffers = []

@@ -13,7 +13,6 @@ function DirectFlightSearchBar() {
     let { user, authTokens } = useContext(AuthContext)
     //authTokens.access to be passed into create flight
 
-    const navigate = useNavigate();
     const [searchedFlights, setSearchedFlights] = useState(null)
     let flightOffers = []
 
@@ -44,7 +43,6 @@ function DirectFlightSearchBar() {
                 departureDate: departureDate,
           }))
           setSearchedFlights(flightOffers)
-          ChangeRoute()
         })
     }
 
