@@ -206,5 +206,3 @@ const HotelSearchBar = () => {
 };
 
 export default HotelSearchBar;
-
-//fetch(`https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=HYATLJ12%2CYZATLB21&adults=1&checkInDate=2023-04-22&bestRateOnly=true`, {
