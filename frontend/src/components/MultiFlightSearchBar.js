@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
+
 
 
 const MultiFlightSearchBar = () => {
@@ -11,7 +11,6 @@ const MultiFlightSearchBar = () => {
     let { user, authTokens } = useContext(AuthContext)
 
   const [returnedFlightList, setReturnedFlightList] = useState(null);
-  const navigate = useNavigate();
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);

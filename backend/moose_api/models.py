@@ -13,7 +13,7 @@ class Itinerary(models.Model):
 
 class Hotel(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='hotels')
     hotel_name = models.CharField(max_length=250)
     location = models.CharField(max_length=250) 
     check_in_date = models.DateField(auto_now=False, auto_now_add=False) 
@@ -24,7 +24,7 @@ class Hotel(models.Model):
 
 class Flight(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='flights')
     flight_type = models.CharField(max_length=250) 
     departure = models.CharField(max_length=250)
     destination = models.CharField(max_length=250)
@@ -38,7 +38,7 @@ class Flight(models.Model):
 
 class Rental(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='rentals')
     rental_company = models.CharField(max_length=250, default='')
     pick_up_location = models.CharField(max_length=250)
     return_location = models.CharField(max_length=250)
@@ -50,7 +50,7 @@ class Rental(models.Model):
 
 class Affinity(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='affinities')
     affinity_type = models.CharField(max_length=250)
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.affinity_type}"
@@ -58,7 +58,9 @@ class Affinity(models.Model):
 
 class Sight(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='sights')
     sight_name = models.CharField(max_length=250)
+    lat = models.CharField(max_length=20)
+    long = models.CharField(max_length=20)
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.sight_name}"

@@ -1,7 +1,5 @@
 import moment from 'moment';
-import { useState, useEffect } from 'react';
-import Moment from 'react-moment';
-import { useNavigate } from 'react-router';
+import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
@@ -19,19 +17,14 @@ function DirectFlightSearchBar() {
     const [searchedFlights, setSearchedFlights] = useState(null)
     let flightOffers = []
 
-    const travel_token = "AefY2m4gLwFY9fZtmBIEbPoR3ny5"
-
     useEffect(() => { }, [searchedFlights]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
         const origin = e.target.elements.origin.value;
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
         const guests = e.target.elements.guests.value;
-      
-        const apiKey = travel_token;
       
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
             method: 'GET',
@@ -44,13 +37,14 @@ function DirectFlightSearchBar() {
             flightOffers= data["data"]
             console.log("Data:")
             console.log(flightOffers)
-            flightOffers = flightOffers.map((flight) => ({
+            flightOffers.map((flight) => ({
                 origin: origin,
                 destination: destination,
                 price: flight["price"]["grandTotal"],
                 departureDate: departureDate,
           }))
           setSearchedFlights(flightOffers)
+          ChangeRoute()
         })
     }
 

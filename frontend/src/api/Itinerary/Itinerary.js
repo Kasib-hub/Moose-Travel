@@ -1,7 +1,7 @@
-
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-const getAllItineraries = async (token) => {
+// this needs to be get all by userID
+const getItinerariesbyUser = async (token, userID) => {
   const url = `http://${BASE_URL}/api/itinerary/`
   const context = {
     method: "GET",
@@ -48,7 +48,10 @@ const createItinerary = async (token, data) => {
   const body = await res.json()
   if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
   else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
-  else {return body}
+  else {
+    alert("Itinerary Created")
+    return body
+  }
 }
 
 const editItinerary = async (token, data, itineraryID) => {  
@@ -85,7 +88,7 @@ const deleteItinerary = async (token, itineraryID) => {
 }
 
 export {
-  getAllItineraries,
+  getItinerariesbyUser,
   getItineraryByID,
   createItinerary,
   editItinerary,

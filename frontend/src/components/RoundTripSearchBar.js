@@ -1,14 +1,12 @@
 import moment from 'moment';
-import { useState, useEffect } from 'react';
-import Moment from 'react-moment';
-import { useNavigate } from 'react-router';
+import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
 
 
-function RoundTripSearchBar() {
+function RoundTripSearchBar({ChangeRoute}) {
 
     let { amadeusToken } = useContext(AuthContext)
     let { user, authTokens } = useContext(AuthContext)
@@ -39,8 +37,6 @@ function RoundTripSearchBar() {
         const departureDate = e.target.elements.departureDate.value;
         const returnDate = e.target.elements.returnDate.value;
         const guests = e.target.elements.guests.value;
-      
-        const apiKey = travel_token;
 
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${guests}&max=15`, {
             method: 'GET',

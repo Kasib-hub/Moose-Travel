@@ -1,0 +1,35 @@
+.navbar {
+  background-color: var(--leaf);
+  color: var(--celery);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.user-text {
+  align-items: center;
+}
+
+.user-text p {
+  margin: 0;
+}
+
+
+
+.navbar h2 {
+  color: var(--celery);
+  display: inline-block;
+  margin-right: 4rem;
+}
+
+a {
+  color: var(--cream);
+  margin-right: 2rem;
+  text-decoration: none;
+  transition: 0.2s all;
+}
+
+a:hover {
+  color: var(--celery);
+}

@@ -1,12 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   height: 100%;
   width: 100%;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1, h2 {
+  color: var(--forest);
+}
+
+h3 {
+  color: var(--black);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -15,19 +23,70 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.submit-btn {
+  background-color: var(--leaf);
+  border: none;
+  border-radius: 5px;
+  color: var(--cream);
+  padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+  transition: 0.3s all;
 }
 
-.App-link {
-  color: #61dafb;
+.submit-btn:hover {
+  background-color: #405849;
+  color: #c5c5c5;
+}
+
+.submit-btn:active {
+  background-color: black
+}
+
+.large-btn {
+  background-color: var(--leaf);
+  border: none;
+  border-radius: 5px;
+  color: var(--cream);
+  padding: 1.5rem 3rem;
+  transition: 0.3s all;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 5rem;
+}
+
+.genres input[type="checkbox"]:not(:checked), 
+.genres input[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999%;
+}
+
+.genres input[type="checkbox"] + label {
+  display: inline-block;
+  padding: 1rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border: 2px solid var(--forest);
+  border-radius: 1rem;
+  width: 9rem;
+  color: var(--forest);
+  transition: 0.2s all;
+  background-color: var(--celery);
+  margin: 1.5rem 2rem
+}
+
+.genres input[type="checkbox"] + label:hover {
+
+  background-color: var(--cream);
+  
+}
+
+.genres input[type="checkbox"]:checked + label {
+  border: 2px solid var(--pear);
+  color: var(--celery);
+  background-color: var(--forest);
 }
 
 @keyframes App-logo-spin {
@@ -196,13 +255,13 @@
   box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
 }
 
-.dashboard-title{
+/* .dashboard-title{
   position: absolute;
   color:white;
   margin-bottom: 1rem;
   margin-top: 1rem;
   font-family: 'Courier New', Courier, monospace;
-}
+} */
 
 .card{
   opacity: 0.8;
@@ -212,14 +271,14 @@
   align-items: column;
   flex-direction: column;
   justify-content: center;
-  background-color: white;
+  background-color: var(--forest);
+  color: var(--celery);
   border-radius: 25px;
-  margin-top: 5rem;
-  margin-bottom: 20rem; /* change how big the dashboard is */
+  margin: 2rem 0rem;
   box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
 }
 .card:hover{
-  background-color: #d7e0e1;
+  background-color: #2e4b41;
   border-color: #013a3c;
   box-shadow: 0 0 5px 0 black;
 }
