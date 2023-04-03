@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 
-function DirectFlightSearchBar() {
+function DirectFlightSearchBar({ChangeRoute}) {
     let {amadeusToken} = useContext(AuthContext)
     const [searchedFlights, setSearchedFlights] = useState(null)
     let flightOffers = []
@@ -12,7 +12,6 @@ function DirectFlightSearchBar() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
         const origin = e.target.elements.origin.value;
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
@@ -29,12 +28,13 @@ function DirectFlightSearchBar() {
             flightOffers= data["data"]
             console.log("Data:")
             console.log(flightOffers)
-            flightOffers = flightOffers.map((flight) => ({
+            flightOffers.map((flight) => ({
                 origin: origin,
                 destination: destination,
                 price: flight["price"]["grandTotal"],
           }))
           setSearchedFlights(flightOffers)
+          ChangeRoute()
         })
     }
 

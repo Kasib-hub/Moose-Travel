@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const RentalCarForm = () => {
+const RentalCarForm = ({handleSearch}) => {
   const [location, setLocation] = useState('');
   const [pickupDate, setPickupDate] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
@@ -9,8 +9,8 @@ const RentalCarForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch('/api/rental_car_search/', {
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const response = await fetch(`http://${BASE_URL}/api/rental_car_search/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const RentalCarForm = () => {
         location: location,
         pickup_date: pickupDate,
         dropoff_date: dropoffDate
-      }),
+      })
     });
 
     if (response.ok) {

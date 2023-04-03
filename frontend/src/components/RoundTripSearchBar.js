@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 
 
-function RoundTripSearchBar() {
+function RoundTripSearchBar({ChangeRoute}) {
 
     let {authTokens} = useContext(AuthContext)
 

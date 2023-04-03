@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createItinerary } from "../api/Itinerary/Itinerary";
 import AuthContext from '../context/AuthContext';
@@ -6,7 +5,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function HomePage() {
+function StartItineraryPage() {
 
   // let {user, logoutUser, authTokens} = useContext(AuthContext)
 
@@ -14,7 +13,7 @@ function HomePage() {
 
   const navigate = useNavigate()
 
-  // This form POSTS the itinerary
+  // This form POSTS the itinerary and uses the response to create the route for the next page that requires the itinerary ID
   const handleSubmit = async (e) => {
     e.preventDefault()
     const data = {
@@ -23,7 +22,6 @@ function HomePage() {
     }
     const postedItinerary = await createItinerary(authTokens.access, data)
     postedItinerary && navigate(`/itinerary/${postedItinerary.id}/trip-selection`)
-    // route to the created page
   }
 
 
@@ -36,14 +34,10 @@ function HomePage() {
           <Form.Label>Name your Trip!</Form.Label>
           <Form.Control type="text" placeholder="Enter a Name" required/>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Create Itinerary
-        </Button>
+        <button className='submit-btn' type='submit'>Create Itinerary</button>
       </Form>
     </div>
   );
 }
 
-export default HomePage;
-
-
+export default StartItineraryPage;

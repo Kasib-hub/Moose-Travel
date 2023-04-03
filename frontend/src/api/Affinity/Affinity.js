@@ -1,6 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-const getAllAffinitesByItinerary = async (token, itineraryID) => {
+const getAllAffinitiesByItinerary = async (token, itineraryID) => {
   const url = `http://${BASE_URL}/api/itinerary/${itineraryID}/affinity/`
   const context = {
     method: "GET",
@@ -83,7 +83,7 @@ const deleteAffinity = async (token, itineraryID, affinityID) => {
 }
 
 export {
-  getAllAffinitesByItinerary,
+  getAllAffinitiesByItinerary,
   getAffinityByID,
   createAffinity,
   editAffinity,

@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import Airplane from '../../assets/airplane.svg'
 import Car from '../../assets/car.svg'
 import Hotel from '../../assets/hotel.svg'
@@ -19,13 +20,17 @@ function TripSelector({selections, setSelections}) {
     : setSelections(selections.filter(element => element !== value)) // filtering out unchecked boxes
   }
 
+  useEffect(() => {
+    setSelections([])
+  }, [setSelections])
+
+  // choose the first element, cleave it, go to next page(route)
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(selections)
     let route = selections[0]
     setSelections(selections.slice(1))
     navigate(route)
-    // choose the first element, cut it off, go to next page
   }
 
   return (

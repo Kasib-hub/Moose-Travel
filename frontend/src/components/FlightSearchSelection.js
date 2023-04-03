@@ -3,7 +3,7 @@ import DirectFlightSearchBar from "./DirectFlightSearchBar";
 import RoundTripSearchBar from "./RoundTripSearchBar";
 import MultiFlightSearchBar from "./MultiFlightSearchBar";
 
-const FlightSearchSelection = ({ onSubmit }, props) => {
+const FlightSearchSelection = ({ onSubmit, ChangeRoute }, props) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionChange = (event) => {
@@ -49,9 +49,9 @@ const FlightSearchSelection = ({ onSubmit }, props) => {
             </div>
         </div> 
 
-        {selectedOption === "direct" && <DirectFlightSearchBar />}
-        {selectedOption === "round-trip" && <RoundTripSearchBar onSubmit={() => window.location.href = '/'}/>}
-        {selectedOption === "multi-trip" && <MultiFlightSearchBar onSubmit={() => window.location.href = '/'}/>}
+        {selectedOption === "direct" && <DirectFlightSearchBar ChangeRoute={ChangeRoute}/>}
+        {selectedOption === "round-trip" && <RoundTripSearchBar onSubmit={() => window.location.href = '/'} ChangeRoute={ChangeRoute}/>}
+        {selectedOption === "multi-trip" && <MultiFlightSearchBar onSubmit={() => window.location.href = '/'} ChangeRoute={ChangeRoute}/>}
     </div>
     // </AnimatedPage>
   );
