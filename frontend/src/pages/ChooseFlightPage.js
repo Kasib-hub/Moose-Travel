@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import FlightSearchSelection from '../components/FlightSearchSelection';
 
 
-function ChooseFlightPage({selections}) {
+function ChooseFlightPage({selections, setSelections}) {
 
   let { authTokens } = useContext(AuthContext)
   let {itineraryID} = useParams()
@@ -28,8 +28,7 @@ function ChooseFlightPage({selections}) {
       <h1>Choose a flight for {itineraryName}</h1>
       {/* once the form is finished, allow user to go to next page somehow */}
       {/* probably needs to be handled from within the component so I'll provide the tripObj */}
-      <FlightSearchSelection />
-      
+      <FlightSearchSelection selections={selections} setSelections={setSelections}/>
     </div>
   );
 }

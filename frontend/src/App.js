@@ -13,10 +13,10 @@ import YourItinerariesPage from './pages/YourItineriesPage';
 import TripSelectionPage from './pages/TripSelectionPage';
 import ChooseFlightPage from './pages/ChooseFlightPage';
 import ChooseHotelPage from './pages/ChooseHotelPage'
-import ChooseCarPage from './pages/ChooseCarPage'
 import ChooseActivityPage from './pages/ChooseActivityPage'
 import ChooseRestaurantPage from './pages/ChooseRestaurantPage'
 import RentalCarPage from './pages/RentalCarPage'
+import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
 
 // import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
@@ -26,6 +26,8 @@ function App() {
 
   // the selections user makes on what forms they want to see when building their trip
   const [selections, setSelections] = useState([])
+  // the genres the user likes
+  const [likes, setLikes] = useState([])
 
   return (
     <div className="App">
@@ -42,6 +44,7 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-car" element={<RentalCarPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurantPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivityPage selections={selections} setSelections={setSelections}/>} />
+              <Route path="/itinerary/:itineraryID/choose-genre" element={<ChooseGenrePage likes={likes} setLikes={setLikes}/>} />
               {/* Trip summary makes the get requests*/}
               <Route path="/itinerary/:itineraryID/trip-summary" element={<TripSummaryPage />} /> 
             </Route>

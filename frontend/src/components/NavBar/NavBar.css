@@ -15,7 +15,10 @@
   margin: 0;
 }
 
+
+
 .navbar h2 {
+  color: var(--celery);
   display: inline-block;
   margin-right: 4rem;
 }
