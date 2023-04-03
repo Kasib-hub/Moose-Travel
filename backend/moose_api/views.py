@@ -3,14 +3,13 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.generics import CreateAPIView
-from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .serializers import SignupSerializer
 from .serializers import *
+import datetime
+from rest_framework import status
 from rest_framework.permissions import AllowAny
-from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from django.views.decorators.csrf import csrf_exempt
 from .sabre import search_rental_cars
 
 
@@ -279,7 +278,7 @@ def rental_car_submission(request):
         'dropoff_location': dropoff_location,
         'dropoff_date': dropoff_date.strftime('%Y-%m-%d')
     }
-    response = requests.post('https://api.rentalcaragency.com/rental_requests', json=rental_request)
+    response = request.post('https://api.rentalcaragency.com/rental_requests', json=rental_request)
     if response.status_code == 200:
         # Display confirmation message to user
         return Response({'message': 'Rental request submitted successfully.'}, status=status.HTTP_200_OK)

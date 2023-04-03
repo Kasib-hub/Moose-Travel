@@ -31,7 +31,6 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
-          {/* navbar would go here */}
           <NavBar />
           <Routes>
             <Route element={<PrivateRoutes />}>
@@ -43,7 +42,7 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-car" element={<RentalCarPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurantPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivityPage selections={selections} setSelections={setSelections}/>} />
-              {/* This needs the tripsummary object likely from state */}
+              {/* Trip summary makes the get requests*/}
               <Route path="/itinerary/:itineraryID/trip-summary" element={<TripSummaryPage />} /> 
             </Route>
             <Route path="/login" element={<LoginPage />} />
