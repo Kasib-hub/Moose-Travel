@@ -1,4 +1,4 @@
-function FlightDisplay ({flights}) {
+function FlightsDisplay ({flights}) {
 
   return (
       flights.map((flight, idx) => {
@@ -12,4 +12,4 @@ function FlightDisplay ({flights}) {
 
 }
 
-export default FlightDisplay
+export default FlightsDisplay

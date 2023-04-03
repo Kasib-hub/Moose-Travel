@@ -4,8 +4,15 @@ import AuthContext from "../context/AuthContext"
 import { getItineraryByID } from "../api/Itinerary/Itinerary"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
+import { getAllRentalsByItinerary } from "../api/Rental/Rental"
+import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
+import { getAllSightsByItinerary } from "../api/Sight/Sight"
 import ItineraryDisplay from "../components/TripSummary/ItineraryDisplay"
-import FlightDisplay from "../components/TripSummary/FlightDisplay"
+import FlightsDisplay from "../components/TripSummary/FlightsDisplay"
+import HotelsDisplay from "../components/TripSummary/HotelsDisplay"
+import CarsDisplay from "../components/TripSummary/CarsDisplay"
+import AffinitiesDisplay from "../components/TripSummary/AffinitiesDisplay"
+import SightsDisplay from "../components/TripSummary/SightsDisplay"
 import './TripSummaryPage.css'
 
 function TripSummaryPage () {
@@ -45,6 +52,30 @@ function TripSummaryPage () {
     fetchHotels()
  }, [])
 
+  useEffect(() => {
+    const fetchRentals = async () => {
+     const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
+     setRentals(fetchedRentals)
+    }
+    fetchRentals()
+  }, [])
+
+  useEffect(() => {
+    const fetchAffinities = async () => {
+     const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
+     setAffinities(fetchedAffinities)
+    }
+    fetchAffinities()
+  }, [])
+
+  useEffect(() => {
+    const fetchSights = async () => {
+     const fetchedSights = await getAllSightsByItinerary(authTokens.access, itineraryID)
+     setSights(fetchedSights)
+    }
+    fetchSights()
+  }, [])
+
   
 
   return (
@@ -53,62 +84,26 @@ function TripSummaryPage () {
       <div className="trip-summary">
         <div>
           <h2>Flights</h2>
-         {flights && <FlightDisplay flights={flights}/>}<br></br>
+          {flights && <FlightsDisplay flights={flights}/>}<br></br>
 
           <h2>Hotels</h2>
-          {
-            hotels && hotels.map((hotel, idx) => {
-              return(
-                <div>
-                  <p>{hotel.hotel_name} - {hotel.location}</p>
-                </div>
-              )
-              
-            })
-          }<br></br>
+          {hotels && <HotelsDisplay hotels={hotels}/>}<br></br>
+
           <h2>Rental Cars</h2>
-          {
-            hotels && hotels.map((hotel, idx) => {
-              return(
-                <div>
-                  <p>{hotel.hotel_name} - {hotel.location}</p>
-                </div>
-              )
-              
-            })
-          }<br></br>
-          <h2>Activities</h2>
-          {
-            hotels && hotels.map((hotel, idx) => {
-              return(
-                <div>
-                  <p>{hotel.hotel_name} - {hotel.location}</p>
-                </div>
-              )
-              
-            })
-          }<br></br>
+          {rentals && <CarsDisplay rentals={rentals}/>}<br></br>
+
+          <h2>Affinities</h2>
+          {affinities && <AffinitiesDisplay affinities={affinities}/>}<br></br>
+
           <h2>Sights</h2>
-          {
-            hotels && hotels.map((hotel, idx) => {
-              return(
-                <div>
-                  <p>{hotel.hotel_name} - {hotel.location}</p>
-                </div>
-              )
-              
-            })
-          }<br></br>
+          {sights && <SightsDisplay sights={sights}/>}<br></br>
+
         </div>
         <div>
           {itinerary && <ItineraryDisplay itinerary={itinerary}/>}
         </div>  
       </div>
     </>
-    
-    
-    
-
 
   )
 
