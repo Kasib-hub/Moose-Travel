@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
 
 function ChooseHotelPage ({selections, setSelections}) {
   let {itineraryID} = useParams()
