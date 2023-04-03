@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 function StartItineraryPage() {
 
+  // let {user, logoutUser, authTokens} = useContext(AuthContext)
+
   let {user, authTokens} = useContext(AuthContext)
 
   const navigate = useNavigate()

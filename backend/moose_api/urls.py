@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
-from .views import MyTokenObtainPairView
 from .views import *
-from .views import search_rental_cars
+
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -11,6 +10,8 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('signup/', views.SignupView.as_view(), name='signup'),
+    path('user/<int:user_id>/', view_or_update_user, name='view_user'),
+    #view, create, update and delete itineraries
     path('itinerary/', itinerary, name='itinerary'),
     path('itinerary/<int:itinerary_id>/', itinerary),
     path('itinerary/<int:itinerary_id>/flight/', flight, name='flight'),

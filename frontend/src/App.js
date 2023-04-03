@@ -7,6 +7,12 @@ import NavBar from './components/NavBar/NavBar';
 import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+
+import MapsPage from './pages/MapsPage';
+import ApiExample from './pages/ApiExample';
+// import { useLoadScript } from '@react-google-maps/api';
+import EditPersonalInfo from './pages/EditPersonalInfo';
+
 import { useState } from 'react';
 // import { useLoadScript } from '@react-google-maps/api';
 import YourItinerariesPage from './pages/YourItineriesPage';
@@ -19,10 +25,13 @@ import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
 
-// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
-
-
 function App() {
+  // loading the google maps script
+  // const libraries = ['places']
+
+
+
+// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
 
   // the selections user makes on what forms they want to see when building their trip
   const [selections, setSelections] = useState([])
