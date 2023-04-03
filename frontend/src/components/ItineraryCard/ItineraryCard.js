@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 
