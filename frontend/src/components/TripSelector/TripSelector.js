@@ -37,7 +37,7 @@ function TripSelector({selections, setSelections}) {
     <form onSubmit={handleSubmit}>
       <div className='trip-selector-form'>
         <div className='trip-checkbox'>
-          <button className='trip-btn'><img src={Airplane} alt="Trash Icon" /></button>
+          <img src={Airplane} alt="Airplane Icon" />
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-flight`}/>
             <label>Airplane</label>     
@@ -45,7 +45,7 @@ function TripSelector({selections, setSelections}) {
         </div>
 
         <div className='trip-checkbox'>
-          <img src={Hotel} alt="Trash Icon" />
+          <img src={Hotel} alt="Hotel Icon" />
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-hotel`}/>
             <label>Hotel</label> 
@@ -54,7 +54,7 @@ function TripSelector({selections, setSelections}) {
 
         <div className='trip-checkbox'>
           
-          <img src={Car} alt="Trash Icon" />
+          <img src={Car} alt="Car Icon" />
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-car`}/>
             <label>Rental Car</label>
@@ -62,7 +62,7 @@ function TripSelector({selections, setSelections}) {
         </div>
 
         <div className='trip-checkbox'>
-          <img src={Restaurant} alt="Trash Icon" />
+          <img src={Restaurant} alt="Restaurant Icon" />
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-restaurant`}/>
             <label>Restaurants</label>
@@ -70,7 +70,7 @@ function TripSelector({selections, setSelections}) {
         </div>
 
         <div className='trip-checkbox'>
-          <img src={Sight} alt="Trash Icon" />
+          <img src={Sight} alt="Sight Icon"/>
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-activity`}/>
             <label>Activites</label>

@@ -6,7 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
-// import { useLoadScript } from '@react-google-maps/api';
+import { useLoadScript } from '@react-google-maps/api';
 import EditPersonalInfo from './pages/EditPersonalInfo';
 import { useState } from 'react';
 import YourItinerariesPage from './pages/YourItineriesPage';
@@ -21,16 +21,19 @@ import TripSummaryPage from './pages/TripSummaryPage'
 
 function App() {
   // loading the google maps script
-  // const libraries = ['places']
+  const libraries = ['places']
 
-
-
-// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries
+  })
 
   // the selections user makes on what forms they want to see when building their trip
   const [selections, setSelections] = useState([])
   // the genres the user likes
   const [likes, setLikes] = useState([])
+
+  if (!isLoaded) return <h2>Loading...</h2>
 
   return (
     <div className="App">
