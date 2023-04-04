@@ -3,6 +3,7 @@ import DirectFlightSearchBar from "./DirectFlightSearchBar";
 import RoundTripSearchBar from "./RoundTripSearchBar";
 import MultiFlightSearchBar from "./MultiFlightSearchBar";
 
+
 const FlightSearchSelection = ({ onSubmit, ChangeRoute }, props) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -13,6 +14,7 @@ const FlightSearchSelection = ({ onSubmit, ChangeRoute }, props) => {
   return (
     // <AnimatedPage>
     <div>
+        
         <div className="flightTypeSelectionDiv"> 
             <div>
                 <label>

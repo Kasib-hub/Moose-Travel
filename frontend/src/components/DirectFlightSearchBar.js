@@ -68,16 +68,16 @@ function DirectFlightSearchBar({ChangeRoute}) {
         <div className="search-div">
 
                 <form className="search-form" onSubmit={handleSubmit}>
-                    <AutoCompleteInput />
-                    <div className="search-input">
+                    <AutoCompleteInput name="origin" placeholder="Where are you flying from?"/>
+                    {/* <div className="search-input">
                         <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Origin</p>
                         <input type="text" name="origin" placeholder="Where do you want to go?" />
-                    </div>
-
-                    <div className="search-input">
+                    </div> */}
+                    <AutoCompleteInput name="destination" placeholder="Where do you want to go?"/>
+                    {/* <div className="search-input">
                         <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Destination</p>
                         <input type="text" name="destination" placeholder="Where do you want to go?" />
-                    </div>
+                    </div> */}
 
                     <div className="search-input">
                         <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p>

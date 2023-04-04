@@ -3,6 +3,7 @@ import AuthContext from '../context/AuthContext';
 import { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FlightSearchSelection from '../components/FlightSearchSelection';
+import Map from "../assets/Map.svg";
 
 
 function ChooseFlightPage({selections, setSelections}) {
@@ -35,10 +36,7 @@ function ChooseFlightPage({selections, setSelections}) {
 
   return (
     <div>
-      <p>I passed {selections} which are the remaining picks from your choices</p>
-      <h1>Choose a flight for {itineraryName}</h1>
-      {/* once the form is finished, allow user to go to next page somehow */}
-      {/* probably needs to be handled from within the component so I'll provide the tripObj */}
+      <h1>Let's find you some flights  <img src={Map}/></h1>
       <FlightSearchSelection selections={selections} setSelections={setSelections} ChangeRoute={ChangeRoute}/>
     </div>
   );
