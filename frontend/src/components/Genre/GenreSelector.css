@@ -1,0 +1,9 @@
+#like-submit {
+  padding: 1rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  width: 9rem;
+  margin: 1.5rem 2rem;
+  color: var(--celery);
+}

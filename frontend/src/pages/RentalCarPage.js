@@ -8,7 +8,9 @@ const RentalCarPage = () => {
   const [selectedCar, setSelectedCar] = useState(null);
 
   const handleSearch = async (searchData) => {
-    const response = await fetch('/api/avis_rental_car_search/', {
+    
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const response = await fetch(`http://${BASE_URL}/api/rental_car_search/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

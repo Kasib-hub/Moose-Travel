@@ -1,19 +1,17 @@
-from functools import wraps
-import requests
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, Http404
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .api_utils import CAR_AVAILABILITY_API, CAR_LOCATIONS_API, CAR_RESERVATIONS_API, get_access_token, CLIENT_ID as client_id, CLIENT_SECRET as client_secret
 from .models import *
 from .serializers import *
+
 
 
 
@@ -71,7 +69,7 @@ def itinerary(request, itinerary_id=None):
             data = Itinerary.objects.get(id=itinerary_id)
             serializer = ItinerarySerializer(data)
         else:
-            itineraries = Itinerary.objects.all()
+            itineraries = Itinerary.objects.filter(user_id=request.user.id)
             serializer = ItinerarySerializer(itineraries, many = True)
         return Response(serializer.data)
     #update 
@@ -218,132 +216,82 @@ def sight(request, itinerary_id, sight_id=None):
         return Response('Sight has been deleted.')
 
 ############################################
-# AVIS API STUFF
+# Rental Car Views
 ############################################
 
-# view, create, update or delete rental
 @api_view(['GET','POST','PUT','DELETE'])
 def rental(request, itinerary_id, rental_id=None):
     # see all 
     if request.method == 'GET':
         if rental_id:
-            data = Rental.objects.get(id=rental_id)
-            serializer = RentalSerializer(data)
+            rental = Rental.objects.get(id=rental_id)
+            serializer = RentalSerializer(rental)
         else:
             rentals = Rental.objects.filter(itinerary_id=itinerary_id)
-            serializer = RentalSerializer(rentals, many = True)
+            serializer = RentalSerializer(rentals, many=True)
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        rental = Rental.objects.get(id = rental_id)
-        serializer = RentalSerializer(instance = rental,data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        rental = Rental.objects.get(id=rental_id)
+        serializer = RentalSerializer(rental, data=request.data)
+        if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
     # create
     elif request.method == 'POST':
         serializer = RentalSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
     # delete
     elif request.method == 'DELETE':
-        rental = Rental.objects.get(id = rental_id)
+        rental = Rental.objects.get(id=rental_id)
         rental.delete()
         return Response('Rental has been deleted.')
 
-def require_method(method):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            request = args[0]
-            if request.method == method:
-                return func(*args, **kwargs)
-            else:
-                return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        return wrapper
-    return decorator
 
 @api_view(['GET'])
-def get_car_locations(country_code, brand, keyword):
-    access_token = get_access_token()
+def get_car_locations(request):
+    country_code = request.query_params.get('country_code')
+    brand = request.query_params.get('brand')
+    keyword = request.query_params.get('keyword')
 
-    headers = {
-        'client_id': client_id,
-        'Authorization': f'Bearer {access_token}'
-    }
+    # use the search_rental_cars function to get car locations
+    car_locations = search_rental_cars(country_code, brand, keyword)
 
-    params = {
-        'country_code': country_code,
-        'brand': brand,
-        'keyword': keyword
-    }
+    return JsonResponse(car_locations, safe=False)
 
-    response = requests.get(CAR_LOCATIONS_API, headers=headers, params=params)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        raise Exception("Error getting car locations: " + response.text)
 
-@api_view(['GET'])
-def home(request):
-    data = [{'message': 'Welcome to Car-Rental-Agency'}]
-    return JsonResponse(data, safe=False)
-
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def car_endpoint(request, car_pk=None):
+@api_view(['GET','POST','PUT','DELETE'])
+def car(request, car_id=None):
+    # see all
     if request.method == 'GET':
-        if car_pk is None:
+        if car_id:
+            car = Car.objects.get(id=car_id)
+            serializer = CarSerializer(car)
+        else:
             cars = Car.objects.all()
             serializer = CarSerializer(cars, many=True)
-        else:
-            car = Car.objects.get(id=car_pk)
-            serializer = CarSerializer(car)
         return Response(serializer.data)
-
+    # update 
+    elif request.method == 'PUT':
+        car = Car.objects.get(id=car_id)
+        serializer = CarSerializer(car, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    # create
     elif request.method == 'POST':
         serializer = CarSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        car = Car.objects.get(id=car_pk)
-        serializer = CarSerializer(instance=car, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(serializer.data)
-
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+    # delete
     elif request.method == 'DELETE':
-        car = Car.objects.get(id=car_pk)
+        car = Car.objects.get(id=car_id)
         car.delete()
         return Response('Car has been deleted.')
-
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def reservation_endpoint(request, rent_pk=None):
-    if request.method == 'GET':
-        if rent_pk is None:
-            reservations = Reservation.objects.all()
-            serializer = ReservationSerializer(reservations, many=True)
-        else:
-            reservation = Reservation.objects.get(id=rent_pk)
-            serializer = ReservationSerializer(reservation)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = ReservationSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        reservation = Reservation.objects.get(id=rent_pk)
-        serializer = ReservationSerializer(instance=reservation, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(serializer.data)
-
-    elif request.method == 'DELETE':
-        reservation = Reservation.objects.get(id=rent_pk)
-        reservation.delete()
-        return Response('Reservation has been deleted.')

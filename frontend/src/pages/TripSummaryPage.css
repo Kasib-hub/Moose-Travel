@@ -1,0 +1,4 @@
+.trip-summary {
+  display: flex;
+  justify-content: space-evenly;
+}

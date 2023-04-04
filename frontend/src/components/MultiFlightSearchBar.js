@@ -1,20 +1,45 @@
 import React, { useState, useEffect } from "react";
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
+import { createFlight } from '../api/Flight/Flight';
+
 
 
 const MultiFlightSearchBar = () => {
 
-  const travel_token = "v4zuAGjtGoQGHBzmv7S67R1IKyoG"  
+    let { amadeusToken } = useContext(AuthContext)
+    let { user, authTokens } = useContext(AuthContext)
+
   const [returnedFlightList, setReturnedFlightList] = useState(null);
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);
 
   useEffect(() => { 
-    console.log("Returned Flights:");
-    console.log(returnedFlightList);
-  }, [returnedFlightList]);
+  }, []);
 
-  
+  function backendReadableConversion(segment) {
+    if (!Array.isArray(segment)) {
+        console.log("Error: segment is not an array.");
+        return;
+      }
+    const convertedList = segment.map((originalSegment) => {
+      const convertedSegment = {
+        "departure_date": originalSegment.departure.at.substring(0,10),
+        "itinerary_id": 1,
+        "user_id": user.user_id,
+        "flight_type": "Multi-Flight",
+        "departure": originalSegment.departure.iataCode,
+        "destination": originalSegment.arrival.iataCode,
+      };
+      return convertedSegment;
+    });
+
+    convertedList.forEach((flightObject) => {
+        createFlight(authTokens.access, flightObject, 2);
+      });
+
+  }
 
   const convertFlights = (flights) =>
     flights.map((flight) => ({
@@ -52,7 +77,7 @@ const MultiFlightSearchBar = () => {
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers `, {
             method: `POST`,
             headers: {
-                'Authorization': `Bearer ${travel_token}`,
+                'Authorization': `Bearer ${amadeusToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -81,6 +106,8 @@ const MultiFlightSearchBar = () => {
           })
         .catch(error => console.error(error));
     }  
+
+    
 
 
   const handleSubmit = (e) => {
@@ -146,21 +173,30 @@ const MultiFlightSearchBar = () => {
             </form>
         </div>
         {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
-            <div key={index}>
-                {flightGroup["itineraries"].map((itenereary, index) => (
-                    itenereary["segments"].map((segment, index) => (
+            <form key={index} onSubmit={(event) => {
+                event.preventDefault();
+                const segments = flightGroup.itineraries.flatMap(itinerary => itinerary.segments);
+                const flightData = { segments };
+                backendReadableConversion(flightData.segments);
+            }}>
+                <div>
+                <h3><b>Price:</b> {flightGroup["price"]["grandTotal"]}</h3>
+                {flightGroup.itineraries.map((itinerary, index) => (
+                    <div key={index}>
+                    <h3><u>Trip {index + 1}</u></h3>
+                    {itinerary.segments.map((segment, index) => (
                         <div key={index}>
-                            <b>Departure</b>
-                            <p>{segment["departure"]["iataCode"]}</p>
-                            <b>Arrival</b>
-                            <p>{segment["arrival"]["iataCode"]}</p>
+                        <h5>Flight {index+1}</h5>
+                        <p>Departure - {segment.departure.iataCode} {segment.departure.at}</p>
+                        <p>Arrival - {segment.arrival.iataCode} {segment.arrival.at}</p>
                         </div>
-                    ))
+                    ))} 
+                    </div>
                 ))}
-                <b>{flightGroup["price"]["grandTotal"]}</b>
-                <p>---------------------------</p>
-            </div>
-        ))}
+                </div>
+                <button type="submit">Save Flight</button>
+            </form>
+            ))}
     </div>
   );
 };

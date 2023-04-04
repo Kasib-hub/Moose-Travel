@@ -3,19 +3,23 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import { AuthProvider } from './context/AuthContext';
 import NavBar from './components/NavBar/NavBar';
-import HomePage from './pages/HomePage';
+import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import MapsPage from './pages/MapsPage';
 import ApiExample from './pages/ApiExample';
 import EditPersonalInfo from './pages/EditPersonalInfo';
 import { useState } from 'react';
-import TripSelection from './pages/TripSelection';
-import ChooseFlight from './pages/ChooseFlight';
-import ChooseHotel from './pages/ChooseHotel';
-import ChooseActivity from './pages/ChooseActivity';
-import ChooseRestaurant from './pages/ChooseRestaurant';
-import ChooseCar from './pages/ChooseCar';
+// import { useLoadScript } from '@react-google-maps/api';
+import YourItinerariesPage from './pages/YourItineriesPage';
+import TripSelectionPage from './pages/TripSelectionPage';
+import ChooseFlightPage from './pages/ChooseFlightPage';
+import ChooseHotelPage from './pages/ChooseHotelPage'
+import ChooseActivityPage from './pages/ChooseActivityPage'
+import ChooseRestaurantPage from './pages/ChooseRestaurantPage'
+import RentalCarPage from './pages/RentalCarPage'
+import ChooseGenrePage from './pages/ChooseGenrePage';
+import TripSummaryPage from './pages/TripSummaryPage'
 
 function App() {
   const [selections, setSelections] = useState([]);
