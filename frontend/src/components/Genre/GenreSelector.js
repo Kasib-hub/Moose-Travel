@@ -10,6 +10,8 @@ function GenreSelector ({likes, setLikes}) {
     checked 
     ? setLikes([...likes, value])
     : setLikes(likes.filter(element => element !== value)) // filtering out unchecked boxes
+
+
   }
 
   const handleSubmit = (e) => {

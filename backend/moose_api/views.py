@@ -10,7 +10,7 @@ import datetime
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from .sabre import search_rental_cars
+# from .sabre import search_rental_cars
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
