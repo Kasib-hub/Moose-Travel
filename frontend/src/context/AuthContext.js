@@ -32,6 +32,13 @@ export const AuthProvider = ({children}) => {
     }
   )
 
+  let [avisToken, setAvisToken] = useState( () => {
+    return localStorage.getItem('avisToken') 
+    ? localStorage.getItem('avisToken')
+    : null
+  }
+)
+
   let [errors, setErrors] = useState(null)
 
   const loginUser = async (e) => {
@@ -77,6 +84,30 @@ export const AuthProvider = ({children}) => {
     navigate('/login')
   }, [navigate])
 
+
+  const getAvisToken = async () => {
+    const CLIENT_ID = process.env.REACT_APP_AVIS_CLIENT_ID
+    const CLIENT_SECRET = process.env.REACT_APP_AVIS_CLIENT_SECRET
+    const TOKEN_URL = 'https://stage.abgapiservices.com/oauth/token/v1'
+    const data = `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
+    const context = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data
+    }
+    const resp = await fetch(TOKEN_URL, context)
+    const body = await resp.json()
+    if (resp.ok) {
+      setAvisToken(body.access_token)
+      localStorage.setItem('avisToken', body.access_token)
+    } else {
+      console.error("Error getting access token: " + resp.status)
+    }
+  }
+
+  
   const getAmadeusToken = async () => {
     console.log('amadeus!')
     const client_id = process.env.REACT_APP_CLIENT_ID
@@ -105,13 +136,16 @@ export const AuthProvider = ({children}) => {
 
 
   let contextData = {
-    loginUser:loginUser,
-    logoutUser:logoutUser,
-    amadeusToken:amadeusToken,
-    authTokens:authTokens,
-    errors:errors,
-    user:user,
-  }
+    loginUser: loginUser,
+    logoutUser: logoutUser,
+    amadeusToken: amadeusToken,
+    authTokens: authTokens,
+    errors: errors,
+    user: user,
+    avisToken: avisToken,
+    getAvisToken: getAvisToken,
+  };
+  
 
   // refresh the token every 10 min.
   useEffect(() => {
@@ -137,6 +171,16 @@ export const AuthProvider = ({children}) => {
         logoutUser()
       }
     }
+  
+    useEffect(() => {
+      let interval = setInterval(() => {
+        if (authTokens) {
+          getCarToken()
+        }
+      }, 1500000)
+      return () => clearInterval(interval)
+    }, [authTokens])
+    
 
     // clear the stacked intervals to call updateToken, this way it is only called once per interval (10 min)
     let interval = setInterval(() => {
@@ -155,6 +199,15 @@ export const AuthProvider = ({children}) => {
     return () => clearInterval(interval)
   }, [amadeusToken])
 
+  useEffect(() => {
+
+    // updates every 2 hours = 7200000ms 
+    let interval = setInterval(() => {
+      if(avisToken) {getAvisToken()}
+    }, 7200000)
+    return () => clearInterval(interval)
+  }, [avisToken])
+  
   return (
     <AuthContext.Provider value={contextData}>
       {children}

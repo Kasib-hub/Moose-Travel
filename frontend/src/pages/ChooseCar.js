@@ -1,11 +1,13 @@
+import React from 'react';
 
-
-function ChooseCar () {
-
+const ChooseCar = ({ car, onSelect }) => {
   return (
-    <h1>CarPage</h1>
-  )
+    <div className="choose-car">
+      <h3>{car.name}</h3>
+      <p>Price: {car.price}</p>
+      <button onClick={() => onSelect(car)}>Select this car</button>
+    </div>
+  );
+};
 
-}
-
-export default ChooseCar
+export default ChooseCar;

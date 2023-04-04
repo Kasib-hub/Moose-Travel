@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 
 const RentalCarForm = () => {
+  const { authTokens } = useContext(AuthContext);
   const [location, setLocation] = useState('');
   const [pickupDate, setPickupDate] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
@@ -10,16 +12,20 @@ const RentalCarForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const searchData = {
+      location,
+      pickup_date: pickupDate,
+      dropoff_date: dropoffDate,
+    };
+
     const response = await fetch('/api/rental_car_search/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'client_id': '4492e1f0',
+        Authorization: `Bearer ${authTokens.access_token}`,
       },
-      body: JSON.stringify({ 
-        location: location,
-        pickup_date: pickupDate,
-        dropoff_date: dropoffDate
-      }),
+      body: JSON.stringify(searchData),
     });
 
     if (response.ok) {
