@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import RentalCarForm from '../components/RentalCarForm';
-import useAuth from '../hooks/useAuth';
 
 const RentalCarPage = () => {
   const { access_token } = useAuth();
