@@ -7,9 +7,8 @@ import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 // import { useLoadScript } from '@react-google-maps/api';
-// import EditPersonalInfo from './pages/EditPersonalInfo';
+import EditPersonalInfo from './pages/EditPersonalInfo';
 import { useState } from 'react';
-// import { useLoadScript } from '@react-google-maps/api';
 import YourItinerariesPage from './pages/YourItineriesPage';
 import TripSelectionPage from './pages/TripSelectionPage';
 import ChooseFlightPage from './pages/ChooseFlightPage';
@@ -42,6 +41,7 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<StartItineraryPage />} />
               <Route path="/itinerary/:userID/your-itineraries" element={<YourItinerariesPage />} />
+              <Route path="/itinerary/:userID/user-information" element={<EditPersonalInfo />} />
               <Route path="/itinerary/:itineraryID/trip-selection" element={<TripSelectionPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlightPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotelPage selections={selections} setSelections={setSelections}/>} />
