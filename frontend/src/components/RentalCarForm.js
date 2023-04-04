@@ -1,69 +1,124 @@
-import React, { useState, useContext } from 'react';
-import AuthContext from '../context/AuthContext';
+import React, { useState } from 'react';
 
 const RentalCarForm = () => {
-  const { authTokens } = useContext(AuthContext);
-  const [location, setLocation] = useState('');
+  const [brand, setBrand] = useState('Avis');
   const [pickupDate, setPickupDate] = useState('');
+  const [pickupLocation, setPickupLocation] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
+  const [dropoffLocation, setDropoffLocation] = useState('');
+  const [countryCode, setCountryCode] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const getCarAvailability = async (searchData) => {
+    const url = new URL("https://stage.abgapiservices.com/cars/catalog/v1/vehicles");
+    url.search = new URLSearchParams({
+      brand: searchData.brand,
+      pickup_date: searchData.pickup_date.toISOString(),
+      pickup_location: searchData.pickup_location,
+      dropoff_date: searchData.dropoff_date.toISOString(),
+      dropoff_location: searchData.dropoff_location,
+      country_code: searchData.country_code,
+      iata_number: "0104724P",
+      transaction_id: "23492034738",
+    });
+
+    try {
+      setLoading(true);
+      setError(null);
+      setResult(null);
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + "YOUR_BEARER_TOKEN", // Replace with your Bearer token
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const searchData = {
-      location,
-      pickup_date: pickupDate,
-      dropoff_date: dropoffDate,
+      brand,
+      pickup_date: new Date(pickupDate),
+      pickup_location: pickupLocation,
+      dropoff_date: new Date(dropoffDate),
+      dropoff_location: dropoffLocation,
+      country_code: countryCode,
     };
 
-    const response = await fetch('/api/rental_car_search/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'client_id': '4492e1f0',
-        Authorization: `Bearer ${authTokens.access_token}`,
-      },
-      body: JSON.stringify(searchData),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      setResult(data);
-      setError(null);
-    } else {
-      const errorData = await response.json();
-      setError(errorData.error_description || 'Unknown error occurred');
-      setResult(null);
-    }
+    await getCarAvailability(searchData);
   };
+
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
+        <label htmlFor="brand">Brand:</label>
+        <select
+          name="brand"
+          id="brand"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        >
+          <option value="Avis">Avis</option>
+          <option value="Budget">Budget</option>
+          <option value="Payless">Payless</option>
+        </select>
 
         <label htmlFor="pickupDate">Pickup Date:</label>
         <input
-          type="date"
+          type="datetime-local"
           id="pickupDate"
           value={pickupDate}
           onChange={(e) => setPickupDate(e.target.value)}
         />
 
+        <label htmlFor="pickupLocation">Pickup Location (Airport Code):</label>
+        <input
+          type="text"
+          id="pickupLocation"
+          value={pickupLocation}
+          onChange={(e) => setPickupLocation(e.target.value)}
+        />
+
         <label htmlFor="dropoffDate">Dropoff Date:</label>
         <input
-          type="date"
+          type="datetime-local"
           id="dropoffDate"
           value={dropoffDate}
           onChange={(e) => setDropoffDate(e.target.value)}
+        />
+
+        <label htmlFor="dropoffLocation">Dropoff Location (Airport Code):</label>
+        <input
+          type="text"
+          id="dropoffLocation"
+          value={dropoffLocation}
+          onChange={(e) => setDropoffLocation(e.target.value)}
+        />
+
+        <label htmlFor="countryCode">Country Code:</label>
+        <input
+          type="text"
+          id="countryCode"
+          value={countryCode}
+          onChange={(e) => setCountryCode(e.target.value)}
         />
 
         <button type="submit">Search</button>
@@ -81,7 +136,7 @@ const RentalCarForm = () => {
           <h3>Results:</h3>
           <pre>{JSON.stringify(result, null, 2)}</pre>
         </div>
-      )}
+        )}
     </div>
   );
 };

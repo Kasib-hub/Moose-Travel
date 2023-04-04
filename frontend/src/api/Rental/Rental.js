@@ -12,13 +12,9 @@ const getAllCarsByItinerary = async (token, itineraryID) => {
   };
   const res = await fetch(url, context);
   const body = await res.json();
-  if (res.status === 400) {
-    alert(`Error: ${JSON.stringify(body)}`);
-  } else if (!res.ok) {
-    alert(`${res.status} (${res.statusText})`);
-  } else {
-    return body;
-  }
+  if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+  else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+  else {return body}
 };
 
 const getCarByID = async (token, itineraryID, carID) => {
@@ -115,13 +111,9 @@ const deleteCar = async (token, itineraryID, carID) => {
     };
     const res = await fetch(url, context);
     const body = await res.json();
-    if (res.status === 400) {
-      alert(`Error: ${JSON.stringify(body)}`);
-    } else if (!res.ok) {
-      alert(`${res.status} (${res.statusText})`);
-    } else {
-      return body;
-    }
+    if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+    else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+    else {return body}
   };
   
   const getReservationByID = async (token, itineraryID, reservationID) => {
@@ -206,18 +198,18 @@ const deleteCar = async (token, itineraryID, carID) => {
     }
   };
 
-export {
-  // Car functions
-  getAllCarsByItinerary,
-  getCarByID,
-  createCar,
-  editCar,
-  deleteCar,
-
-  // Reservation functions
-  getAllReservationsByItinerary,
-  getReservationByID,
-  createReservation,
-  editReservation,
-  deleteReservation,
-};
+  export {
+    // Car functions
+    getAllCarsByItinerary,
+    getCarByID,
+    createCar,
+    editCar,
+    deleteCar,
+  
+    // Reservation functions
+    getAllReservationsByItinerary,
+    getReservationByID,
+    createReservation,
+    editReservation,
+    deleteReservation,
+  };

@@ -6,53 +6,40 @@ import NavBar from './components/NavBar/NavBar';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
-
 import MapsPage from './pages/MapsPage';
 import ApiExample from './pages/ApiExample';
 import EditPersonalInfo from './pages/EditPersonalInfo';
-
 import { useState } from 'react';
 import TripSelection from './pages/TripSelection';
 import ChooseFlight from './pages/ChooseFlight';
-import ChooseHotel from './pages/ChooseHotel'
-import ChooseActivity from './pages/ChooseActivity'
-import ChooseRestaurant from './pages/ChooseRestaurant'
-
-// Import the rental car components
-import RentalCarForm from './components/RentalCarForm';
+import ChooseHotel from './pages/ChooseHotel';
+import ChooseActivity from './pages/ChooseActivity';
+import ChooseRestaurant from './pages/ChooseRestaurant';
 import ChooseCar from './pages/ChooseCar';
 
 function App() {
-  const [selections, setSelections] = useState([])
+  const [selections, setSelections] = useState([]);
 
   return (
     <div className="App">
       <Router>
         <AuthProvider>
+          <NavBar />
           <Routes>
-            <Route element={<PrivateRoutes />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/api-example" element={<ApiExample />} />
             <Route path="/personal-info/:userID" element={<EditPersonalInfo />} />
-          </Routes>
-          <NavBar />
-          <Routes>
-            <Route element={<PrivateRoutes />}>
-              <Route path="/" element={<HomePage />} />
+            <PrivateRoutes>
               <Route path="/itinerary/:itineraryID/trip-selection" element={<TripSelection selections={selections} setSelections={setSelections} />} />
               <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlight selections={selections} setSelections={setSelections} />} />
               <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotel />} />
               <Route path="/itinerary/:itineraryID/choose-car" element={<ChooseCar />} />
               <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurant />} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivity />} />
-            </Route>
+            </PrivateRoutes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-                        {/* Add a direct route to RentalCarForm.js */}
-            <Route path="/rental-form" element={<RentalCarForm />} />
-            {/* Add a direct route to ChooseCar.js */}
-            <Route path="/choose-car" element={<ChooseCar />} />
           </Routes>
         </AuthProvider>
       </Router>
