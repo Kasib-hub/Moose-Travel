@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router';
-import AnimatedPage from "./AnimatedPage";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import AuthContext from '../context/AuthContext';
+import { createHotel } from "../api/Hotel/Hotel";
 
 
 const HotelSearchBar = () => {
 
-    const travel_token = "SXMvnz0af6PdbTqfOVf8SofP33QT"
-    const [searchedHotels, setSearchedHotels] = useState(null)
+    let { amadeusToken } = useContext(AuthContext);
+    let { user, authTokens } = useContext(AuthContext);
     const [hotelOffers, setHotelOffers] = useState(null);
     const [guests, setGuests] = useState(1);
-    const navigate = useNavigate();
+    const [hotelsToSubmit, setHotelsToSubmit] = useState([]);
+
 
     useEffect(() => {
-        console.log('Hotel Offers');
-        console.log(hotelOffers)
-    }, [hotelOffers])
+
+    }, [])
 
   const [hotels, setHotels] = useState([
     { id: 1, cityCode: "", checkInDate: "", checkOutDate: "" },
@@ -59,7 +59,7 @@ const HotelSearchBar = () => {
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${travel_token}`,
+            Authorization: `Bearer ${ amadeusToken }`,
           },
         }
       )
@@ -75,7 +75,7 @@ const HotelSearchBar = () => {
             {
               method: "GET",
               headers: {
-                Authorization: `Bearer ${travel_token}`,
+                Authorization: `Bearer ${amadeusToken}`,
               },
             }
           );
@@ -91,7 +91,29 @@ const HotelSearchBar = () => {
     }
     Promise.all(promises).then(() => setHotelOffers(returnedOffers));
   };
+
+  const backendReadableConversion = (hotel) => {
+    hotel.map((originalHotel) => {
+      let convertedHotel = {
+        "user_id" : user.user_id,
+        "itinerary_id" : 1,
+        "hotel_name" : originalHotel.hotel.name,
+        "location" : originalHotel.hotel.cityCode,
+        "check_in_date" : originalHotel.offers["0"]["checkInDate"],
+        "check_out_date" : originalHotel.offers["0"]["checkOutDate"],
+      };
+      setHotelsToSubmit([...hotelsToSubmit, convertedHotel]);
+    });
+    console.log("Hotels to Submit");
+    console.log(hotelsToSubmit);
+  }
   
+  const submitHotelsToBackend = () => {
+    hotelsToSubmit.forEach((hotelObject) => {
+      createHotel(authTokens.access, hotelObject, 2);
+    });
+  };
+
 
   return (
 
@@ -159,19 +181,24 @@ const HotelSearchBar = () => {
             </form>
         </div>
 
-        {/* If the hotel offer only has one location, it will map through the children. Otherwise it will map through the indexes */}
         {hotelOffers && hotelOffers.map((hotel, index) => (
             <div key={index} className="hotelListingDiv">
                 <h2>{"Hotels for " + hotel["0"]["hotel"]["cityCode"]}</h2>
                 {hotel.map((offer, index) => (
-                    <div key={index}>
+                    <form key={index} onSubmit={(e) =>  {
+                      e.preventDefault();
+                      backendReadableConversion([offer]);
+                    }}>
                         <b>{offer["hotel"]["name"]}</b>
                         <p>{offer["offers"]["0"]["price"]["total"]}</p>
-                        <p>----------------------</p>
-                    </div>
+                        <button type="submit">Save Hotel</button>
+                    </form>
                 ))}
+                <p>--------------------------------</p>
             </div>
         ))}
+
+        <button onClick={ () => submitHotelsToBackend() }>Submit Hotels</button>
 
     </div>
 
@@ -179,5 +206,3 @@ const HotelSearchBar = () => {
 };
 
 export default HotelSearchBar;
-
-//fetch(`https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=HYATLJ12%2CYZATLB21&adults=1&checkInDate=2023-04-22&bestRateOnly=true`, {
