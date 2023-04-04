@@ -2,8 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import *
-# gets User import, We're not providing templates or forms. User doesn't interact with this directly. It's up to react to build the form and send the JSON object back to the djangoREST
-# you can add other properties form inherited User Model
+
 class SignupSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -27,7 +26,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
         instance.user_id = validated_data.get('user_id', instance.user_id)
         instance.save()
         return instance
-    
+
 class HotelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hotel
@@ -45,7 +44,7 @@ class HotelSerializer(serializers.ModelSerializer):
         instance.check_out_date= validated_data.get('check_out_date', instance.check_out_date)
         instance.save()
         return instance
-    
+
 class FlightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flight
@@ -63,8 +62,8 @@ class FlightSerializer(serializers.ModelSerializer):
         instance.arrival_date= validated_data.get('arrival_date', instance.arrival_date)
         instance.departure_date= validated_data.get('departure_date', instance.departure_date)
         instance.save()
-        return instance 
-    
+        return instance
+
 class RentalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rental
@@ -89,7 +88,7 @@ class AffinitySerializer(serializers.ModelSerializer):
         model = Affinity
         fields = "__all__"
 
-    def create(self, validated_data):
+    def create(self,    validated_data):
         return Affinity.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
@@ -98,7 +97,7 @@ class AffinitySerializer(serializers.ModelSerializer):
         instance.affinity_type = validated_data.get('affinity_type', instance.affinity_type)
         instance.save()
         return instance
-    
+
 class SightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sight
@@ -113,3 +112,33 @@ class SightSerializer(serializers.ModelSerializer):
         instance.sight_name = validated_data.get('sight_name', instance.sight_name)
         instance.save()
         return instance
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = ['id', 'vehicle_number', 'model', 'seating_capacity', 'rent_per_day']
+
+class AvailableCarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = ['id', 'vehicle_number', 'model', 'seating_capacity', 'rent_per_day', 'availability']
+
+class CarReservationSerializer(serializers.Serializer):
+    product = serializers.DictField(required=True)
+    transaction = serializers.DictField(required=True)
+    reservation = serializers.DictField(required=True)
+    rate_totals = serializers.DictField(required=True)
+    passenger = serializers.DictField(required=True)
+
+    def create(self, validated_data):
+        return CarReservation.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.product = validated_data.get('product', instance.product)
+        instance.transaction = validated_data.get('transaction', instance.transaction)
+        instance.reservation = validated_data.get('reservation', instance.reservation)
+        instance.rate_totals = validated_data.get('rate_totals', instance.rate_totals)
+        instance.passenger = validated_data.get('passenger', instance.passenger)
+        instance.save()
+        return instance
+
