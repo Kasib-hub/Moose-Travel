@@ -1,6 +1,6 @@
 .navbar {
   background-color: var(--leaf);
-  color: var(--celery);
+  color: var(--cream);
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
@@ -8,14 +8,13 @@
 }
 
 .user-text {
+  margin-left: 15rem;
   align-items: center;
 }
 
 .user-text p {
   margin: 0;
 }
-
-
 
 .navbar h2 {
   color: var(--celery);
@@ -31,5 +30,20 @@ a {
 }
 
 a:hover {
+  color: var(--celery);
+}
+
+.logout {
+  border: 1px solid var(--forest);
+  color: var(--cream);
+  border-radius: 1rem;
+  background-color: var(--forest);
+  padding: 0.5rem 1rem;
+  margin: 5px;
+  transition: all 0.2s;
+}
+
+.logout:hover {
+  border: 1px solid var(--celery);
   color: var(--celery);
 }

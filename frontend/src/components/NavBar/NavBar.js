@@ -24,7 +24,7 @@ function NavBar() {
       <div className='user-text'>
         {user && <p>Welcome {user.username}!</p>}
       </div>
-      <button onClick={logoutUser}>Logout</button>
+      <button onClick={logoutUser} className='logout'>Logout</button>
 
     </div>
   );
