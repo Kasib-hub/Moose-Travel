@@ -30,7 +30,7 @@ const RentalCarForm = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + "YOUR_BEARER_TOKEN", // Replace with your Bearer token
+          "Authorization": `Bearer YOUR_BEARER_TOKEN`,
         },
       });
 

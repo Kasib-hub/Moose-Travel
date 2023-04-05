@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const [errors, setErrors] = useState(null);
 
-  const getAmadeusToken = async () => {
+  const getAmadeusToken = useCallback(async () => {
     const BASE_URL = process.env.REACT_APP_BASE_URL;
     const url = `http://${BASE_URL}/api/amadeus/token/`;
     const context = {
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   }, [navigate]);
 
-  const getAvisToken = async () => {
+  const getAvisToken = useCallback(async () => {
     const CLIENT_ID = process.env.REACT_APP_AVIS_CLIENT_ID;
     const CLIENT_SECRET = process.env.REACT_APP_AVIS_CLIENT_SECRET;
     const TOKEN_URL = "https://stage.abgapiservices.com/oauth/token/v1";
