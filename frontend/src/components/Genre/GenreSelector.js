@@ -1,8 +1,12 @@
+import ChatGPTSummaryRequest from "../ChatGPTSummaryRequest"
 import "./GenreSelector.css"
+import { useState } from "react";
+import { useParams } from "react-router-dom"
 
 function GenreSelector ({likes, setLikes}) {
 
-  
+  const [showSummary, setShowSummary] = useState(false);
+  let {itineraryID} = useParams()
 
   const handleChange = (e) => {
     // destructuring the value and checked properies of the form of checkboxes
@@ -17,6 +21,12 @@ function GenreSelector ({likes, setLikes}) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(likes)
+    setLikes(likes)
+    setShowSummary(true)
+
+    setTimeout(() => {
+      window.location.href = `/itinerary/${itineraryID}/trip-summary`;
+    }, 7000); // delay in milliseconds
   }
 
 
@@ -53,6 +63,7 @@ function GenreSelector ({likes, setLikes}) {
           <button type="submit" className="submit-btn" id="like-submit">Submit</button>
 
         </form>
+        {showSummary && <ChatGPTSummaryRequest likes={likes} />}
       </div>  
     </>
 
