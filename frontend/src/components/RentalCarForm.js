@@ -53,16 +53,25 @@ const RentalCarForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const searchData = {
-      brand,
-      pickup_date: new Date(pickupDate),
-      pickup_location: pickupLocation,
-      dropoff_date: new Date(dropoffDate),
-      dropoff_location: dropoffLocation,
-      country_code: countryCode,
-    };
+    if (!pickupDate.trim() || !pickupLocation.trim() || !dropoffDate.trim() || !dropoffLocation.trim() || !countryCode.trim()) {
+      setError('Please fill out all required fields');
+      return;
+    }
 
-    await getCarAvailability(searchData);
+    try {
+      const searchData = {
+        brand,
+        pickup_date: new Date(pickupDate),
+        pickup_location: pickupLocation,
+        dropoff_date: new Date(dropoffDate),
+        dropoff_location: dropoffLocation,
+        country_code: countryCode,
+      };
+
+      await getCarAvailability(searchData);
+    } catch (error) {
+      setError('Invalid date format');
+    }
   };
 
 

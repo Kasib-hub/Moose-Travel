@@ -1,47 +1,4 @@
-import { createContext, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-
-const AuthContext = createContext();
-
-export default AuthContext;
-
-export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-
-  // callback sets the state on the initial load (mount) not every single time state changes
-  const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null
-  );
-
-  const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
-      : null
-  );
-
-  const [amadeusToken, setAmadeusToken] = useState(() =>
-    localStorage.getItem("amadeusToken") ? localStorage.getItem("amadeusToken") : null
-  );
-
-  const [avisToken, setAvisToken] = useState(() =>
-    localStorage.getItem("avisToken") ? localStorage.getItem("avisToken") : null
-  );
-
-  const [errors, setErrors] = useState(null);
-
-  const getAmadeusToken = async () => {
-    const BASE_URL = process.env.REACT_APP_BASE_URL;
-    const url = `http://${BASE_URL}/api/amadeus/token/`;
-    const context = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authTokens?.access}`,
-      },
-    };    
+    
     const resp = await fetch(url, context);
     const body = await resp.json();
     if (resp.ok) {
@@ -60,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       password: e.target.password.value,
     };
     console.log(userObj);
-    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const BASE_URL = process.env.REACT_APP_BASE_URL || "localhost:8000";
     const url = `http://${BASE_URL}/api/token/`;
     const context = {
       method: "POST",
@@ -92,6 +49,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("amadeusToken");
     navigate("/login");
   }, [navigate]);
+
 
   const getAvisToken = async () => {
     const CLIENT_ID = process.env.REACT_APP_AVIS_CLIENT_ID;
