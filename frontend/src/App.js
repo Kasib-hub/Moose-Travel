@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/NavBar/NavBar";
-import HomePage from "./pages/HomePage";
 import MapsPage from "./pages/MapsPage";
 import ApiExample from "./pages/ApiExample";
 import EditPersonalInfo from "./pages/EditPersonalInfo";
@@ -28,7 +27,6 @@ function App() {
         <AuthProvider>
           <NavBar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/api-example" element={<ApiExample />} />
             <Route path="/personal-info/:userID" element={<EditPersonalInfo />} />
