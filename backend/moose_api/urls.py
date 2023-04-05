@@ -18,5 +18,7 @@ urlpatterns = [
     path('itinerary/<int:itinerary_id>/affinity/', views.affinity, name='affinity'), 
     path('itinerary/<int:itinerary_id>/affinity/<int:affinity_id>/', views.affinity), 
     path('itinerary/<int:itinerary_id>/sight/', views.sight, name='sight'),
-    path('itinerary/<int:itinerary_id>/sight/<int:sight_id>', views.sight),
+    path('itinerary/<int:itinerary_id>/sight/<int:sight_id>/', views.sight),
+    path('itinerary/<int:itinerary_id>/car/', views.car, name='car'),
+    path('itinerary/<int:itinerary_id>/car/<int:car_id>/', views.car), 
 ]

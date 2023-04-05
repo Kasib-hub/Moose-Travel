@@ -220,7 +220,7 @@ def rental(request, itinerary_id, rental_id=None):
     # see all 
     if request.method == 'GET':
         if rental_id:
-            rental = Rental.objects.get(id=rental_id)
+            rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
             serializer = RentalSerializer(rental)
         else:
             rentals = Rental.objects.filter(itinerary_id=itinerary_id)
@@ -228,7 +228,7 @@ def rental(request, itinerary_id, rental_id=None):
         return Response(serializer.data)
     #update 
     elif request.method == 'PUT':
-        rental = Rental.objects.get(id=rental_id)
+        rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
         serializer = RentalSerializer(rental, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -245,52 +245,41 @@ def rental(request, itinerary_id, rental_id=None):
             return Response(serializer.errors, status=400)
     # delete
     elif request.method == 'DELETE':
-        rental = Rental.objects.get(id=rental_id)
+        rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
         rental.delete()
         return Response('Rental has been deleted.')
 
-
-
-@api_view(['GET'])
-def get_car_locations(request):
-    country_code = request.query_params.get('country_code')
-    brand = request.query_params.get('brand')
-    keyword = request.query_params.get('keyword')
-
-    # use the search_rental_cars function to get car locations
-    car_locations = search_rental_cars(country_code, brand, keyword)
-
-    return JsonResponse(car_locations, safe=False)
-
-
+############################################
 @api_view(['GET','POST','PUT','DELETE'])
-def car(request, car_id=None):
-    # see all
+def car(request, itinerary_id, car_id=None):
+    # see all 
     if request.method == 'GET':
         if car_id:
-            car = Car.objects.get(id=car_id)
+            car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
             serializer = CarSerializer(car)
         else:
-            cars = Car.objects.all()
+            cars = Car.objects.filter(itinerary_id=itinerary_id)
             serializer = CarSerializer(cars, many=True)
         return Response(serializer.data)
-    # update 
+    #update 
     elif request.method == 'PUT':
-        car = Car.objects.get(id=car_id)
+        car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
         serializer = CarSerializer(car, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        else:
+            return Response(serializer.errors, status=400)
     # create
     elif request.method == 'POST':
         serializer = CarSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        else:
+            return Response(serializer.errors, status=400)
     # delete
     elif request.method == 'DELETE':
-        car = Car.objects.get(id=car_id)
+        car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
         car.delete()
         return Response('Car has been deleted.')
