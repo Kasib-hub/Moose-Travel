@@ -9,7 +9,7 @@ import EditPersonalInfo from "./pages/EditPersonalInfo";
 import { useState } from "react";
 import YourItineriesPage from "./pages/YourItineriesPage";
 import TripSelection from "./pages/TripSelectionPage";
-import ChooseFlight from "./pages/ChooseFlight";
+import ChooseFlight from "./pages/ChooseFlightPage";
 import ChooseHotel from "./pages/ChooseHotelPage";
 import ChooseCar from "./pages/ChooseCarPage";
 import ChooseRestaurant from "./pages/ChooseRestaurantPage";
