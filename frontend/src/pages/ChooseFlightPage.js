@@ -37,7 +37,7 @@ function ChooseFlightPage({selections, setSelections}) {
   return (
     <div>
       <h1>Let's find you some flights  <img src={Map}/></h1>
-      <FlightSearchSelection selections={selections} setSelections={setSelections} ChangeRoute={ChangeRoute}/>
+      <FlightSearchSelection ChangeRoute={ChangeRoute}/>
     </div>
   );
 }

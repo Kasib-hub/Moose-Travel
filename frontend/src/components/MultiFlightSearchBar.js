@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
+import { Autocomplete } from "@react-google-maps/api"
 
 
 
-const MultiFlightSearchBar = () => {
+const MultiFlightSearchBar = ({ChangeRoute}) => {
 
     let { amadeusToken } = useContext(AuthContext)
     let { user, authTokens } = useContext(AuthContext)
+    let { itineraryID } = useParams()
 
   const [returnedFlightList, setReturnedFlightList] = useState(null);
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);
+
+  const options = {
+    types:['airport']
+  }
+
+  const handleOriginSelection = (e, id) => {
+    let regex = /\((.*?)\)/g
+    let iataCodeWithParenthesis = e.target.value.match(regex)
+    let iataCode = iataCodeWithParenthesis[0].replace(/\(|\)/g, "")
+    handleFlightChange(id, e.target.name, iataCode)
+    // (id, field, value) 
+  }
 
   useEffect(() => { 
   }, []);
@@ -26,7 +41,7 @@ const MultiFlightSearchBar = () => {
     const convertedList = segment.map((originalSegment) => {
       const convertedSegment = {
         "departure_date": originalSegment.departure.at.substring(0,10),
-        "itinerary_id": 1,
+        "itinerary_id": itineraryID,
         "user_id": user.user_id,
         "flight_type": "Multi-Flight",
         "departure": originalSegment.departure.iataCode,
@@ -36,7 +51,7 @@ const MultiFlightSearchBar = () => {
     });
 
     convertedList.forEach((flightObject) => {
-        createFlight(authTokens.access, flightObject, 2);
+        createFlight(authTokens.access, flightObject, itineraryID);
       });
 
   }
@@ -63,6 +78,7 @@ const MultiFlightSearchBar = () => {
   };
 
   const handleFlightChange = (id, field, value) => {
+    console.log(value)
     const updatedFlights = [...flights];
     const index = updatedFlights.findIndex((flight) => flight.id === id);
     updatedFlights[index][field] = value;
@@ -112,6 +128,8 @@ const MultiFlightSearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(e.target.from.value)
+    console.log(e.target.to.value)
   
     // Call findMultiFlight to send the API request
     findMultiFlight();
@@ -128,29 +146,49 @@ const MultiFlightSearchBar = () => {
                 <div key={flight.id} className="search-form">
     
                         <div className="search-input">
-                            <label style={{color: 'white', fontSize: '1.3rem'}}>From:</label>
-                            <input
+                            <label className="label">From:</label>
+                            <Autocomplete options={options}>
+                              <input 
+                                type='text' 
+                                name="from" 
+                                value={flight.from}
+                                onBlur={(event) => handleOriginSelection(event, flight.id)}
+                                onChange={(event) =>
+                                handleFlightChange(flight.id, "from", event.target.value)
+                                } />
+                            </Autocomplete>
+                            {/* <input
                                 type="text"
                                 value={flight.from}
                                 onChange={(event) =>
                                 handleFlightChange(flight.id, "from", event.target.value)
                                 }
-                            />
+                            /> */}
                         </div>
 
                         <div className="search-input">
-                            <label style={{color: 'white', fontSize: '1.3rem'}}>To:</label>
-                            <input
+                            <label className="label">To:</label>
+                            <Autocomplete options={options}>
+                              <input 
+                                type='text' 
+                                name="to" 
+                                value={flight.to} 
+                                onBlur={(event) => handleOriginSelection(event, flight.id)}
+                                onChange={(event) =>
+                                handleFlightChange(flight.id, "to", event.target.value)
+                                } />
+                            </Autocomplete>
+                            {/* <input
                                 type="text"
                                 value={flight.to}
                                 onChange={(event) =>
                                 handleFlightChange(flight.id, "to", event.target.value)
                                 }
-                            />
+                            /> */}
                         </div>
 
                         <div className="search-input">
-                            <label style={{color: 'white', fontSize: '1.3rem'}}>Departure Date:</label>
+                            <label className="label">Departure Date:</label>
                             <input
                                 type="date"
                                 value={flight.departureDate}
@@ -166,10 +204,10 @@ const MultiFlightSearchBar = () => {
                         
                 </div>
             ))}
-            <button type="button" onClick={handleAddFlight} className="add-search">
+            <button type="button" onClick={handleAddFlight} className="submit-btn">
                 Add Flight
             </button>
-            <button type="submit" className="hotel-search">Search</button>
+            <button type="submit" className="submit-btn">Search</button>
             </form>
         </div>
         {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
@@ -178,6 +216,7 @@ const MultiFlightSearchBar = () => {
                 const segments = flightGroup.itineraries.flatMap(itinerary => itinerary.segments);
                 const flightData = { segments };
                 backendReadableConversion(flightData.segments);
+                ChangeRoute()
             }}>
                 <div>
                 <h3><b>Price:</b> {flightGroup["price"]["grandTotal"]}</h3>

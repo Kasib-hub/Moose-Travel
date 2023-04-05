@@ -33,6 +33,8 @@ function App() {
   // the genres the user likes
   const [likes, setLikes] = useState([])
 
+
+
   if (!isLoaded) return <h2>Loading...</h2>
 
   return (

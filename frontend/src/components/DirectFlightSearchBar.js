@@ -110,14 +110,14 @@ function DirectFlightSearchBar({ChangeRoute}) {
                 </form>
             </div>
             {searchedFlights && searchedFlights.map((flight, index) => (
-                <div>
-                    <Card key={index} onClick={() => {
+                <div key={index}>
+                    <Card onClick={() => {
                         createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate), itineraryID)
                         ChangeRoute()
                         }}>
-                        <div key={index}>Origin: {flight.origin}</div>
-                        <div key={index}>Destination: {flight.destination}</div>
-                        <div key={index}>Price: {flight.price}</div>
+                        <div>Origin: {flight.origin}</div>
+                        <div>Destination: {flight.destination}</div>
+                        <div>Price: {flight.price}</div>
                     </Card>
                 </div>
                 ))}

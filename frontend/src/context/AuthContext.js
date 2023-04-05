@@ -93,7 +93,6 @@ export const AuthProvider = ({children}) => {
     const resp = await fetch(url, context)
     const body = await resp.json()
     if (resp.status === 200) {
-      console.log('token updated')
       setAmadeusToken(body.access_token)
       localStorage.setItem('amadeusToken', body.access_token)
     } else {
@@ -148,10 +147,10 @@ export const AuthProvider = ({children}) => {
   // refresh token from amadeus
   useEffect(() => {
 
-    // updates every 25 minutes = 1500000ms 
+    // updates every 5 minutes = 300000ms 
     let interval = setInterval(() => {
       if(amadeusToken) {getAmadeusToken()}
-    }, 1500000)
+    }, 300000)
     return () => clearInterval(interval)
   }, [amadeusToken])
 
