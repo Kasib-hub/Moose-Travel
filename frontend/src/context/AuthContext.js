@@ -147,19 +147,21 @@ useEffect(() => {
   return () => clearInterval(tokenInterval);
 }, [authTokens, updateToken]);
 
+// After
 useEffect(() => {
   const amadeusTokenInterval = setInterval(() => {
     getAmadeusToken();
   }, 1500000);
   return () => clearInterval(amadeusTokenInterval);
-}, []);
+}, [getAmadeusToken]); // Add getAmadeusToken to the dependency array
+
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
     getAvisToken();
   }, 7200000);
   return () => clearInterval(avisTokenInterval);
-}, []);
+}, [getAvisToken]);
 
 let contextData = {
   loginUser: loginUser,

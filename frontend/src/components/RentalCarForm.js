@@ -9,7 +9,6 @@ const RentalCarForm = () => {
   const [countryCode, setCountryCode] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const getCarAvailability = async (searchData) => {
     const url = new URL("https://stage.abgapiservices.com/cars/catalog/v1/vehicles");
@@ -22,8 +21,7 @@ const RentalCarForm = () => {
       country_code: searchData.country_code,
       iata_number: "0104724P",
       transaction_id: "23492034738",
-    });
-
+    }.toString().replace(/,/g, '&'));
     try {
       setLoading(true);
       setError(null);
