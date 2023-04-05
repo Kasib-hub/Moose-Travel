@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/NavBar/NavBar";
+import { Navigate } from 'react-router-dom';
 import MapsPage from "./pages/MapsPage";
 import ApiExample from "./pages/ApiExample";
 import EditPersonalInfo from "./pages/EditPersonalInfo";
