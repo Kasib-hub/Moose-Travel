@@ -24,10 +24,10 @@ h3 {
 }
 
 .submit-btn {
-  background-color: var(--leaf);
+  background-color: var(--forest);
   border: none;
-  border-radius: 5px;
-  color: var(--cream);
+  border-radius: 1.5rem;
+  color: var(--celery);
   padding: 0.75rem 1.5rem 0.75rem 1.5rem;
   transition: 0.3s all;
 }
@@ -98,7 +98,7 @@ h3 {
   }
 }
 
-.search-div {
+/* .search-div {
   display: flex;
   justify-content: center;
   background-color: var(--forest);
@@ -113,7 +113,12 @@ h3 {
 }
 
 .search-form input {
-  width: 2rem;
+  width: 20rem;
+}
+
+.radio-btns {
+  display: flex;
+  width: auto;
 }
 
 .search-input {
@@ -129,7 +134,7 @@ h3 {
   /* display: flex;
   align-items: center;
   justify-content: center; */
-  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+  /* box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
   border-radius: 50px;
   font-size: 16px;
   color: #333;
@@ -137,9 +142,9 @@ h3 {
   border-bottom: 2px solid #ccc;
   padding: 10px;
   width: 100%;
-}
+} */
 
-.search-input input[type="text"]::placeholder,
+/* .search-input input[type="text"]::placeholder,
 .search-input input[type="date"]::placeholder {
   color: #aaa;
 }
@@ -172,9 +177,12 @@ h3 {
 
 .flightTypeSelectionDiv {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-}
+  background-color: var(--forest);
+  border-radius: 50px;
+  margin: 1rem;
+  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+} */ */
 
 
 
@@ -214,11 +222,11 @@ h3 {
   transition: background-color 0.3s;
 }
 
-.search-button {
+/* .search-button {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /* .fade-enter {
   opacity: 0;

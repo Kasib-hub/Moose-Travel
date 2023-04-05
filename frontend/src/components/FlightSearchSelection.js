@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DirectFlightSearchBar from "./DirectFlightSearchBar";
 import RoundTripSearchBar from "./RoundTripSearchBar";
 import MultiFlightSearchBar from "./MultiFlightSearchBar";
+import "./FlightSearchSelection.css"
 
 
 const FlightSearchSelection = ({ onSubmit, ChangeRoute }, props) => {
@@ -12,40 +13,38 @@ const FlightSearchSelection = ({ onSubmit, ChangeRoute }, props) => {
   };
 
   return (
-    // <AnimatedPage>
     <div>
-        
         <div className="flightTypeSelectionDiv"> 
-            <div>
-                <label>
+            <div className="radio-btns">
                 <input
                     type="radio"
                     value="direct"
+                    id="direct"
                     checked={selectedOption === "direct"}
                     onChange={handleOptionChange}
                 />
-                Direct
-                </label>
+                <label htmlFor="direct">Direct</label>
+
             </div>
-            <div>
-                <label>
+            <div className="radio-btns">
                 <input
                     type="radio"
                     value="round-trip"
+                    id="round-trip"
                     checked={selectedOption === "round-trip"}
                     onChange={handleOptionChange}
                 />
-                Round Trip
-                </label>
+                <label htmlFor="round-trip">Round Trip</label>
             </div>
-            <div>
-                <label>
+            <div className="radio-btns">
                 <input
                     type="radio"
                     value="multi-trip"
+                    id="multi-trip"
                     checked={selectedOption === "multi-trip"}
                     onChange={handleOptionChange}
                 />
+                <label htmlFor="multi-trip">
                 Multi-Trip
                 </label>
             </div>
