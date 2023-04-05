@@ -233,19 +233,22 @@ def rental(request, itinerary_id, rental_id=None):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        else:
+            return Response(serializer.errors, status=400)
     # create
     elif request.method == 'POST':
         serializer = RentalSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        else:
+            return Response(serializer.errors, status=400)
     # delete
     elif request.method == 'DELETE':
         rental = Rental.objects.get(id=rental_id)
         rental.delete()
         return Response('Rental has been deleted.')
+
 
 
 @api_view(['GET'])
