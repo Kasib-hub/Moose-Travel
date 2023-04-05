@@ -32,6 +32,26 @@ export const AuthProvider = ({ children }) => {
 
   const [errors, setErrors] = useState(null);
 
+  const getAmadeusToken = async () => {
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const url = `http://${BASE_URL}/api/amadeus/token/`;
+    const context = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authTokens?.access}`,
+      },
+    };    
+    const resp = await fetch(url, context);
+    const body = await resp.json();
+    if (resp.ok) {
+      setAmadeusToken(body.access_token);
+      localStorage.setItem("amadeusToken", body.access_token);
+    } else {
+      console.error("Error getting access token: " + resp.status);
+    }
+  };  
+
   const loginUser = async (e) => {
     e.preventDefault();
     const userObj = {
@@ -54,8 +74,6 @@ export const AuthProvider = ({ children }) => {
     if (!resp.ok) {
       setErrors(body);
     } else {
-      // structure = body.access or refresh token
-      // storing user information from the decoded token to AuthContext; user info available through entire app that way.
       console.log(body);
       alert("Login Successful!");
       setAuthTokens(body);
@@ -63,9 +81,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(body));
       navigate("/");
     }
-    getAmadeusToken();
+    getAmadeusToken(); // Call getAmadeusToken regardless of whether login was successful
   };
-
+  
   const logoutUser = useCallback(() => {
     setAuthTokens(null);
     setUser(null);
