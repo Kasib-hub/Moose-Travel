@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/NavBar/NavBar";
 import MapsPage from "./pages/MapsPage";
@@ -30,16 +29,18 @@ function App() {
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/api-example" element={<ApiExample />} />
             <Route path="/personal-info/:userID" element={<EditPersonalInfo />} />
-            <PrivateRoutes>
-              <Route path="/itinerary/:itineraryID/trip-selection" element={<TripSelection selections={selections} setSelections={setSelections} />} />
-              <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlight selections={selections} setSelections={setSelections} />} />
-              <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotel />} />
-              <Route path="/itinerary/:itineraryID/choose-car" element={<ChooseCar />} />
-              <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurant />} />
-              <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivity />} />
-              <Route path="/itinerary/:itineraryID/summary" element={<TripSummaryPage />} />
-              <Route path="/your-itineraries" element={<YourItineriesPage />} />
-            </PrivateRoutes>
+            <Route path="/itinerary/:itineraryID/trip-selection" render={() => {
+              return localStorage.getItem('token') ? <TripSelection selections={selections} setSelections={setSelections} /> : <Navigate to='/login' replace={true} />;
+            }} />
+            <Route path="/itinerary/:itineraryID/choose-flight" render={() => {
+              return localStorage.getItem('token') ? <ChooseFlight selections={selections} setSelections={setSelections} /> : <Navigate to='/login' replace={true} />;
+            }} />
+            <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotel />} />
+            <Route path="/itinerary/:itineraryID/choose-car" element={<ChooseCar />} />
+            <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurant />} />
+            <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivity />} />
+            <Route path="/itinerary/:itineraryID/summary" element={<TripSummaryPage />} />
+            <Route path="/your-itineraries" element={<YourItineriesPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
