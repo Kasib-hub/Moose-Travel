@@ -23,7 +23,6 @@ const RentalCarForm = () => {
       transaction_id: "23492034738",
     }.toString().replace(/,/g, '&'));
     try {
-      setLoading(true);
       setError(null);
       setResult(null);
 
@@ -44,7 +43,7 @@ const RentalCarForm = () => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false);
+      console.log('Done');
     }
   };
 
