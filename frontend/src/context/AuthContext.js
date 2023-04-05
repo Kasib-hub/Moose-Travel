@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       console.error("Error getting access token: " + resp.status);
     }
-  };
+  }, [authTokens]);
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       console.error("Error getting access token: " + resp.status);
     }
-  };
+  } , []);
 
 const updateToken = useCallback(async () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -153,8 +153,7 @@ useEffect(() => {
     getAmadeusToken();
   }, 1500000);
   return () => clearInterval(amadeusTokenInterval);
-}, [getAmadeusToken]); // Add getAmadeusToken to the dependency array
-
+}, [getAmadeusToken]);
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
