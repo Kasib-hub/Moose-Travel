@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import RentalCarForm from '../components/RentalCarForm';
 
 const RentalCarPage = () => {
-  const { access_token } = useAuth();
+  // const { access_token } = useAuth();
   const [searchResults, setSearchResults] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
 

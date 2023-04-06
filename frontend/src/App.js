@@ -35,7 +35,7 @@ function App() {
 
 
 
-  if (!isLoaded) return <h2>Loading...</h2>
+  // if (!isLoaded) return <h2>Loading...</h2>
 
   return (
     <div className="App">
