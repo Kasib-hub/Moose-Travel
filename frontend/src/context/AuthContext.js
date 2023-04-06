@@ -41,7 +41,6 @@ export const AuthProvider = ({children}) => {
       "email": e.target.email.value,
       "password": e.target.password.value
     }
-    console.log(userObj)
     const BASE_URL = process.env.REACT_APP_BASE_URL
     const url = `http://${BASE_URL}/api/token/`
     const context = {

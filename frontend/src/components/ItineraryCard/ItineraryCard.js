@@ -9,7 +9,7 @@ function ItineraryCard ({id, itinerary_name, summary}) {
         <Card.Body>
           <Card.Title>{itinerary_name}</Card.Title>
           <Card.Text>
-            {summary ? summary : "No Summary Created"}
+            {summary ? `${summary.slice(0, 100)}...` : "No Summary Created"}
           </Card.Text>
           {/* navigate to a detail page of the summary */}
           <Link to={`/itinerary/${id}/trip-summary`}><button className='submit-btn'>Details</button></Link>
