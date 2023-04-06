@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RentalCarForm from '../components/RentalCarForm';
 
 const RentalCarPage = () => {
+  const { access_token } = useAuth();
   const [searchResults, setSearchResults] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
 
@@ -12,6 +13,7 @@ const RentalCarPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`,
       },
       body: JSON.stringify(searchData),
     });
@@ -29,12 +31,11 @@ const RentalCarPage = () => {
     alert(`You have successfully booked ${rentalData.car.make} ${rentalData.car.model} from ${rentalData.pickupDate} to ${rentalData.dropoffDate} at ${rentalData.rentalAgency} for $${rentalData.totalPrice}`);
     console.log(rentalData);
   };
-  
 
   return (
     <div>
       <h1>Rental Cars</h1>
-      <RentalCarForm onSearch={handleSearch} />
+      <RentalCarForm onSearch={handleSearch} access_token={access_token}/>
       {searchResults.length > 0 && (
         <table>
           <thead>
@@ -64,7 +65,7 @@ const RentalCarPage = () => {
       {selectedCar && (
         <div>
           <h2>Selected Car: {selectedCar.make} {selectedCar.model}</h2>
-          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} />
+          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} access_token={access_token} />
         </div>
       )}
     </div>

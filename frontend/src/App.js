@@ -1,38 +1,25 @@
-import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PrivateRoutes from './utils/PrivateRoutes';
-import { AuthProvider } from './context/AuthContext';
-import NavBar from './components/NavBar/NavBar';
-import StartItineraryPage from './pages/StartItineraryPage';
-import SignUpPage from './pages/SignUpPage';
-import LoginPage from './pages/LoginPage';
-// import { useLoadScript } from '@react-google-maps/api';
-// import EditPersonalInfo from './pages/EditPersonalInfo';
-import { useState } from 'react';
-// import { useLoadScript } from '@react-google-maps/api';
-import YourItinerariesPage from './pages/YourItineriesPage';
-import TripSelectionPage from './pages/TripSelectionPage';
-import ChooseFlightPage from './pages/ChooseFlightPage';
-import ChooseHotelPage from './pages/ChooseHotelPage'
-import ChooseActivityPage from './pages/ChooseActivityPage'
-import ChooseRestaurantPage from './pages/ChooseRestaurantPage'
-import RentalCarPage from './pages/RentalCarPage'
-import ChooseGenrePage from './pages/ChooseGenrePage';
-import TripSummaryPage from './pages/TripSummaryPage'
-import ChatGPTSummaryRequest from './components/ChatGPTSummaryRequest';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import NavBar from "./components/NavBar/NavBar";
+import { Navigate } from 'react-router-dom';
+import MapsPage from "./pages/MapsPage";
+import ApiExample from "./pages/ApiExample";
+import EditPersonalInfo from "./pages/EditPersonalInfo";
+import { useState } from "react";
+import YourItineriesPage from "./pages/YourItineriesPage";
+import TripSelection from "./pages/TripSelectionPage";
+import ChooseFlight from "./pages/ChooseFlightPage";
+import ChooseHotel from "./pages/ChooseHotelPage";
+import ChooseCar from "./pages/ChooseCarPage";
+import ChooseRestaurant from "./pages/ChooseRestaurantPage";
+import ChooseActivity from "./pages/ChooseActivityPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import TripSummaryPage from "./pages/TripSummaryPage";
 
 function App() {
-  // loading the google maps script
-  // const libraries = ['places']
-
-
-
-// import SupportEngine from './components/SupportEngine/SupportEngine';import RentalCarPage from './pages/RentalCarPage';
-
-  // the selections user makes on what forms they want to see when building their trip
-  const [selections, setSelections] = useState([])
-  // the genres the user likes
-  const [likes, setLikes] = useState([])
+  const [selections, setSelections] = useState([]);
 
   return (
     <div className="App">
@@ -57,7 +44,6 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
-          {/* <SupportEngine /> */}
         </AuthProvider>
       </Router>
     </div>

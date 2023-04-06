@@ -1,27 +1,28 @@
+from django.contrib.auth.models import User
+from django.http import JsonResponse, Http404
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.generics import CreateAPIView
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.generics import CreateAPIView
-from django.contrib.auth.models import User
-from .serializers import SignupSerializer
+from .models import *
 from .serializers import *
 import datetime
 from rest_framework import status
-from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view
-# from .sabre import search_rental_cars
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         # Add custom claims
         token['username'] = user.username #grabs the specified attributes of the user model. 'token' here is basically in encripted dictionary
         # ...
-
         return token
     
 class MyTokenObtainPairView(TokenObtainPairView):   #creates a new view for the serialized information that's based off the old template by inheriting the old method ('template')
@@ -151,37 +152,6 @@ def hotel(request, itinerary_id, hotel_id=None):
         hotel.delete()
         return Response('Hotel has been deleted.')
 
-# view, create, update or delete rental
-@api_view(['GET','POST','PUT','DELETE'])
-def rental(request, itinerary_id, rental_id=None):
-    # see all 
-    if request.method == 'GET':
-        if rental_id:
-            data = Rental.objects.get(id=rental_id)
-            serializer = RentalSerializer(data)
-        else:
-            rentals = Rental.objects.filter(itinerary_id=itinerary_id)
-            serializer = RentalSerializer(rentals, many = True)
-        return Response(serializer.data)
-    #update 
-    elif request.method == 'PUT':
-        rental = Rental.objects.get(id = rental_id)
-        serializer = RentalSerializer(instance = rental,data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(serializer.data)
-    # create
-    elif request.method == 'POST':
-        serializer = RentalSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(serializer.data)
-    # delete
-    elif request.method == 'DELETE':
-        rental = Rental.objects.get(id = rental_id)
-        rental.delete()
-        return Response('Rental has been deleted.')
-
 # view, create, update or delete affinity
 @api_view(['GET','POST','PUT','DELETE'])
 def affinity(request, itinerary_id, affinity_id=None):
@@ -244,58 +214,75 @@ def sight(request, itinerary_id, sight_id=None):
         sight.delete()
         return Response('Sight has been deleted.')
 
-@api_view(['POST'])
-def rental_car_search(request):
-    location = request.data.get('location')
-    pickup_date = request.data.get('pickup_date')
-    dropoff_date = request.data.get('dropoff_date')
+############################################
+# Rental Car Views
+############################################
 
-    try:
-        access_token = 'T1RLAQK9Nxp2ebr3kkR2PxF1UoSBAEV4XUfLbrh0AEoDQasfERCfBCPK0orePAe/63bbdpWqAADgSTUaP+035C9mKvWzSSdtXv2WpeLgBaZcLbuMC9HlvuC/KXezYWSyEklgKBBNnV2LHy0ulw0Sy0PVvZk/pDp367/1BjHc07hD3ldc5xP7isWzWm0Kzvb792dA6AtNic2VftZTXax+asTX4kf5cIkbJonj285S1ouf/7fqTEaNwkyUS2glC2fBzfTjQN50kUVcGWlsNUpeEbW4MG2UilzVnvrYXiDOeOku6IQpKjEmQGmv7xbzEuXneeiT0eiK5P0uTqXAOPM5E+tGGePc8MAT+O9FYFswZ9cdY1+8EGclhwk*'
+@api_view(['GET','POST','PUT','DELETE'])
+def rental(request, itinerary_id, rental_id=None):
+    # see all 
+    if request.method == 'GET':
+        if rental_id:
+            rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
+            serializer = RentalSerializer(rental)
+        else:
+            rentals = Rental.objects.filter(itinerary_id=itinerary_id)
+            serializer = RentalSerializer(rentals, many=True)
+        return Response(serializer.data)
+    #update 
+    elif request.method == 'PUT':
+        rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
+        serializer = RentalSerializer(rental, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    # create
+    elif request.method == 'POST':
+        serializer = RentalSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(serializer.errors, status=400)
+    # delete
+    elif request.method == 'DELETE':
+        rental = Rental.objects.get(id=rental_id, itinerary_id=itinerary_id)
+        rental.delete()
+        return Response('Rental has been deleted.')
 
-        response_data = search_rental_cars(location, pickup_date, dropoff_date, access_token)
-        return Response(response_data)
-    except Exception as e:
-        return Response({"error": str(e)}, status=400)
-
-@api_view(['POST'])
-def rental_car_submission(request):
-    # Collect user information from request data
-    name = request.data.get('name')
-    email = request.data.get('email')
-    phone = request.data.get('phone')
-    pickup_location = request.data.get('pickup_location')
-    pickup_date = request.data.get('pickup_date')
-    dropoff_location = request.data.get('dropoff_location')
-    dropoff_date = request.data.get('dropoff_date')
-
-    # Validate user information
-    if not name or not email or not phone or not pickup_location or not pickup_date or not dropoff_location or not dropoff_date:
-        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
-    # Check that pickup and dropoff dates are valid and in the future
-    today = datetime.date.today()
-    try:
-        pickup_date = datetime.datetime.strptime(pickup_date, '%Y-%m-%d').date()
-        dropoff_date = datetime.datetime.strptime(dropoff_date, '%Y-%m-%d').date()
-    except ValueError:
-        return Response({'error': 'Invalid date format. Please use yyyy-mm-dd.'}, status=status.HTTP_400_BAD_REQUEST)
-    if pickup_date <= today or dropoff_date <= today:
-        return Response({'error': 'Pickup and dropoff dates must be in the future.'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Submit rental request
-    rental_request = {
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'pickup_location': pickup_location,
-        'pickup_date': pickup_date.strftime('%Y-%m-%d'),
-        'dropoff_location': dropoff_location,
-        'dropoff_date': dropoff_date.strftime('%Y-%m-%d')
-    }
-    response = request.post('https://api.rentalcaragency.com/rental_requests', json=rental_request)
-    if response.status_code == 200:
-        # Display confirmation message to user
-        return Response({'message': 'Rental request submitted successfully.'}, status=status.HTTP_200_OK)
-    else:
-        # Handle errors from the API
-        return Response({'error': 'Failed to submit rental request.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+############################################
+@api_view(['GET','POST','PUT','DELETE'])
+def car(request, itinerary_id, car_id=None):
+    # see all 
+    if request.method == 'GET':
+        if car_id:
+            car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
+            serializer = CarSerializer(car)
+        else:
+            cars = Car.objects.filter(itinerary_id=itinerary_id)
+            serializer = CarSerializer(cars, many=True)
+        return Response(serializer.data)
+    #update 
+    elif request.method == 'PUT':
+        car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
+        serializer = CarSerializer(car, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    # create
+    elif request.method == 'POST':
+        serializer = CarSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(serializer.errors, status=400)
+    # delete
+    elif request.method == 'DELETE':
+        car = Car.objects.get(id=car_id, itinerary_id=itinerary_id)
+        car.delete()
+        return Response('Car has been deleted.')
