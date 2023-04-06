@@ -64,8 +64,8 @@ function EditPersonalInfo() {
 
   return (
     <>
-      <p> Please update your personal info {userID}</p>
-      <Form  onSubmit={handleSubmit}>
+      <p> Please update your personal info</p>
+      <Form  onSubmit={handleSubmit} className="boot-form">
       {/* form for updating username */}
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>User Name</Form.Label>

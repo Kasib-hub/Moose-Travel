@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom"
 import AuthContext from '../context/AuthContext';
 import { createHotel } from "../api/Hotel/Hotel";
 
@@ -7,6 +8,7 @@ const HotelSearchBar = () => {
 
     let { amadeusToken } = useContext(AuthContext);
     let { user, authTokens } = useContext(AuthContext);
+    let { itineraryID } = useParams();
     const [hotelOffers, setHotelOffers] = useState(null);
     const [guests, setGuests] = useState(1);
     const [hotelsToSubmit, setHotelsToSubmit] = useState([]);
@@ -96,7 +98,7 @@ const HotelSearchBar = () => {
     hotel.map((originalHotel) => {
       let convertedHotel = {
         "user_id" : user.user_id,
-        "itinerary_id" : 1,
+        "itinerary_id" : itineraryID,
         "hotel_name" : originalHotel.hotel.name,
         "location" : originalHotel.hotel.cityCode,
         "check_in_date" : originalHotel.offers["0"]["checkInDate"],
@@ -110,7 +112,7 @@ const HotelSearchBar = () => {
   
   const submitHotelsToBackend = () => {
     hotelsToSubmit.forEach((hotelObject) => {
-      createHotel(authTokens.access, hotelObject, 2);
+      createHotel(authTokens.access, hotelObject, itineraryID);
     });
   };
 

@@ -50,7 +50,7 @@ function SignUpPage() {
         </Alert>
       }
       <h2>&#9992; Sign up for Flights! &#9992;</h2>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="boot-form">
         <Form.Group className="mb-3" controlId="username">
           <Form.Label>User Name</Form.Label>
           <Form.Control type="text" placeholder="Enter username" required/>

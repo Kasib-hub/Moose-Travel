@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom"
+import HotelSearchBar from "../components/HotelSearchBar"
 
 function ChooseHotelPage ({selections, setSelections}) {
   let {itineraryID} = useParams()
@@ -18,6 +19,7 @@ function ChooseHotelPage ({selections, setSelections}) {
   return (
     <>
       <h1>Hotel Page</h1>
+      <HotelSearchBar />
       <button onClick={handleClick}>Next</button>
     </>
     

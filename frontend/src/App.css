@@ -6,8 +6,11 @@
   text-align: center;
   height: 100%;
   width: 100%;
-  
 }
+
+/* p, label, div {
+  font-size: 1.5rem;
+} */
 
 h1, h2 {
   color: var(--forest);
@@ -21,6 +24,21 @@ h3 {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.boot-form {
+  margin: auto;
+  width: 60%;
+}
+
+.link {
+  color: var(--forest);
+  text-decoration: none;
+  margin:auto;
+}
+
+.link:hover {
+  color: var(--pear);
 }
 
 .submit-btn {
@@ -39,6 +57,20 @@ h3 {
 
 .submit-btn:active {
   background-color: black
+}
+
+.other-btn {
+  background-color: var(--celery);
+  border: 2px solid var(--forest);
+  border-radius: 1.5rem;
+  color: var(--forest);
+  padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+  transition: 0.3s all;
+}
+
+.other-btn:hover {
+  color: #405849;
+  background-color: #ada9a9;
 }
 
 .large-btn {
@@ -97,92 +129,6 @@ h3 {
     transform: rotate(360deg);
   }
 }
-
-/* .search-div {
-  display: flex;
-  justify-content: center;
-  background-color: var(--forest);
-  border-radius: 50px;
-  margin: 1rem;
-  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
-}
-
-.search-form {
-  display: flex;
-  justify-content: center;
-}
-
-.search-form input {
-  width: 20rem;
-}
-
-.radio-btns {
-  display: flex;
-  width: auto;
-}
-
-.search-input {
-  margin-right: 20px;
-  padding: 1.3rem;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.search-input input[type="text"],
-.search-input input[type="date"],
-.search-input select {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  /* box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
-  border-radius: 50px;
-  font-size: 16px;
-  color: #333;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  padding: 10px;
-  width: 100%;
-} */
-
-/* .search-input input[type="text"]::placeholder,
-.search-input input[type="date"]::placeholder {
-  color: #aaa;
-}
-
-.search-input select {
-  width: 110px;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath fill='%23333' d='M0 0l4 5 4-5H0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: auto 30%;
-}
-
-.search-button button {
-  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
-  font-size: 16px;
-  color: #fff;
-  background-color: #333;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.search-button button:hover {
-  background-color: #222;
-}
-
-.flightTypeSelectionDiv {
-  display: flex;
-  justify-content: center;
-  background-color: var(--forest);
-  border-radius: 50px;
-  margin: 1rem;
-  box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
-} */ */
 
 
 
@@ -273,22 +219,26 @@ h3 {
 
 .card{
   opacity: 0.8;
+  font-size: 1.5rem;
   position: relative;
   display: flex;
   width: 40%;
   align-items: column;
   flex-direction: column;
   justify-content: center;
+  padding: 1rem;
   background-color: var(--forest);
   color: var(--celery);
   border-radius: 25px;
-  margin: 2rem 0rem;
+  margin: 2rem auto;
   box-shadow: 4.4px 8.8px 8.8px hsl(0deg 0% 0% / 0.36);
+  transition: all 0.2s ;
 }
 .card:hover{
   background-color: #2e4b41;
   border-color: #013a3c;
   box-shadow: 0 0 5px 0 black;
+  cursor: pointer;
 }
 /* .card1{
   

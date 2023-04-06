@@ -115,7 +115,7 @@ function RoundTripSearchBar({ChangeRoute}) {
                     </div>
 
                     <div className="search-button">
-                        <button type="submit">Search</button>
+                        <button type="submit" className='submit-btn'>Search</button>
                     </div>
 
                 </form>

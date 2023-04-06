@@ -23,7 +23,7 @@ function TripSelection({selections, setSelections}) {
 
   return (
     <div>
-      <h1>Customize your trip: Name - {itineraryName}</h1>
+      <h1>Customize your trip!</h1>
       <TripSelector selections={selections} setSelections={setSelections}/>
     </div>
   );

@@ -28,8 +28,8 @@ function StartItineraryPage() {
   return (
     <div>
       <h1>Welcome to Moose Travel</h1>
-      <h2>You're Best Travel Partner</h2>
-      <Form onSubmit={handleSubmit}>
+      <h2>"You're Best Travel Partner"</h2>
+      <Form onSubmit={handleSubmit} className="boot-form">
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name your Trip!</Form.Label>
           <Form.Control type="text" placeholder="Enter a Name" required/>

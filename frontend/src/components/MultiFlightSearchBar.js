@@ -22,12 +22,12 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
     types:['airport']
   }
 
+  // get the IATA code from the airport name then set the state
   const handleOriginSelection = (e, id) => {
     let regex = /\((.*?)\)/g
     let iataCodeWithParenthesis = e.target.value.match(regex)
     let iataCode = iataCodeWithParenthesis[0].replace(/\(|\)/g, "")
     handleFlightChange(id, e.target.name, iataCode)
-    // (id, field, value) 
   }
 
   useEffect(() => { 
@@ -128,8 +128,6 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.from.value)
-    console.log(e.target.to.value)
   
     // Call findMultiFlight to send the API request
     findMultiFlight();
@@ -157,13 +155,6 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
                                 handleFlightChange(flight.id, "from", event.target.value)
                                 } />
                             </Autocomplete>
-                            {/* <input
-                                type="text"
-                                value={flight.from}
-                                onChange={(event) =>
-                                handleFlightChange(flight.id, "from", event.target.value)
-                                }
-                            /> */}
                         </div>
 
                         <div className="search-input">
@@ -178,13 +169,6 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
                                 handleFlightChange(flight.id, "to", event.target.value)
                                 } />
                             </Autocomplete>
-                            {/* <input
-                                type="text"
-                                value={flight.to}
-                                onChange={(event) =>
-                                handleFlightChange(flight.id, "to", event.target.value)
-                                }
-                            /> */}
                         </div>
 
                         <div className="search-input">
@@ -198,7 +182,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
                             />
                         </div>
 
-                        <button type="button" onClick={() => handleDeleteFlight(flight.id)} className="deleteButton">
+                        <button type="button" onClick={() => handleDeleteFlight(flight.id)} className="other-btn">
                             Delete Flight
                         </button>
                         
