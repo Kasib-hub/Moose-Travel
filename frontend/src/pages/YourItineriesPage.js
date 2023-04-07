@@ -23,7 +23,7 @@ function YourItinerariesPage () {
     <div>
       <h1>Your stuff Page</h1>
       {
-        userItineraries && userItineraries.map((itinerary, idx) => {
+        userItineraries && userItineraries.map((itinerary) => {
           return (
             <ItineraryCard key={itinerary.id} id={itinerary.id} itinerary_name={itinerary.itinerary_name} summary={itinerary.summary}/>
           )
