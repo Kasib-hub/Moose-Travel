@@ -13,7 +13,7 @@ const RentalCarPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${access_token}`,
+        // Authorization: `Bearer ${access_token}`,
       },
       body: JSON.stringify(searchData),
     });
@@ -35,7 +35,7 @@ const RentalCarPage = () => {
   return (
     <div>
       <h1>Rental Cars</h1>
-      <RentalCarForm onSearch={handleSearch} access_token={access_token}/>
+      {/* <RentalCarForm onSearch={handleSearch} access_token={access_token}/> */}
       {searchResults.length > 0 && (
         <table>
           <thead>
@@ -65,7 +65,7 @@ const RentalCarPage = () => {
       {selectedCar && (
         <div>
           <h2>Selected Car: {selectedCar.make} {selectedCar.model}</h2>
-          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} access_token={access_token} />
+          {/* <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} access_token={access_token} /> */}
         </div>
       )}
     </div>
