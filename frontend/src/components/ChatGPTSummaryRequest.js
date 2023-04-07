@@ -91,7 +91,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
             getSummary()
         }
-    }, [flights, hotels, getSummary])
+    }, [flights, hotels])
 
     useEffect(() => {
 
