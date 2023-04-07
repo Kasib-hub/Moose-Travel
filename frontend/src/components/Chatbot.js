@@ -1,9 +1,8 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react'
 
-const API_KEY = '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'
-
+const GPT_API_KEY = process.env.REACT_APP_GPT_API_KEY
 function Chatbot() {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
@@ -79,7 +78,7 @@ function Chatbot() {
             method: "POST",
 
             headers: {
-                "Authorization": "Bearer " + API_KEY,
+                "Authorization": "Bearer " + GPT_API_KEY,
                 "Content-Type": "application/json"
             },
 
