@@ -5,7 +5,7 @@ function ChooseHotelPage ({selections, setSelections}) {
   let {itineraryID} = useParams()
   const navigate = useNavigate()
 
-  const handleClick = () => {
+  const ChangeRoute = () => {
     if (selections.length < 1) {
       console.log('empty array')
       return navigate(`/itinerary/${itineraryID}/choose-genre`)
@@ -19,8 +19,7 @@ function ChooseHotelPage ({selections, setSelections}) {
   return (
     <>
       <h1>Hotel Page</h1>
-      <HotelSearchBar />
-      <button onClick={handleClick}>Next</button>
+      <HotelSearchBar ChangeRoute={ChangeRoute}/>
     </>
     
   )

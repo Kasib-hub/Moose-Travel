@@ -4,7 +4,7 @@ import AuthContext from '../context/AuthContext';
 import { createHotel } from "../api/Hotel/Hotel";
 
 
-const HotelSearchBar = () => {
+const HotelSearchBar = ({ChangeRoute}) => {
 
     let { amadeusToken } = useContext(AuthContext);
     let { user, authTokens } = useContext(AuthContext);
@@ -104,16 +104,19 @@ const HotelSearchBar = () => {
         "check_in_date" : originalHotel.offers["0"]["checkInDate"],
         "check_out_date" : originalHotel.offers["0"]["checkOutDate"],
       };
-      setHotelsToSubmit([...hotelsToSubmit, convertedHotel]);
+      return setHotelsToSubmit([...hotelsToSubmit, convertedHotel]);
     });
     console.log("Hotels to Submit");
     console.log(hotelsToSubmit);
+    
   }
   
   const submitHotelsToBackend = () => {
     hotelsToSubmit.forEach((hotelObject) => {
       createHotel(authTokens.access, hotelObject, itineraryID);
+      
     });
+    ChangeRoute()
   };
 
 

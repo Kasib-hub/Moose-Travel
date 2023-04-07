@@ -24,5 +24,5 @@ urlpatterns = [
     path('itinerary/<int:itinerary_id>/affinity/<int:affinity_id>/', affinity), 
     path('itinerary/<int:itinerary_id>/sight/', sight, name='sight'),
     path('itinerary/<int:itinerary_id>/sight/<int:sight_id>', sight),  
-    path('rental_car_search/', views.rental_car_search, name='rental_car_search'),
+    # path('rental_car_search/', views.rental_car_search, name='rental_car_search'),
 ]

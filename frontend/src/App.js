@@ -6,7 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import StartItineraryPage from './pages/StartItineraryPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
-// import { useLoadScript } from '@react-google-maps/api';
+import { useLoadScript } from '@react-google-maps/api';
 import EditPersonalInfo from './pages/EditPersonalInfo';
 import { useState } from 'react';
 import YourItinerariesPage from './pages/YourItineriesPage';
@@ -14,19 +14,18 @@ import TripSelectionPage from './pages/TripSelectionPage';
 import ChooseFlightPage from './pages/ChooseFlightPage';
 import ChooseHotelPage from './pages/ChooseHotelPage'
 import ChooseActivityPage from './pages/ChooseActivityPage'
-import ChooseRestaurantPage from './pages/ChooseRestaurantPage'
 import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
 
 function App() {
   // loading the google maps script
-  // const libraries = ['places']
+  const libraries = ['places']
 
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
-  //   libraries
-  // })
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries
+  })
 
   // the selections user makes on what forms they want to see when building their trip
   const [selections, setSelections] = useState([])
@@ -35,7 +34,7 @@ function App() {
 
 
 
-  // if (!isLoaded) return <h2>Loading...</h2>
+  if (!isLoaded) return <h2>Loading...</h2>
 
   return (
     <div className="App">
@@ -51,7 +50,6 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-flight" element={<ChooseFlightPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-hotel" element={<ChooseHotelPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-car" element={<RentalCarPage selections={selections} setSelections={setSelections}/>} />
-              <Route path="/itinerary/:itineraryID/choose-restaurant" element={<ChooseRestaurantPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-activity" element={<ChooseActivityPage selections={selections} setSelections={setSelections}/>} />
               <Route path="/itinerary/:itineraryID/choose-genre" element={<ChooseGenrePage likes={likes} setLikes={setLikes}/>} />
               {/* Trip summary makes the get requests*/}

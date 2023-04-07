@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import Airplane from '../../assets/airplane.svg'
 import Car from '../../assets/car.svg'
 import Hotel from '../../assets/hotel.svg'
-import Restaurant from '../../assets/restaurant.svg'
 import Sight from '../../assets/sight.svg'
 import './TripSelector.css'
 
@@ -58,14 +57,6 @@ function TripSelector({selections, setSelections}) {
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-car`}/>
             <label>Rental Car</label>
-          </div>
-        </div>
-
-        <div className='trip-checkbox'>
-          <img src={Restaurant} alt="Restaurant Icon" />
-          <div className='labels'>
-            <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-restaurant`}/>
-            <label>Restaurants</label>
           </div>
         </div>
 

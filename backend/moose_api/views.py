@@ -252,7 +252,7 @@ def sight(request, itinerary_id, sight_id=None):
 #     try:
 #         access_token = 'T1RLAQK9Nxp2ebr3kkR2PxF1UoSBAEV4XUfLbrh0AEoDQasfERCfBCPK0orePAe/63bbdpWqAADgSTUaP+035C9mKvWzSSdtXv2WpeLgBaZcLbuMC9HlvuC/KXezYWSyEklgKBBNnV2LHy0ulw0Sy0PVvZk/pDp367/1BjHc07hD3ldc5xP7isWzWm0Kzvb792dA6AtNic2VftZTXax+asTX4kf5cIkbJonj285S1ouf/7fqTEaNwkyUS2glC2fBzfTjQN50kUVcGWlsNUpeEbW4MG2UilzVnvrYXiDOeOku6IQpKjEmQGmv7xbzEuXneeiT0eiK5P0uTqXAOPM5E+tGGePc8MAT+O9FYFswZ9cdY1+8EGclhwk*'
 
-#         response_data = search_rental_cars(location, pickup_date, dropoff_date, access_token)
+#         # response_data = search_rental_cars(location, pickup_date, dropoff_date, access_token)
 #         return Response(response_data)
 #     except Exception as e:
 #         return Response({"error": str(e)}, status=400)
