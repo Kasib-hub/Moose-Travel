@@ -17,9 +17,13 @@ import ChooseActivityPage from './pages/ChooseActivityPage'
 import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
+import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
   // loading the google maps script
+
+  let user = localStorage.getItem('authTokens')
+
   const libraries = ['places']
 
   const { isLoaded } = useLoadScript({
@@ -54,11 +58,12 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-genre" element={<ChooseGenrePage likes={likes} setLikes={setLikes}/>} />
               {/* Trip summary makes the get requests*/}
               <Route path="/itinerary/:itineraryID/trip-summary" element={<TripSummaryPage />} /> 
+              
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
-          {/* <SupportEngine /> */}
+          {user && <SupportEngine />}
         </AuthProvider>
       </Router>
     </div>
