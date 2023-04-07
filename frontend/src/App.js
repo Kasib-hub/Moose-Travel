@@ -22,7 +22,7 @@ import TripSummaryPage from './pages/TripSummaryPage'
 function App() {
   // loading the google maps script
 
-  let user = localStorage.getItem('authTokens')
+  // let user = localStorage.getItem('authTokens')
 
   const libraries = ['places']
 
