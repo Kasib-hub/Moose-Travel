@@ -42,17 +42,17 @@ function ChatGPTSummaryRequest ({ likes }) {
         }
         fetchHotels()
 
-        const fetchRentals = async () => {
-        const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
-        setRentals(fetchedRentals)
-        }
-        fetchRentals()
+        // const fetchRentals = async () => {
+        // const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
+        // setRentals(fetchedRentals)
+        // }
+        // fetchRentals()
 
-        const fetchAffinities = async () => {
-        const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
-        setAffinities(fetchedAffinities)
-        }
-        fetchAffinities()
+        // const fetchAffinities = async () => {
+        // const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
+        // setAffinities(fetchedAffinities)
+        // }
+        // fetchAffinities()
 
         // const fetchSights = async () => {
         // const fetchedSights = await getAllSightsByItinerary(authTokens.access, itineraryID)
