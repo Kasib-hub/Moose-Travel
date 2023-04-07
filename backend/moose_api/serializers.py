@@ -24,6 +24,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.itinerary_name = validated_data.get('itinerary_name', instance.itinerary_name)
         instance.user_id = validated_data.get('user_id', instance.user_id)
+        instance.summary = validated_data.get('summary', instance.summary)
         instance.save()
         return instance
 
