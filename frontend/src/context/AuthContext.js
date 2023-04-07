@@ -10,58 +10,69 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // callback sets the state on the initial load (mount) not every single time state changes
-  const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
+  const [authTokens, setAuthTokens] = useState( () => {
+      return localStorage.getItem('authTokens') 
+      ? JSON.parse(localStorage.getItem('authTokens'))
       : null
-  );
+    }
+  )
 
-  const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
+  const [user, setUser] = useState( () => {
+      return localStorage.getItem('authTokens') 
+      ? jwt_decode(localStorage.getItem('authTokens'))
       : null
-  );
+    }
+  )
 
-  const [amadeusToken, setAmadeusToken] = useState(() =>
-    localStorage.getItem("amadeusToken") ? localStorage.getItem("amadeusToken") : null
-  );
-
-  const [avisToken, setAvisToken] = useState(() =>
-    localStorage.getItem("avisToken") ? localStorage.getItem("avisToken") : null
-  );
+  const [amadeusToken, setAmadeusToken] = useState( () => {
+      return localStorage.getItem('amadeusToken') 
+      ? localStorage.getItem('amadeusToken')
+      : null
+    }
+  )
+  
+  const [avisToken, setAvisToken] = useState( () => {
+      return localStorage.getItem('avisToken') 
+      ? localStorage.getItem('avisToken')
+      : null
+    }
+  )
 
   const [errors, setErrors] = useState(null);
 
-  const getAmadeusToken = useCallback(async () => {
-    const BASE_URL = process.env.REACT_APP_BASE_URL;
-    const url = `http://${BASE_URL}/api/amadeus/token/`;
+  const getAmadeusToken = async () => {
+    console.log('amadeus!')
+    const client_id = process.env.REACT_APP_CLIENT_ID
+    const client_secret = process.env.REACT_APP_CLIENT_SECRET
+    const url = `https://test.api.amadeus.com/v1/security/oauth2/token`
+    const data = `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`
     const context = {
-      method: "GET",
+      method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authTokens?.access}`,
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-    };    
-    const resp = await fetch(url, context);
-    const body = await resp.json();
-    if (resp.ok) {
-      setAmadeusToken(body.access_token);
-      localStorage.setItem("amadeusToken", body.access_token);
-    } else {
-      console.error("Error getting access token: " + resp.status);
+      body: data
     }
-  }, [authTokens]);
+    const resp = await fetch(url, context)
+    const body = await resp.json()
+    if (resp.status === 200) {
+      console.log('token updated')
+      setAmadeusToken(body.access_token)
+      localStorage.setItem('amadeusToken', body.access_token)
+    } else {
+      alert("issue with your amadeus token")
+    }
+  }
 
   const loginUser = async (e) => {
     e.preventDefault();
     const userObj = {
-      username: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-    console.log(userObj);
-    const BASE_URL = process.env.REACT_APP_BASE_URL || "localhost:8000";
-    const url = `http://${BASE_URL}/api/token/`;
+      "username": e.target.username.value,
+      "email": e.target.email.value,
+      "password": e.target.password.value
+    }
+    const BASE_URL = process.env.REACT_APP_BASE_URL
+    const url = `http://${BASE_URL}/api/token/`
     const context = {
       method: "POST",
       headers: {
@@ -79,17 +90,20 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(body);
       setUser(jwt_decode(body.access));
       localStorage.setItem("authTokens", JSON.stringify(body));
+      getAmadeusToken();
       navigate("/");
     }
-    getAmadeusToken(); // Call getAmadeusToken regardless of whether login was successful
+     // Call getAmadeusToken regardless of whether login was successful
   };
   
   const logoutUser = useCallback(() => {
     setAuthTokens(null);
     setUser(null);
     setAmadeusToken(null);
+    setAvisToken(null);
     localStorage.removeItem("authTokens");
     localStorage.removeItem("amadeusToken");
+    localStorage.removeItem("avisToken");
     navigate("/login");
   }, [navigate]);
 
@@ -150,10 +164,10 @@ useEffect(() => {
 // After
 useEffect(() => {
   const amadeusTokenInterval = setInterval(() => {
-    getAmadeusToken();
-  }, 1500000);
+    if(amadeusToken) getAmadeusToken();
+  }, 30000);
   return () => clearInterval(amadeusTokenInterval);
-}, [getAmadeusToken]);
+}, [amadeusToken]);
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
@@ -173,9 +187,9 @@ let contextData = {
   getAvisToken: getAvisToken,
 };
 
-return (
-  <AuthContext.Provider value={contextData}>
-    {children}
-  </AuthContext.Provider>
-)
+  return (
+    <AuthContext.Provider value={contextData}>
+      {children}
+    </AuthContext.Provider>
+  )
 }

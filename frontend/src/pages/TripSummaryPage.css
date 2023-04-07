@@ -2,3 +2,7 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.summary {
+  width: 50%;
+}

@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { createFlight } from '../api/Flight/Flight';
+import AutoCompleteInput from './AutoComplete/AutoCompleteInput';
 
 
-function RoundTripSearchBar() {
+function RoundTripSearchBar({ChangeRoute}) {
 
     let { amadeusToken } = useContext(AuthContext)
     let { user, authTokens } = useContext(AuthContext)
+    let { itineraryID } = useParams()
 
     const [searchedFlights, setSearchedFlights] = useState(null)
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
@@ -62,7 +65,7 @@ function RoundTripSearchBar() {
     const flightToSubmit = (origin, destination, price, departureDate, returnDate) => {
         let flightData =  {
          "departure_date": departureDate,
-         "itinerary_id": 1,
+         "itinerary_id": itineraryID,
          "user_id": user.user_id,
          "flight_type": "Direct",
          "departure": origin,
@@ -80,22 +83,24 @@ function RoundTripSearchBar() {
                 <form className="search-form" onSubmit={handleSubmit}>
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Origin</p>
-                        <input type="text" name='origin' placeholder="Where do you want to go?" />
+                        <p className="label" >Origin</p>
+                        <AutoCompleteInput name="origin" placeholder="Where are you flying from?"/>
+                        {/* <input type="text" name='origin' placeholder="Where do you want to go?" /> */}
                     </div>
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p>
+                        <p className="label" >Departure Date</p>
                         <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} onChange={handleDateChange}/>
                     </div>
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Destination</p>
-                        <input type="text" name='destination' placeholder="Where do you want to go?" />
+                        <p className="label" >Destination</p>
+                        <AutoCompleteInput name="destination" placeholder="Where do you want to go?"/>
+                        {/* <input type="text" name='destination' placeholder="Where do you want to go?" /> */}
                     </div>
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Return Date</p>
+                        <p className="label" >Return Date</p>
                         <input type="date" name="returnDate" placeholder="Check-out" min={returnDate}/>
                     </div>
 
@@ -110,7 +115,7 @@ function RoundTripSearchBar() {
                     </div>
 
                     <div className="search-button">
-                        <button type="submit">Search</button>
+                        <button type="submit" className='submit-btn'>Search</button>
                     </div>
 
                 </form>
@@ -118,8 +123,11 @@ function RoundTripSearchBar() {
             </div>
 
             {searchedFlights && searchedFlights.map((flight, index) => (
-                <div>
-                    <Card key={index} onClick={() => createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate, flight.returnDate), 1)}>
+                <div key={index}>
+                    <Card onClick={() => {
+                        createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate, flight.returnDate), itineraryID)
+                        ChangeRoute()
+                        }}>
                         <div>Origin: {flight.origin}</div>
                         <div>Destination: {flight.destination}</div>
                         <div>Price: {flight.price}</div>

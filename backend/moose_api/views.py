@@ -1,10 +1,5 @@
 from django.contrib.auth.models import User
-from django.http import JsonResponse, Http404
-from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from rest_framework.decorators import api_view
@@ -12,8 +7,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import *
 from .serializers import *
-import datetime
-from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

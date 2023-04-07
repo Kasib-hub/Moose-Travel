@@ -18,7 +18,7 @@ function LoginPage() {
         </Alert>
       }
     <h2>&#9992; Login for Flights! &#9992;</h2>
-    <Form onSubmit={loginUser}>
+    <Form onSubmit={loginUser} className="boot-form">
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>User Name</Form.Label>
         <Form.Control type="text" placeholder="Enter username" required/>
@@ -38,7 +38,7 @@ function LoginPage() {
         Login
       </Button>
     </Form>
-    <p>Doesn't have an account with us? <Link to={'/signup'}>Signup</Link> now!</p>
+    <p>Doesn't have an account with us? <Link to={'/signup'} className="link">Signup</Link> now!</p>
     </>
   );
 }

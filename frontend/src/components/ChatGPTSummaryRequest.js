@@ -3,26 +3,18 @@ import AuthContext from "../context/AuthContext"
 import { useEffect, useState, useContext } from "react"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
-// import { getAllRentalsByItinerary } from "../api/Rental/Rental"
-// import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
-
-
 
 function ChatGPTSummaryRequest ({ likes }) {
 
     let {itineraryID} = useParams()
     let {user, authTokens} = useContext(AuthContext)
-    const apiKey = "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";
+    const apiKey = process.env.REACT_APP_GPT_API_KEY
   
     const [itinerary, setItinerary] = useState()
     const [flights, setFlights] = useState()
     const [hotels, setHotels] = useState()
     const [summary, setSummary] = useState()
-    // const [rentals, setRentals] = useState()
-    // const [affinities, setAffinities] = useState()
-    // const [sights, setSights] = useState()
-
     useEffect(() => {
         const fetchItinerary = async () => {
         const fetchedItinerary = await getItineraryByID(authTokens.access, itineraryID)
@@ -91,7 +83,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
             getSummary()
         }
-    }, [flights, hotels, likes])
+    }, [flights, hotels, likes, apiKey])
 
     useEffect(() => {
 
@@ -109,7 +101,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
         putSummary()
 
-    }, [summary, authTokens.access, itinerary.itinerary_name, itineraryID, user.user_id])
+    }, [summary, authTokens.access, itineraryID, itinerary.itinerary_name, user.user_id])
 
 
 

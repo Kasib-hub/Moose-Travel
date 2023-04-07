@@ -2,7 +2,7 @@ import { Autocomplete } from "@react-google-maps/api"
 import { useState } from "react"
 import './AutoComplete.css'
 
-function AutoCompleteInput({name, placeholder}) {
+function AutoCompleteInputMulti({name, placeholder, flight_type, onChange}) {
 
   const [origin, setOrigin] = useState("")
 
@@ -23,11 +23,11 @@ function AutoCompleteInput({name, placeholder}) {
   return (
     <>
       <Autocomplete options={options}>
-        <input id={name} type='text' placeholder={placeholder} onBlur={handleOriginSelection} onChange={handleOriginInput} value={origin}/>
+        <input id={name} type='text' placeholder={placeholder} onBlur={handleOriginSelection} onChange={onChange} value={flight_type}/>
       </Autocomplete>
     </>
 
   );
 }
 
-export default AutoCompleteInput
+export default AutoCompleteInputMulti

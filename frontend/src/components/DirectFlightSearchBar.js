@@ -1,16 +1,19 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
+import AutoCompleteInput from './AutoComplete/AutoCompleteInput';
 
 
 
-function DirectFlightSearchBar() {
+function DirectFlightSearchBar({ChangeRoute}) {
 
     let { amadeusToken } = useContext(AuthContext)
     let { user, authTokens } = useContext(AuthContext)
+    let {itineraryID} = useParams()
     //authTokens.access to be passed into create flight
 
     const [searchedFlights, setSearchedFlights] = useState(null)
@@ -36,7 +39,7 @@ function DirectFlightSearchBar() {
             flightOffers= data["data"]
             console.log("Data:")
             console.log(flightOffers)
-            flightOffers.map((flight) => ({
+            flightOffers = flightOffers.map((flight) => ({
                 origin: origin,
                 destination: destination,
                 price: flight["price"]["grandTotal"],
@@ -49,7 +52,7 @@ function DirectFlightSearchBar() {
     const flightToSubmit = (origin, destination, price, departureDate) => {
        let flightData =  {
         "departure_date": departureDate,
-        "itinerary_id": 1,
+        "itinerary_id": itineraryID,
         "user_id": user.user_id,
         "flight_type": "Direct",
         "departure": origin,
@@ -60,48 +63,58 @@ function DirectFlightSearchBar() {
         return flightData;
     }
 
-    //navigate("/hotel-question")
-
     return (
         <div>
         <div className="search-div">
 
                 <form className="search-form" onSubmit={handleSubmit}>
-
                     <div className="search-input">
+                        <label className='label'>Origin</label>
+                        <AutoCompleteInput name="origin" placeholder="Where are you flying from?"/>
+                    </div>
+                    {/* <div className="search-input">
                         <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Origin</p>
                         <input type="text" name="origin" placeholder="Where do you want to go?" />
+                    </div> */}
+                    <div className="search-input">
+                        <label className='label'>Destination</label>
+                        <AutoCompleteInput name="destination" placeholder="Where do you want to go?"/>
                     </div>
 
-                    <div className="search-input">
+                    {/* <div className="search-input">
                         <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Destination</p>
                         <input type="text" name="destination" placeholder="Where do you want to go?" />
-                    </div>
+                    </div> */}
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p>
+                        {/* <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p> */}
+                        <label className='label'>Departure Date</label>
                         <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} />
                     </div>
 
                     <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p>
+                        {/* <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p> */}
+                        <label className='label'>Guests</label>
                         <select name="guests">
-                        <option value="1">1 Guest</option>
-                        <option value="2">2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4">4 Guests</option>
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
                         </select>
                     </div>
 
                     <div className="search-button">
-                        <button type="submit">Search</button>
+                        <button className='submit-btn' type="submit">Search</button>
                     </div>
 
                 </form>
             </div>
             {searchedFlights && searchedFlights.map((flight, index) => (
-                <div>
-                    <Card key={index} onClick={() => createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate), 1)}>
+                <div key={index}>
+                    <Card onClick={() => {
+                        createFlight(authTokens.access, flightToSubmit(flight.origin, flight.destination, flight.price, flight.departureDate), itineraryID)
+                        ChangeRoute()
+                        }}>
                         <div>Origin: {flight.origin}</div>
                         <div>Destination: {flight.destination}</div>
                         <div>Price: {flight.price}</div>

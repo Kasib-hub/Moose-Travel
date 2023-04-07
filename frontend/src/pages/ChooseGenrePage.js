@@ -1,7 +1,9 @@
 import GenreSelector from "../components/Genre/GenreSelector"
 
 
-function ChooseGenrePage ({likes, setLikes}) {
+function ChooseGenrePage ({likes, setLikes, selections}) {
+
+
 
   return (
     <>

@@ -26,7 +26,7 @@ function GenreSelector ({likes, setLikes}) {
 
     setTimeout(() => {
       window.location.href = `/itinerary/${itineraryID}/trip-summary`;
-    }, 7000); // delay in milliseconds
+    }, 10000); // delay in milliseconds
   }
 
 

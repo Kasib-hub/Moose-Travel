@@ -9,21 +9,19 @@ function YourItinerariesPage () {
 
   const [userItineraries, setUserItineraries] = useState()
 
-  // make call to get all itineraries for the user
   useEffect(() => {
-    fetchItineraries()
-  })
-
-  const fetchItineraries = async () => {
-    const fetchedItineraries = await getItinerariesbyUser(authTokens.access, user.user_id)
-    setUserItineraries(fetchedItineraries)
-  }
+    const fetchItinerary = async () => {
+     const fetchedItinerary = await getItinerariesbyUser(authTokens.access, user.user_id)
+     setUserItineraries(fetchedItinerary)
+    }
+    fetchItinerary()
+ }, [authTokens.access, user.user_id])
 
   return (
     <div>
       <h1>Your stuff Page</h1>
       {
-        userItineraries && userItineraries.map((itinerary, idx) => {
+        userItineraries && userItineraries.map((itinerary) => {
           return (
             <ItineraryCard key={itinerary.id} id={itinerary.id} itinerary_name={itinerary.itinerary_name} summary={itinerary.summary}/>
           )

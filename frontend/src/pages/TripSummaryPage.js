@@ -80,7 +80,7 @@ function TripSummaryPage () {
 
   return (
     <>
-      <h1>Trip Summary Page</h1><br></br>
+      <h1>Trip Summary</h1><br></br>
       <div className="trip-summary">
         <div>
           <h2>Flights</h2>
@@ -99,7 +99,7 @@ function TripSummaryPage () {
           {sights && <SightsDisplay sights={sights}/>}<br></br>
 
         </div>
-        <div>
+        <div className="summary">
           {itinerary && <ItineraryDisplay itinerary={itinerary}/>}
         </div>  
       </div>
