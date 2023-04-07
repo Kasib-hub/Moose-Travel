@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert';
 
+
+
 function SignUpPage() {
 
   const [errors, setErrors] = useState()
@@ -22,8 +24,8 @@ function SignUpPage() {
   }
   
   const signUpUser = async (userObj) => {
-    const BASE_URL = process.env.REACT_APP_BASE_URL
-    const url = `http://${BASE_URL}/api/signup/`
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const url = `http://${BASE_URL}/api/signup/`;
     const context = {
       method: "POST",
       headers: {

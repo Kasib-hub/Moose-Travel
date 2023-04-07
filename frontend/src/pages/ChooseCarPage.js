@@ -1,21 +1,20 @@
+import React from 'react';
+import RentalCarForm from '../components/RentalCarForm';
 
-
-function ChooseCarPage () {
-
-  // const ChangeRoute = () => {
-  //   if (selections.length < 1) {
-  //     return navigate(`/itinerary/${itineraryID}/choose-genre`)
-  //   }
-  //   console.log(selections)
-  //   let route = selections[0]
-  //   setSelections(selections.slice(1))
-  //   navigate(route)
-  // }
-
+const ChooseCar = ({ car, onSelect }) => {
   return (
-    <h1>CarPage</h1>
-  )
+    <div>
+      <h1>Choose a car</h1>
+      <RentalCarForm />
+      {car && (
+        <div className="choose-car">
+          <h3>{car.name}</h3>
+          <p>Price: {car.price}</p>
+          <button onClick={() => onSelect(car)}>Select this car</button>
+        </div>
+      )}
+    </div>
+  );
+};
 
-}
-
-export default ChooseCarPage
+export default ChooseCar;

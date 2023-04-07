@@ -1,40 +1,41 @@
-import React, { useState } from 'react';
-import RentalCarForm from '../components/RentalCarForm';
+// import React, { useState } from 'react';
+// import RentalCarForm from '../components/RentalCarForm';
 
 const RentalCarPage = () => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedCar, setSelectedCar] = useState(null);
+  // const { access_token } = useAuth();
+  // const [searchResults, setSearchResults] = useState([]);
+  // const [selectedCar, setSelectedCar] = useState(null);
 
-  const handleSearch = async (searchData) => {
+  // const handleSearch = async (searchData) => {
     
-    const BASE_URL = process.env.REACT_APP_BASE_URL;
-    const response = await fetch(`http://${BASE_URL}/api/rental_car_search/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(searchData),
-    });
+  //   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  //   const response = await fetch(`http://${BASE_URL}/api/rental_car_search/`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       // Authorization: `Bearer ${access_token}`,
+  //     },
+  //     body: JSON.stringify(searchData),
+  //   });
 
-    const data = await response.json();
-    setSearchResults(data);
-    setSelectedCar(null);
-  };
+  //   const data = await response.json();
+  //   setSearchResults(data);
+  //   setSelectedCar(null);
+  // };
 
-  const handleCarSelect = (car) => {
-    setSelectedCar(car);
-  };
+  // const handleCarSelect = (car) => {
+  //   setSelectedCar(car);
+  // };
 
-  const handleRentalSubmit = (rentalData) => {
-    alert(`You have successfully booked ${rentalData.car.make} ${rentalData.car.model} from ${rentalData.pickupDate} to ${rentalData.dropoffDate} at ${rentalData.rentalAgency} for $${rentalData.totalPrice}`);
-    console.log(rentalData);
-  };
-  
+  // const handleRentalSubmit = (rentalData) => {
+  //   alert(`You have successfully booked ${rentalData.car.make} ${rentalData.car.model} from ${rentalData.pickupDate} to ${rentalData.dropoffDate} at ${rentalData.rentalAgency} for $${rentalData.totalPrice}`);
+  //   console.log(rentalData);
+  // };
 
   return (
     <div>
-      <h1>Rental Cars</h1>
-      <RentalCarForm onSearch={handleSearch} />
+      {/* <h1>Rental Cars</h1>
+      <RentalCarForm onSearch={handleSearch} access_token={access_token}/>
       {searchResults.length > 0 && (
         <table>
           <thead>
@@ -64,9 +65,9 @@ const RentalCarPage = () => {
       {selectedCar && (
         <div>
           <h2>Selected Car: {selectedCar.make} {selectedCar.model}</h2>
-          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} />
+          <RentalCarForm car={selectedCar} onSubmit={handleRentalSubmit} access_token={access_token} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
