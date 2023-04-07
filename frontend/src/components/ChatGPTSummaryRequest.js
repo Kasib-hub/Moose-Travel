@@ -19,9 +19,9 @@ function ChatGPTSummaryRequest ({ likes }) {
     const [flights, setFlights] = useState()
     const [hotels, setHotels] = useState()
     const [summary, setSummary] = useState()
-    const [rentals, setRentals] = useState()
-    const [affinities, setAffinities] = useState()
-    const [sights, setSights] = useState()
+    // const [rentals, setRentals] = useState()
+    // const [affinities, setAffinities] = useState()
+    // const [sights, setSights] = useState()
 
     useEffect(() => {
         const fetchItinerary = async () => {
@@ -67,7 +67,7 @@ function ChatGPTSummaryRequest ({ likes }) {
         if (flights || hotels) {
             getSummary()
         }
-    }, [flights, hotels])
+    }, [flights, hotels, getSummary])
 
     useEffect(() => {
 
@@ -85,7 +85,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
         putSummary()
 
-    }, [summary])
+    }, [summary, authTokens.access, itinerary.itinerary_name, itineraryID, user.user_id])
 
 
 
