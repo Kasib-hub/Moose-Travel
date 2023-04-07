@@ -13,7 +13,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
     let {itineraryID} = useParams()
     let {user, authTokens} = useContext(AuthContext)
-    const apiKey = "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";
+    const apiKey = process.env.REACT_APP_GPT_API_KEY
   
     const [itinerary, setItinerary] = useState()
     const [flights, setFlights] = useState()
@@ -109,7 +109,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
         putSummary()
 
-    }, [summary, authTokens.access, itinerary.itinerary_name, itineraryID, user.user_id])
+    }, [summary])
 
 
 

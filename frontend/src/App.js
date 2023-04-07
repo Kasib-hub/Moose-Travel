@@ -17,7 +17,7 @@ import ChooseActivityPage from './pages/ChooseActivityPage'
 import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
-import SupportEngine from './components/SupportEngine/SupportEngine';
+// import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
   // loading the google maps script
@@ -63,7 +63,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
-          {user && <SupportEngine />}
+          {/* {user && <SupportEngine />} */}
         </AuthProvider>
       </Router>
     </div>

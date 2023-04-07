@@ -12,7 +12,7 @@ function YourItinerariesPage () {
   // make call to get all itineraries for the user
   useEffect(() => {
     fetchItineraries()
-  })
+  }, [])
 
   const fetchItineraries = async () => {
     const fetchedItineraries = await getItinerariesbyUser(authTokens.access, user.user_id)
