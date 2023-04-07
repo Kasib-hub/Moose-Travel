@@ -3,8 +3,8 @@ import AuthContext from "../context/AuthContext"
 import { useEffect, useState, useContext } from "react"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
-// import { getAllRentalsByItinerary } from "../api/Rental/Rental"
-// import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
+import { getAllRentalsByItinerary } from "../api/Rental/Rental"
+import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
 
 
@@ -13,15 +13,15 @@ function ChatGPTSummaryRequest ({ likes }) {
 
     let {itineraryID} = useParams()
     let {user, authTokens} = useContext(AuthContext)
-    const apiKey = "1234";
+    const apiKey = "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";
   
     const [itinerary, setItinerary] = useState()
     const [flights, setFlights] = useState()
     const [hotels, setHotels] = useState()
     const [summary, setSummary] = useState()
-    // const [rentals, setRentals] = useState()
-    // const [affinities, setAffinities] = useState()
-    // const [sights, setSights] = useState()
+    const [rentals, setRentals] = useState()
+    const [affinities, setAffinities] = useState()
+    const [sights, setSights] = useState()
 
     useEffect(() => {
         const fetchItinerary = async () => {
@@ -42,17 +42,17 @@ function ChatGPTSummaryRequest ({ likes }) {
         }
         fetchHotels()
 
-        // const fetchRentals = async () => {
-        // const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
-        // setRentals(fetchedRentals)
-        // }
-        // fetchRentals()
+        const fetchRentals = async () => {
+        const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
+        setRentals(fetchedRentals)
+        }
+        fetchRentals()
 
-        // const fetchAffinities = async () => {
-        // const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
-        // setAffinities(fetchedAffinities)
-        // }
-        // fetchAffinities()
+        const fetchAffinities = async () => {
+        const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
+        setAffinities(fetchedAffinities)
+        }
+        fetchAffinities()
 
         // const fetchSights = async () => {
         // const fetchedSights = await getAllSightsByItinerary(authTokens.access, itineraryID)
@@ -65,33 +65,9 @@ function ChatGPTSummaryRequest ({ likes }) {
 
     useEffect(() => {
         if (flights || hotels) {
-
-            const getSummary = async () => {
-                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${likes} `;
-                console.log(likes)
-                const requestOptions = {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${apiKey}`,
-                  },
-                  body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
-                    messages: [{ role: "user", content: `${prompt}` }],
-                  }),
-                };
-                try {
-                  const response = await fetch("https://api.openai.com/v1/chat/completions",requestOptions);
-                  const jsonresponse = await response.json();
-                  setSummary(jsonresponse.choices["0"].message.content);
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-
             getSummary()
         }
-    }, [flights, hotels, likes])
+    }, [flights, hotels])
 
     useEffect(() => {
 
@@ -109,7 +85,7 @@ function ChatGPTSummaryRequest ({ likes }) {
 
         putSummary()
 
-    }, [summary, authTokens.access, itinerary.itinerary_name, itineraryID, user.user_id])
+    }, [summary])
 
 
 
@@ -146,6 +122,43 @@ function ChatGPTSummaryRequest ({ likes }) {
         
     }
 
+
+    const getSummary = async () => {
+        const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${likes} `;
+        console.log(likes)
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: `${prompt}` }],
+          }),
+        };
+        try {
+          const response = await fetch("https://api.openai.com/v1/chat/completions",requestOptions);
+          const jsonresponse = await response.json();
+          setSummary(jsonresponse.choices["0"].message.content);
+        
+          // Edit Itinerary
+        //   const data = {
+        //     "itinerary_name": "test name",
+        //     "user_id": user.user_id,
+        //     "summary": "Test",
+        //   };
+        //   const fixedItinerary = await editItinerary(
+        //     authTokens.access,
+        //     data,
+        //     itineraryID
+        //   );
+        //   console.log("Edited Itinerary:");
+        //   console.log(fixedItinerary);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
 
     return (
