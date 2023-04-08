@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { createFlight } from '../api/Flight/Flight';
 import AutoCompleteInput from './AutoComplete/AutoCompleteInput';
+import Moose from '../assets/moose.svg';
 
 
 function RoundTripSearchBar({ChangeRoute}) {
@@ -16,6 +17,7 @@ function RoundTripSearchBar({ChangeRoute}) {
 
     const [searchedFlights, setSearchedFlights] = useState(null)
     const [returnDate, setReturnDate] = useState(moment().add(1,'days').format('YYYY-MM-DD'))
+    const [loading, setLoading] = useState(false)
     let flightOffers = []
 
 
@@ -29,11 +31,14 @@ function RoundTripSearchBar({ChangeRoute}) {
 
     }, [setReturnDate])
 
+    useEffect(() => {
+        setLoading(false)
+    }, [searchedFlights])
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
+        setLoading(true)
         const origin = e.target.elements.origin.value;
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
@@ -121,7 +126,7 @@ function RoundTripSearchBar({ChangeRoute}) {
                 </form>
 
             </div>
-
+            {loading && <img src={Moose} alt="loading" className='loading'/>}
             {searchedFlights && searchedFlights.map((flight, index) => (
                 <div key={index}>
                     <Card onClick={() => {

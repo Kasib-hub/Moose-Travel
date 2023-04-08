@@ -4,6 +4,7 @@ import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
 import { Autocomplete } from "@react-google-maps/api"
+import Moose from '../assets/moose.svg';
 
 
 
@@ -17,7 +18,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
   const [flights, setFlights] = useState([
     { id: 1, from: "", to: "", departureDate: ""},
   ]);
-
+  const [loading, setLoading] = useState(false)
   const options = {
     types:['airport']
   }
@@ -31,9 +32,11 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
   }
 
   useEffect(() => { 
-  }, []);
+    setLoading(false)
+  }, [returnedFlightList]);
 
   function backendReadableConversion(segment) {
+    
     if (!Array.isArray(segment)) {
         console.log("Error: segment is not an array.");
         return;
@@ -128,7 +131,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+    setLoading(true)
     // Call findMultiFlight to send the API request
     findMultiFlight();
   };
@@ -194,6 +197,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
             <button type="submit" className="submit-btn">Search</button>
             </form>
         </div>
+        {loading && <img src={Moose} alt="loading" className='loading'/>}
         {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
             <form key={index} onSubmit={(event) => {
                 event.preventDefault();
