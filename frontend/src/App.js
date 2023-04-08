@@ -20,6 +20,7 @@ import TripSummaryPage from './pages/TripSummaryPage'
 // import SupportEngine from './components/SupportEngine/SupportEngine';
 import ChosenActivities from './components/ChosenActivities';
 
+
 function App() {
   // loading the google maps script
 
