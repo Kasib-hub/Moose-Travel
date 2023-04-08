@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import Button from "react-bootstrap/esm/Button";
 import { deleteItinerary } from "../api/Itinerary/Itinerary";

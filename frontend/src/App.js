@@ -18,6 +18,7 @@ import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage';
 import DeleteTripSummaryPage from './pages/DeleteTripSummaryPage';
+import Moose from './assets/moose.svg'
 // import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
 
 
 
-  if (!isLoaded) return <h2>Loading...</h2>
+  if (!isLoaded) return <img className='loading' src={Moose} alt='moose loading walk'></img>
 
   return (
     <div className="App">

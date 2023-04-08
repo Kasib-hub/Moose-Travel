@@ -6,6 +6,7 @@ import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
 import AutoCompleteInput from './AutoComplete/AutoCompleteInput';
+import Moose from '../assets/moose.svg';
 
 
 
@@ -17,12 +18,21 @@ function DirectFlightSearchBar({ChangeRoute}) {
     //authTokens.access to be passed into create flight
 
     const [searchedFlights, setSearchedFlights] = useState(null)
+    const [loading, setLoading] = useState(false)
     let flightOffers = []
 
     useEffect(() => { }, [searchedFlights]);
 
+
+    useEffect(() => { 
+        setLoading(false)
+    }, [searchedFlights]);
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         const origin = e.target.elements.origin.value;
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
@@ -72,28 +82,16 @@ function DirectFlightSearchBar({ChangeRoute}) {
                         <label className='label'>Origin</label>
                         <AutoCompleteInput name="origin" placeholder="Where are you flying from?"/>
                     </div>
-                    {/* <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Origin</p>
-                        <input type="text" name="origin" placeholder="Where do you want to go?" />
-                    </div> */}
                     <div className="search-input">
                         <label className='label'>Destination</label>
                         <AutoCompleteInput name="destination" placeholder="Where do you want to go?"/>
                     </div>
-
-                    {/* <div className="search-input">
-                        <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Destination</p>
-                        <input type="text" name="destination" placeholder="Where do you want to go?" />
-                    </div> */}
-
                     <div className="search-input">
-                        {/* <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Departure Date</p> */}
                         <label className='label'>Departure Date</label>
                         <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} />
                     </div>
 
                     <div className="search-input">
-                        {/* <p className="label" style={{color: 'white', fontSize: '1.3rem'}}>Guests</p> */}
                         <label className='label'>Guests</label>
                         <select name="guests">
                             <option value="1">1 Guest</option>
@@ -109,6 +107,7 @@ function DirectFlightSearchBar({ChangeRoute}) {
 
                 </form>
             </div>
+            {loading && <img src={Moose} alt="loading" className='loading'/>}
             {searchedFlights && searchedFlights.map((flight, index) => (
                 <div key={index}>
                     <Card onClick={() => {

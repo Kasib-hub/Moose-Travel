@@ -26,6 +26,16 @@ h3 {
   }
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 55vh;
+  margin: auto;
+}
+
+
 .boot-form {
   margin: auto;
   width: 60%;
