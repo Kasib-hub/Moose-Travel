@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { useParams } from "react-router-dom"
 import AuthContext from '../context/AuthContext';
@@ -8,7 +8,6 @@ export default function App({ ChangeRoute }) {
 
     let { user, authTokens } = useContext(AuthContext);
     let { itineraryID } = useParams();
-    const [siteList, setSiteList] = useState([]);
     const [sitesToSubmit, setSitesToSubmit] = useState([]);
 
     const [address, setAddress] = React.useState("");
