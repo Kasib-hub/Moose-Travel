@@ -12,18 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='itinerary',
-            name='flight_id',
-            field=models.ForeignKey(default=999, on_delete=django.db.models.deletion.CASCADE, to='moose_api.flight'),
-            preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='itinerary',
-            name='hotel_id',
-            field=models.ForeignKey(default=999, on_delete=django.db.models.deletion.CASCADE, to='moose_api.hotel'),
-            preserve_default=False,
-        ),
-        migrations.AddField(
             model_name='sight',
             name='lat',
             field=models.CharField(default=123, max_length=20),

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('itinerary/<int:itinerary_id>/sight/<int:sight_id>/', views.sight),
     path('itinerary/<int:itinerary_id>/car/', views.car, name='car'),
     path('itinerary/<int:itinerary_id>/car/<int:car_id>/', views.car), 
+    path('admin/', include('moose.urls')),
 ]
