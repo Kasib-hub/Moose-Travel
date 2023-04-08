@@ -19,7 +19,7 @@ function YourItinerariesPage () {
 
   return (
     <div>
-      <h1>Your stuff Page</h1>
+      <h1>Your Itineraries</h1>
       {
         userItineraries && userItineraries.map((itinerary) => {
           return (

@@ -73,6 +73,20 @@ h3 {
   background-color: #ada9a9;
 }
 
+.detail-btn {
+  background-color: var(--leaf);
+  border: 2px solid var(--forest);
+  border-radius: 1.5rem;
+  color: var(--celery);
+  padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+  transition: 0.3s all;
+}
+
+.detail-btn:hover {
+  color: #2e3f35;
+  background-color:var(--leaf);
+}
+
 .large-btn {
   background-color: var(--leaf);
   border: none;

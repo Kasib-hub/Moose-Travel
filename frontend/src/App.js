@@ -16,7 +16,8 @@ import ChooseHotelPage from './pages/ChooseHotelPage'
 import ChooseActivityPage from './pages/ChooseActivityPage'
 import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
-import TripSummaryPage from './pages/TripSummaryPage'
+import TripSummaryPage from './pages/TripSummaryPage';
+import DeleteTripSummaryPage from './pages/DeleteTripSummaryPage';
 // import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
               <Route path="/itinerary/:itineraryID/choose-genre" element={<ChooseGenrePage likes={likes} setLikes={setLikes}/>} />
               {/* Trip summary makes the get requests*/}
               <Route path="/itinerary/:itineraryID/trip-summary" element={<TripSummaryPage />} /> 
+              <Route path="/itinerary/:itineraryID/trip-summary/delete" element={<DeleteTripSummaryPage />} /> 
               
             </Route>
             <Route path="/login" element={<LoginPage />} />
