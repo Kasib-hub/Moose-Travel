@@ -1,12 +1,23 @@
 import './NavBar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // dummy NavBar - we'll have these in a navBar
 function NavBar() {
 
   let {user, logoutUser} = useContext(AuthContext)
+
+  const [username, setUsername] = useState('')
+
+  // needs to detect updated user state
+  useEffect(() => {
+    const BASE_URL = process.env.REACT_APP_BASE_URL
+    fetch(`http://${BASE_URL}/api/user/${user.user_id}/`)
+      .then(res => {return res.json()}) 
+      .then(data => {setUsername(data.username)})
+      .catch((err)=>{console.log(err.message)})
+      }, [username]) 
 
   return (
     <div className='navbar'>
@@ -22,7 +33,7 @@ function NavBar() {
         
       </div>
       <div className='user-text'>
-        {user && <p>Welcome {user.username}!</p>}
+        {user && <p>Welcome {username}!</p>}
         <button onClick={logoutUser} className='logout'>Logout</button>
       </div>
 

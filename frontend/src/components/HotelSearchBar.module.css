@@ -3,6 +3,7 @@
   flex-direction: column;
   margin: auto;
   width: 70%;
+  margin-bottom: 1rem;
 }
 
 .hotelSearch input{

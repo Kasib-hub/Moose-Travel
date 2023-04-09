@@ -2,9 +2,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { React, useState, useContext, useEffect} from 'react';
 import AuthContext from '../context/AuthContext';
-import { useParams} from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Alert from 'react-bootstrap/Alert';
 
 
 function EditPersonalInfo() {
@@ -12,13 +13,15 @@ function EditPersonalInfo() {
       const {userID} = useParams()
       //GET request to get user's info 
       const [userInfo, setUserInfo] = useState({})
+      const [response, setResponse] = useState()
+      const navigate = useNavigate()
       const BASE_URL = process.env.REACT_APP_BASE_URL
       useEffect(() => {
         fetch(`http://${BASE_URL}/api/user/${userID}/`)
           .then(res => {return res.json()}) 
           .then(data => {setUserInfo(data)})
           .catch((err)=>{console.log(err.message)})
-          }) 
+          }, []) 
       // make PUT request to rest API 
       const putUser = async (data) => {
         const url = `http://${BASE_URL}/api/user/${userID}/`
@@ -34,7 +37,10 @@ function EditPersonalInfo() {
         const body = await res.json()
         if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
         else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
-        else {alert("user updated!")}
+        else {
+          setResponse("User updated!")
+          setTimeout(() => {navigate(`/itinerary/${userID}/your-itineraries`)}, 1500)
+        }
       }
       // make PUT request to rest API 
       const handleSubmit = (e) => {
@@ -64,7 +70,8 @@ function EditPersonalInfo() {
 
   return (
     <>
-      <p> Please update your personal info</p>
+      <strong><p> Please update your personal info</p></strong>
+      {response && <Alert variant="success">{response}</Alert>}
       <Form  onSubmit={handleSubmit} className="boot-form">
       {/* form for updating username */}
       <Form.Group className="mb-3" controlId="username">
@@ -75,7 +82,7 @@ function EditPersonalInfo() {
       {/* form for updating email address */}
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" name="email" vaule={userInfo.email}
+        <Form.Control type="email" placeholder="Enter email" name="email" value={userInfo.email}
                 onChange = {handleChange} required/>
         <Form.Text className="text-muted">
           We'll never share your email with anyone else.

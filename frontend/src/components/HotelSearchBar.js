@@ -5,6 +5,7 @@ import { createHotel } from "../api/Hotel/Hotel";
 import { Autocomplete } from "@react-google-maps/api";
 import HotelSearchBarCSS from './HotelSearchBar.module.css'
 import FormSelect from "react-bootstrap/esm/FormSelect";
+import Alert from 'react-bootstrap/Alert';
 import Moose from '../assets/moose.svg';
 
 
@@ -16,6 +17,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
     const [hotelOffers, setHotelOffers] = useState(null);
     const [guests, setGuests] = useState(1);
     const [hotelsToSubmit, setHotelsToSubmit] = useState([]);
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false)
 
     const options = {
@@ -50,7 +52,6 @@ const HotelSearchBar = ({ChangeRoute}) => {
     setHotels(updatedHotels);
   };
 
-  
 //   we're creating an array of promises, one for each hotel in the hotels array. We're then using Promise.all() to wait 
 //   for all the promises to resolve before updating the hotelOffers state with the returnedOffers array that contains the 
 //   fetched data for each hotel.
@@ -64,6 +65,20 @@ const HotelSearchBar = ({ChangeRoute}) => {
       let hotelIds = [];
       let urlFormatHotelIds = "";
       const { cityCode, checkInDate, checkOutDate } = hotel;
+      if (new Date(checkInDate) > new Date(checkOutDate)) {
+        setError("Check out date must be after check in date");
+        return;
+      }
+      if (cityCode.length !== 3) {
+        setError("Please choose a valid city with airport that contains a 3 letter IATA code in parenthesis");
+        return;
+      }
+      const datenow = new Date();
+      if (new Date(checkInDate) < datenow || new Date(checkOutDate) <= datenow) {
+        setError("Check in and check out dates must be in the future");
+        return;
+      }
+      
   
       const fetchPromise = fetch(
         `https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=5&radiusUnit=KM`,
@@ -140,7 +155,12 @@ const HotelSearchBar = ({ChangeRoute}) => {
 
     <div>
         <div className="search-div">
-
+        {error && (
+          <Alert key="danger" variant="danger">
+            <h3>Error:</h3>
+            <pre>{error}</pre>
+          </Alert>
+        )}
             <form onSubmit={handleSearch} >
             {hotels.map((hotel) => (
               
@@ -155,6 +175,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
                                   onChange={(event) =>
                                   handleHotelChange(hotel.id, "checkInDate", event.target.value)
                                   }
+                                  required
                               />
                               <label className="label" >Check-out Date:</label>
                               <input
@@ -163,6 +184,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
                                   onChange={(event) =>
                                   handleHotelChange(hotel.id, "checkOutDate", event.target.value)
                                   }
+                                  required
                               />
                           </div>
 
@@ -176,6 +198,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
                               onChange={(event) =>
                               handleHotelChange(hotel.id, "cityCode", event.target.value)
                               }
+                              required
                             />
                           </Autocomplete>
                               
