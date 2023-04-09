@@ -11,7 +11,7 @@ function AffinitiesDisplay ({affinities}) {
             </div>
           )
         })
-      }
+      }<br></br>
     </>
   )
 }

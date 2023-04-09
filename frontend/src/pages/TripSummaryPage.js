@@ -83,11 +83,11 @@ function TripSummaryPage () {
       <h1>Trip Summary</h1><br></br>
       <div className="trip-summary">
         <div>
-          {flights && <FlightsDisplay flights={flights}/>}<br></br>
-          {hotels && <HotelsDisplay hotels={hotels}/>}<br></br>
-          {cars && <CarsDisplay cars={cars}/>}<br></br>
-          {affinities && <AffinitiesDisplay affinities={affinities}/>}<br></br>
-          {sights && <SightsDisplay sights={sights}/>}<br></br>
+          {flights.length !== 0 && <FlightsDisplay flights={flights}/>}
+          {hotels.length !== 0 && <HotelsDisplay hotels={hotels}/>}
+          {cars.length !== 0 && <CarsDisplay cars={cars}/>}
+          {affinities.length !== 0 && <AffinitiesDisplay affinities={affinities}/>} 
+          {sights.length !== 0 && <SightsDisplay sights={sights}/>}
         </div>
         <div className="summary">
           {itinerary && <ItineraryDisplay itinerary={itinerary}/>}

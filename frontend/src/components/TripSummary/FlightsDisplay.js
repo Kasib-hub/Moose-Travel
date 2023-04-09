@@ -11,7 +11,7 @@ function FlightsDisplay ({flights}) {
             </div>
           )
         })
-      }
+      }<br></br>
     </>
   )
 }

@@ -3,7 +3,7 @@ function CarsDisplay ({cars}) {
 
   return (
     <>
-      <h2>Rental Cars</h2>
+      <h2>Rentals</h2>
       {
         cars.map((car, idx) => {
           return(
@@ -14,7 +14,7 @@ function CarsDisplay ({cars}) {
             </div>
           )
         })
-      }
+      }<br></br>
     </>
   )
 

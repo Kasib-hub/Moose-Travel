@@ -11,7 +11,7 @@ function SightsDisplay ({sights}) {
             </div>
           )
         })
-      }
+      }<br></br>
     </>
   )
 }

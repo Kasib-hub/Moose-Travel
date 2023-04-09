@@ -13,7 +13,7 @@ function HotelsDisplay ({hotels}) {
               </div>
             )
           })
-        }
+        }<br></br>
     </>
   )
       

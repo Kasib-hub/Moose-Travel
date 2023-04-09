@@ -3,7 +3,8 @@ import AuthContext from '../context/AuthContext';
 import Card from 'react-bootstrap/Card';
 import { createCar } from '../api/Rental/Rental';
 import { useParams } from 'react-router-dom';
-// import createRen
+import { Autocomplete } from "@react-google-maps/api"
+import Moose from '../assets/moose.svg';
 
 const RentalCarForm = ({ChangeRoute}) => {
   const { avisToken, authTokens, user } = useContext(AuthContext);
@@ -22,6 +23,12 @@ const RentalCarForm = ({ChangeRoute}) => {
   const formatDate = (date) => {
     return new Date(date).toLocaleString();
   };
+
+  const [loading, setLoading] = useState(false)
+
+  const options = {
+    types:['airport']
+  }
 
   const getCarAvailability = async (searchData) => {
     const url = new URL("https://stage.abgapiservices.com/cars/catalog/v1/vehicles");
@@ -118,6 +125,7 @@ const RentalCarForm = ({ChangeRoute}) => {
             />
 
             <label className='label' htmlFor="pickupLocation">Pickup Location (Airport Name):</label>
+
             <input 
               type='text'
               id="pickupLocation"
