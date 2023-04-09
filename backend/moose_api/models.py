@@ -39,10 +39,11 @@ class Rental(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='rentals')
     rental_company = models.CharField(max_length=250, default='')
+    price = models.CharField(max_length=250, null=True)
     pick_up_location = models.CharField(max_length=250)
     return_location = models.CharField(max_length=250)
-    pick_up_date = models.DateField(auto_now=False, auto_now_add=False)
-    return_date = models.DateField(auto_now=False, auto_now_add=False)
+    pick_up_date = models.DateTimeField(auto_now=False, auto_now_add=False)
+    return_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.rental_company}"

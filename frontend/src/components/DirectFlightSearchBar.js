@@ -23,12 +23,9 @@ function DirectFlightSearchBar({ChangeRoute}) {
 
     useEffect(() => { }, [searchedFlights]);
 
-
     useEffect(() => { 
         setLoading(false)
     }, [searchedFlights]);
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();

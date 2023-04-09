@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }) => {
       setUser(jwt_decode(body.access));
       localStorage.setItem("authTokens", JSON.stringify(body));
       getAmadeusToken();
+      getAvisToken()
       navigate("/");
     }
      // Call getAmadeusToken regardless of whether login was successful
@@ -168,10 +169,10 @@ useEffect(() => {
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
-    getAvisToken();
+    if(avisToken) getAvisToken();
   }, 7200000);
   return () => clearInterval(avisTokenInterval);
-}, [getAvisToken]);
+}, [avisToken]);
 
 let contextData = {
   loginUser: loginUser,

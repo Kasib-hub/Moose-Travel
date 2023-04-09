@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import AuthContext from './context/AuthContext';
+import AuthContext from '../context/AuthContext';
+import Card from 'react-bootstrap/Card';
+// import createRen
 
 const RentalCarForm = () => {
   const { avisToken } = useContext(AuthContext);
@@ -14,19 +16,6 @@ const RentalCarForm = () => {
   const [error, setError] = useState(null);
   const [airportIATACodes, setAirportIATACodes] = useState([]);
 
-  useEffect(() => {
-    const fetchAirportData = async () => {
-      try {
-        const response = await axios.get('/src/data/airports.json');
-        setAirportIATACodes(response.data);
-      } catch (error) {
-        console.error('Error fetching airport data:', error);
-      }
-    };
-
-    fetchAirportData();
-  }, []);
-
   const formatDate = (date) => {
     return new Date(date).toLocaleString();
   };
@@ -35,9 +24,9 @@ const RentalCarForm = () => {
     const url = new URL("https://stage.abgapiservices.com/cars/catalog/v1/vehicles");
     url.search = new URLSearchParams({
       brand: searchData.brand,
-      pickup_date: searchData.pickup_date.toISOString(),
+      pickup_date: searchData.pickup_date.toISOString().split('.')[0],
       pickup_location: searchData.pickup_location,
-      dropoff_date: searchData.dropoff_date.toISOString(),
+      dropoff_date: searchData.dropoff_date.toISOString().split('.')[0],
       dropoff_location: searchData.dropoff_location,
       country_code: searchData.country_code,
       iata_number: "0104724P",
@@ -52,6 +41,7 @@ const RentalCarForm = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "client_id": process.env.REACT_APP_AVIS_CLIENT_ID,
           "Authorization": `Bearer ${avisToken}`,
         },
       });
@@ -61,7 +51,8 @@ const RentalCarForm = () => {
       }
 
       const data = await response.json();
-      setResult(data);
+      setResult(data.vehicles);
+      console.log(data.vehicles)
     } catch (error) {
       setError(error.message);
     }
@@ -91,75 +82,70 @@ const RentalCarForm = () => {
     }
   };
 
+  const handleClick = (e) => {
+
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-      <label htmlFor="brand">Brand:</label>
-      <select
-        name="brand"
-        id="brand"
-        value={brand}
-        onChange={(e) => setBrand(e.target.value)}
-      >
-        <option value="Avis">Avis</option>
-        <option value="Budget">Budget</option>
-        <option value="Payless">Payless</option>
-      </select>
+      <h1>Rental Car Search</h1>
+      <form className="search-form" onSubmit={handleSubmit}>
+        <div className="search-boxes">
+          <div className='search-input'>
+            <label className='label' htmlFor="pickupDate">Pickup Date:</label>
+            <input
+              type="datetime-local"
+              id="pickupDate"
+              value={pickupDate}
+              onChange={(e) => setPickupDate(e.target.value)}
+            />
 
-      <label htmlFor="pickupDate">Pickup Date:</label>
-      <input
-        type="datetime-local"
-        id="pickupDate"
-        value={pickupDate}
-        onChange={(e) => setPickupDate(e.target.value)}
-      />
+            <label className='label' htmlFor="pickupLocation">Pickup Location (Airport Name):</label>
+            <input 
+              type='text'
+              id="pickupLocation"
+              value={pickupLocation}
+              onChange={(e) => setPickupLocation(e.target.value)}
+            />
+            <label className='label' htmlFor="brand">Brand:</label>
+            <select
+              name="brand"
+              id="brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+            >
+              <option value="Avis">Avis</option>
+              <option value="Budget">Budget</option>
+              <option value="Payless">Payless</option>
+            </select>
+          </div>
+          
+          <div className='search-input'>
+            <label className='label' htmlFor="dropoffDate">Dropoff Date:</label>
+            <input
+              type="datetime-local"
+              id="dropoffDate"
+              value={dropoffDate}
+              onChange={(e) => setDropoffDate(e.target.value)}
+            />
 
-      <label htmlFor="pickupLocation">Pickup Location (Airport Name):</label>
-      <select
-        id="pickupLocation"
-        value={pickupLocation}
-        onChange={(e) => setPickupLocation(e.target.value)}
-      >
-        <option value="">Select an airport</option>
-        {airportIATACodes.map((airport) => (
-          <option key={airport.iata_code} value={airport.iata_code}>
-            {airport.name}
-          </option>
-        ))}
-      </select>
-
-      <label htmlFor="dropoffDate">Dropoff Date:</label>
-      <input
-        type="datetime-local"
-        id="dropoffDate"
-        value={dropoffDate}
-        onChange={(e) => setDropoffDate(e.target.value)}
-      />
-
-      <label htmlFor="dropoffLocation">Dropoff Location (Airport Name):</label>
-      <select
-        id="dropoffLocation"
-        value={dropoffLocation}
-        onChange={(e) => setDropoffLocation(e.target.value)}
-      >
-        <option value="">Select an airport</option>
-        {airportIATACodes.map((airport) => (
-          <option key={airport.iata_code} value={airport.iata_code}>
-            {airport.name}
-          </option>
-        ))}
-      </select>
-
-      <label htmlFor="countryCode">Country Code:</label>
-      <input
-        type="text"
-        id="countryCode"
-        value={countryCode}
-        onChange={(e) => setCountryCode(e.target.value)}
-      />
-
-      <button type="submit">Search</button>
+            <label className='label' htmlFor="dropoffLocation">Dropoff Location (Airport Name):</label>
+            <input 
+              type='text'
+              id="dropoffLocation"
+              value={dropoffLocation}
+              onChange={(e) => setDropoffLocation(e.target.value)}
+            />
+            <label className='label' htmlFor="countryCode">Country Code:</label>
+            <input
+              type="text"
+              id="countryCode"
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
+            />
+          </div>
+        </div>
+        <button type="submit" className='submit-btn'>Search</button>
       </form>
   
       {error && (
@@ -171,20 +157,17 @@ const RentalCarForm = () => {
   
       {result && (
         <div>
-          <h3>Results:</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-          <h3>Formatted Results:</h3>
-          <ul>
-            {result.map((car, index) => (
-              <li key={index}>
-                <h4>{car.vehicle_info.make_model.name}</h4>
-                <p>Category: {car.vehicle_info.category}</p>
-                <p>Seats: {car.vehicle_info.seating_capacity}</p>
-                <p>Pickup Date: {formatDate(car.reservation.pickup_date)}</p>
-                <p>Dropoff Date: {formatDate(car.reservation.dropoff_date)}</p>
-              </li>
-            ))}
-          </ul>
+          {result.map((car, index) => (
+            <Card key={index} onClick={handleClick}>
+              <img src={car.category.image_url} alt={`${car.category.model} view`} className='car-image' />
+              <h4>{car.category.make} {car.category.model}</h4>
+              <p>Price: {`$${car.rate_totals.pay_later.reservation_total}`}</p>
+              {/* <p>Seats: {car.vehicle_info.seating_capacity}</p>
+              <p>Pickup Date: {formatDate(car.reservation.pickup_date)}</p>
+              <p>Dropoff Date: {formatDate(car.reservation.dropoff_date)}</p> */}
+            </Card>
+          ))}
+         
         </div>
       )}
     </div>
