@@ -4,6 +4,7 @@ import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
 import { Autocomplete } from "@react-google-maps/api"
+import Alert from 'react-bootstrap/Alert';
 import Moose from '../assets/moose.svg';
 
 
@@ -19,6 +20,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
     { id: 1, from: "", to: "", departureDate: ""},
   ]);
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null);
   const options = {
     types:['airport']
   }
@@ -60,12 +62,26 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
   }
 
   const convertFlights = (flights) =>
-    flights.map((flight) => ({
+    flights.map((flight) => {
+      if (flight.from.length !== 3 || flight.to.length !== 3) {
+        setError("Please choose a valid city with airport that contains a 3 letter IATA code")
+        flight.from = ''
+        flight.to = ''
+        return
+      }
+      if (new Date(flight.departureDate) < new Date()) {
+        setError("Please choose a valid departure date in the future")
+        flight.departureDate = ''
+        return
+      }
+
+     return ({
         id: flight.id,
         originLocationCode: flight.from,
         destinationLocationCode: flight.to,
         departureDateTimeRange: { date: flight.departureDate },
-  }));
+      })
+});
 
   const handleAddFlight = () => {
     const newId = flights[flights.length - 1].id + 1;
@@ -81,7 +97,6 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
   };
 
   const handleFlightChange = (id, field, value) => {
-    console.log(value)
     const updatedFlights = [...flights];
     const index = updatedFlights.findIndex((flight) => flight.id === id);
     updatedFlights[index][field] = value;
@@ -145,45 +160,50 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
             {flights.map((flight) => (
 
                 <div key={flight.id} className="search-form">
-    
+                      <div className="direct-flight">
                         <div className="search-input">
-                            <label className="label">From:</label>
-                            <Autocomplete options={options}>
-                              <input 
-                                type='text' 
-                                name="from" 
-                                value={flight.from}
-                                onBlur={(event) => handleOriginSelection(event, flight.id)}
-                                onChange={(event) =>
-                                handleFlightChange(flight.id, "from", event.target.value)
-                                } />
-                            </Autocomplete>
+                          <label className="label">From:</label>
+                          <Autocomplete options={options}>
+                            <input
+                              required 
+                              type='text' 
+                              name="from" 
+                              value={flight.from}
+                              onBlur={(event) => handleOriginSelection(event, flight.id)}
+                              onChange={(event) =>
+                              handleFlightChange(flight.id, "from", event.target.value)
+                              } />
+                          </Autocomplete>
                         </div>
 
                         <div className="search-input">
-                            <label className="label">To:</label>
-                            <Autocomplete options={options}>
-                              <input 
-                                type='text' 
-                                name="to" 
-                                value={flight.to} 
-                                onBlur={(event) => handleOriginSelection(event, flight.id)}
-                                onChange={(event) =>
-                                handleFlightChange(flight.id, "to", event.target.value)
-                                } />
-                            </Autocomplete>
+                          <label className="label">To:</label>
+                          <Autocomplete options={options}>
+                            <input
+                              required 
+                              type='text' 
+                              name="to" 
+                              value={flight.to} 
+                              onBlur={(event) => handleOriginSelection(event, flight.id)}
+                              onChange={(event) =>
+                              handleFlightChange(flight.id, "to", event.target.value)
+                              } />
+                          </Autocomplete>
                         </div>
 
                         <div className="search-input">
                             <label className="label">Departure Date:</label>
                             <input
-                                type="date"
-                                value={flight.departureDate}
-                                onChange={(event) =>
-                                handleFlightChange(flight.id, "departureDate", event.target.value)
-                                }
+                              required
+                              type="date"
+                              value={flight.departureDate}
+                              onChange={(event) =>
+                              handleFlightChange(flight.id, "departureDate", event.target.value)
+                              }
                             />
                         </div>
+                    </div>
+                        
 
                         <button type="button" onClick={() => handleDeleteFlight(flight.id)} className="other-btn">
                             Delete Flight
