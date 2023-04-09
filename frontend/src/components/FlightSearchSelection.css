@@ -28,7 +28,11 @@
 }
 
 .search-form select {
-  margin-top: 3.5rem;
+  margin: 1rem auto;
+  background-color: var(--leaf);
+  border: none;
+  border-bottom: 2px solid var(--celery);
+  color: var(--celery);
 }
 
 .search-form input[type=date] {
@@ -51,6 +55,7 @@ input::placeholder {
   margin: auto 1rem;
   margin-bottom: 1rem;
   border-radius: 1.5rem;
+  width: 50%;
 }
 
 .search-input input {
@@ -70,4 +75,15 @@ input::placeholder {
   color: var(--cream);
   font-size: 1.3rem;
 
+}
+
+.card img {
+  margin: auto;
+}
+
+.card-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 5rem;
 }
