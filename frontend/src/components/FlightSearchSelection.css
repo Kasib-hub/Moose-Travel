@@ -99,3 +99,18 @@ input::placeholder {
 .direct-flight input[type=date] {
   margin: 1.3rem auto;
 }
+
+.multi-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  border: 1px solid var(--pear);
+  border-radius: 2rem;
+  background-color: var(--pear);
+  color: var(--black);
+  padding: 1rem;
+  margin: auto;
+  margin-top: 2rem;
+}

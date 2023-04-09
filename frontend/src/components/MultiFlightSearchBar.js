@@ -6,8 +6,7 @@ import { createFlight } from '../api/Flight/Flight';
 import { Autocomplete } from "@react-google-maps/api"
 import Alert from 'react-bootstrap/Alert';
 import Moose from '../assets/moose.svg';
-
-
+import Card from 'react-bootstrap/Card';
 
 const MultiFlightSearchBar = ({ChangeRoute}) => {
 
@@ -155,6 +154,12 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
   return (
     <div>
         <div className="search-div">
+          {error && (
+          <Alert key="danger" variant="danger">
+            <h3>Error:</h3>
+            <pre>{error}</pre>
+          </Alert>
+        )}
             <form onSubmit={handleSubmit}>
 
             {flights.map((flight) => (
@@ -219,7 +224,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
         </div>
         {loading && <img src={Moose} alt="loading" className='loading'/>}
         {returnedFlightList && returnedFlightList.map((flightGroup, index) => (
-            <form key={index} onSubmit={(event) => {
+            <form key={index} className='multi-form' onSubmit={(event) => {
                 event.preventDefault();
                 const segments = flightGroup.itineraries.flatMap(itinerary => itinerary.segments);
                 const flightData = { segments };
@@ -241,7 +246,7 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
                     </div>
                 ))}
                 </div>
-                <button type="submit">Save Flight</button>
+                <button type="submit" className="submit-btn">Save Flight</button>
             </form>
             ))}
     </div>
