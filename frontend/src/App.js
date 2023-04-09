@@ -20,11 +20,10 @@ import TripSummaryPage from './pages/TripSummaryPage';
 import DeleteTripSummaryPage from './pages/DeleteTripSummaryPage';
 import Moose from './assets/moose.svg'
 // import SupportEngine from './components/SupportEngine/SupportEngine';
+import ChosenActivities from './components/ChosenActivities';
+
 
 function App() {
-  // loading the google maps script
-
-  // let user = localStorage.getItem('authTokens')
 
   const libraries = ['places']
 
@@ -37,8 +36,6 @@ function App() {
   const [selections, setSelections] = useState([])
   // the genres the user likes
   const [likes, setLikes] = useState([])
-
-
 
   if (!isLoaded) return <img className='loading' src={Moose} alt='moose loading walk'></img>
 
@@ -62,6 +59,7 @@ function App() {
               <Route path="/itinerary/:itineraryID/trip-summary" element={<TripSummaryPage />} /> 
               <Route path="/itinerary/:itineraryID/trip-summary/delete" element={<DeleteTripSummaryPage />} /> 
               
+              <Route path="/itinerary/:itineraryID/activities"  element={<ChosenActivities />} /> 
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />

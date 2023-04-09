@@ -137,8 +137,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
   
   const submitHotelsToBackend = () => {
     hotelsToSubmit.forEach((hotelObject) => {
-      createHotel(authTokens.access, hotelObject, itineraryID);
-      
+      createHotel(authTokens.access, hotelObject, itineraryID); 
     });
     ChangeRoute()
   };
