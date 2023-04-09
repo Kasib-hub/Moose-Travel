@@ -4,7 +4,7 @@ import AuthContext from "../context/AuthContext"
 import { getItineraryByID } from "../api/Itinerary/Itinerary"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
-import { getAllRentalsByItinerary } from "../api/Rental/Rental"
+import { getAllCarsByItinerary } from "../api/Rental/Rental"
 import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getAllSightsByItinerary } from "../api/Sight/Sight"
 import ItineraryDisplay from "../components/TripSummary/ItineraryDisplay"
@@ -23,7 +23,7 @@ function TripSummaryPage () {
   const [itinerary, setItinerary] = useState()
   const [flights, setFlights] = useState()
   const [hotels, setHotels] = useState()
-  const [rentals, setRentals] = useState()
+  const [cars, setCars] = useState()
   const [affinities, setAffinities] = useState()
   const [sights, setSights] = useState()
   // goal here is to get all entries from each model that are associated
@@ -53,11 +53,11 @@ function TripSummaryPage () {
  }, [authTokens.access, itineraryID])
 
   useEffect(() => {
-    const fetchRentals = async () => {
-     const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
-     setRentals(fetchedRentals)
+    const fetchCars = async () => {
+     const fetchedCars = await getAllCarsByItinerary(authTokens.access, itineraryID)
+     setCars(fetchedCars)
     }
-    fetchRentals()
+    fetchCars()
   }, [authTokens.access, itineraryID])
 
   useEffect(() => {
@@ -83,11 +83,11 @@ function TripSummaryPage () {
       <h1>Trip Summary</h1><br></br>
       <div className="trip-summary">
         <div>
-          {flights.length > 0 && <FlightsDisplay flights={flights}/>}<br></br>
-          {hotels.length > 0 && <HotelsDisplay hotels={hotels}/>}<br></br>
-          {rentals.length > 0 && <CarsDisplay rentals={rentals}/>}<br></br>
-          {affinities.length > 0 && <AffinitiesDisplay affinities={affinities}/>}<br></br>
-          {sights.length > 0 && <SightsDisplay sights={sights}/>}<br></br>
+          {flights && <FlightsDisplay flights={flights}/>}<br></br>
+          {hotels && <HotelsDisplay hotels={hotels}/>}<br></br>
+          {cars && <CarsDisplay cars={cars}/>}<br></br>
+          {affinities && <AffinitiesDisplay affinities={affinities}/>}<br></br>
+          {sights && <SightsDisplay sights={sights}/>}<br></br>
         </div>
         <div className="summary">
           {itinerary && <ItineraryDisplay itinerary={itinerary}/>}

@@ -65,17 +65,20 @@ class FlightSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class RentalSerializer(serializers.ModelSerializer):
+class CarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Rental
+        model = Car
         fields = "__all__"
 
     def create(self, validated_data):
-        return Rental.objects.create(**validated_data)
+        return Car.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.itinerary_id = validated_data.get('itinerary_id', instance.itinerary_id)
         instance.user_id = validated_data.get('user_id', instance.user_id)
+        instance.model = validated_data.get('model', instance.model)
+        instance.make = validated_data.get('make', instance.make)
+        instance.price = validated_data.get('price', instance.price)
         instance.rental_company = validated_data.get('rental_company', instance.rental_company)
         instance.pick_up_location = validated_data.get('pick_up_location', instance.pick_up_location)
         instance.return_location = validated_data.get('return_location', instance.return_location)
@@ -114,32 +117,32 @@ class SightSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class CarSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Car
-        fields = ['id', 'vehicle_number', 'model', 'seating_capacity', 'rent_per_day']
+# class CarSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Car
+#         fields = ['id', 'vehicle_number', 'model', 'seating_capacity', 'rent_per_day']
 
 class AvailableCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = ['id', 'vehicle_number', 'model', 'seating_capacity', 'rent_per_day', 'availability']
 
-class CarReservationSerializer(serializers.Serializer):
-    product = serializers.DictField(required=True)
-    transaction = serializers.DictField(required=True)
-    reservation = serializers.DictField(required=True)
-    rate_totals = serializers.DictField(required=True)
-    passenger = serializers.DictField(required=True)
+# class CarReservationSerializer(serializers.Serializer):
+#     product = serializers.DictField(required=True)
+#     transaction = serializers.DictField(required=True)
+#     reservation = serializers.DictField(required=True)
+#     rate_totals = serializers.DictField(required=True)
+#     passenger = serializers.DictField(required=True)
 
-    def create(self, validated_data):
-        return CarReservation.objects.create(**validated_data)
+#     def create(self, validated_data):
+#         return CarReservation.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
-        instance.product = validated_data.get('product', instance.product)
-        instance.transaction = validated_data.get('transaction', instance.transaction)
-        instance.reservation = validated_data.get('reservation', instance.reservation)
-        instance.rate_totals = validated_data.get('rate_totals', instance.rate_totals)
-        instance.passenger = validated_data.get('passenger', instance.passenger)
-        instance.save()
-        return instance
+#     def update(self, instance, validated_data):
+#         instance.product = validated_data.get('product', instance.product)
+#         instance.transaction = validated_data.get('transaction', instance.transaction)
+#         instance.reservation = validated_data.get('reservation', instance.reservation)
+#         instance.rate_totals = validated_data.get('rate_totals', instance.rate_totals)
+#         instance.passenger = validated_data.get('passenger', instance.passenger)
+#         instance.save()
+#         return instance
 

@@ -163,14 +163,14 @@ useEffect(() => {
 useEffect(() => {
   const amadeusTokenInterval = setInterval(() => {
     if(amadeusToken) getAmadeusToken();
-  }, 30000);
+  }, 60000);
   return () => clearInterval(amadeusTokenInterval);
 }, [amadeusToken]);
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
     if(avisToken) getAvisToken();
-  }, 7200000);
+  }, 60000);
   return () => clearInterval(avisTokenInterval);
 }, [avisToken]);
 

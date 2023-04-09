@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Itinerary(models.Model):
@@ -34,20 +33,6 @@ class Flight(models.Model):
     def __str__(self) -> str:
         return f"itinerary:{self.itinerary_id}, {self.departure} - {self.destination}"
 
-
-class Rental(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='rentals')
-    rental_company = models.CharField(max_length=250, default='')
-    price = models.CharField(max_length=250, null=True)
-    pick_up_location = models.CharField(max_length=250)
-    return_location = models.CharField(max_length=250)
-    pick_up_date = models.DateTimeField(auto_now=False, auto_now_add=False)
-    return_date = models.DateTimeField(auto_now=False, auto_now_add=False)
-
-    def __str__(self) -> str:
-        return f"itinerary:{self.itinerary_id}, {self.rental_company}"
-
 class Affinity(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='affinities')
@@ -67,11 +52,16 @@ class Sight(models.Model):
     
     
 class Car(models.Model):
-    vehicle_number = models.CharField(max_length=20)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    itinerary_id = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='cars')
     model = models.CharField(max_length=50)
-    seating_capacity = models.IntegerField()
-    rent_per_day = models.IntegerField()
-    availability = models.BooleanField(null=True)
+    make = models.CharField(max_length=50)
+    price = models.CharField(max_length=50)
+    rental_company = models.CharField(max_length=50)
+    pick_up_location = models.CharField(max_length=250)
+    return_location = models.CharField(max_length=250)
+    pick_up_date = models.DateTimeField(auto_now=False, auto_now_add=False)
+    return_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return self.model

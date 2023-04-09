@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import Card from 'react-bootstrap/Card';
+import { createCar } from '../api/Rental/Rental';
+import { useParams } from 'react-router-dom';
 // import createRen
 
-const RentalCarForm = () => {
-  const { avisToken } = useContext(AuthContext);
+const RentalCarForm = ({ChangeRoute}) => {
+  const { avisToken, authTokens, user } = useContext(AuthContext);
+  const { itineraryID } = useParams();
+
   const [brand, setBrand] = useState('Avis');
   const [pickupDate, setPickupDate] = useState('');
   const [pickupLocation, setPickupLocation] = useState('');
@@ -82,8 +85,22 @@ const RentalCarForm = () => {
     }
   };
 
-  const handleClick = (e) => {
-
+  // make the POST request to the backend to create a new rental car
+  const makeRental = async (car) => {
+    const rentalObject = {
+      "itinerary_id": itineraryID,
+      "user_id": user.user_id,
+      "model": car.category.model,
+      "make": car.category.make,
+      "rental_company": brand,
+      "price": car.rate_totals.pay_later.reservation_total,
+      "pick_up_location": pickupLocation,
+      "return_location": dropoffLocation,
+      "pick_up_date": pickupDate,
+      "return_date": dropoffDate,
+    }
+    await createCar(authTokens.access, rentalObject, itineraryID)
+    ChangeRoute()
   }
 
   return (
@@ -158,7 +175,7 @@ const RentalCarForm = () => {
       {result && (
         <div>
           {result.map((car, index) => (
-            <Card key={index} onClick={handleClick}>
+            <Card key={index} onClick={(e) => makeRental(car)}>
               <img src={car.category.image_url} alt={`${car.category.model} view`} className='car-image' />
               <h4>{car.category.make} {car.category.model}</h4>
               <p>Price: {`$${car.rate_totals.pay_later.reservation_total}`}</p>
