@@ -1,5 +1,7 @@
 function HotelsDisplay ({hotels}) {
 
+  if (hotels.legnth === 0) return null
+
   return (
     <>
       <h2>Hotels</h2>

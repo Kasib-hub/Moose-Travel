@@ -1,5 +1,7 @@
 function FlightsDisplay ({flights}) {
 
+  if (flights.length === 0) return (null)
+
   return (
     <>
      <h2>Flights</h2>

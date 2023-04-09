@@ -1,5 +1,7 @@
 function SightsDisplay ({sights}) {
 
+  if (sights.length === 0) return null
+
   return (
     <>
       <h2>Sights</h2>

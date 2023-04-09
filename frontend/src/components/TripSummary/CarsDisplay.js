@@ -1,6 +1,8 @@
 function CarsDisplay ({cars}) {
 // I'm getting the rental properties from models.py in the backend
 
+  if (cars.length === 0) return null
+
   return (
     <>
       <h2>Rentals</h2>

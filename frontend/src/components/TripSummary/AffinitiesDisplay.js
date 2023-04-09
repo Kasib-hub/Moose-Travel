@@ -1,5 +1,7 @@
 function AffinitiesDisplay ({affinities}) {
 
+  if (affinities.length === 0) return null
+
   return (
     <>
       <h2>Affinities</h2>

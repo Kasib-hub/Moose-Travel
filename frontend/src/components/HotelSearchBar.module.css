@@ -1,0 +1,30 @@
+.hotelSearch {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 70%;
+}
+
+.hotelSearch input{
+  width: 18rem;
+  min-width: auto;
+  border: none;
+  margin: 1rem auto;
+  border-bottom: 2px solid var(--celery);
+}
+
+.hotelSearch select{
+  max-width: 15rem;
+  background-color: var(--leaf);
+  color: var(--celery);
+  margin: 0 auto;
+  border: none;
+  border-bottom: 2px solid var(--celery);
+}
+
+.hotelSearch button {
+  margin: auto;
+  margin-right: auto;
+  height: 5rem;
+  width: 8rem;
+}

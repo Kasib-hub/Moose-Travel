@@ -16,6 +16,10 @@ h1, h2 {
   color: var(--forest);
 }
 
+h1 {
+  margin-bottom: 1.5rem;
+}
+
 h3 {
   color: var(--black);
 }
@@ -55,6 +59,7 @@ h3 {
   background-color: var(--forest);
   border: none;
   border-radius: 1.5rem;
+  margin-top: 1rem;
   color: var(--celery);
   padding: 0.75rem 1.5rem 0.75rem 1.5rem;
   transition: 0.3s all;
@@ -83,6 +88,10 @@ h3 {
   background-color: #ada9a9;
 }
 
+.other-btn::after {
+  background-color: var(--pear);
+}
+
 .detail-btn {
   background-color: var(--leaf);
   border: 2px solid var(--forest);
@@ -95,6 +104,10 @@ h3 {
 .detail-btn:hover {
   color: #2e3f35;
   background-color:var(--leaf);
+}
+
+.detail-btn:active {
+  background-color: #2e3f35;
 }
 
 .large-btn {
@@ -291,4 +304,8 @@ h3 {
 
 .car-image {
   height:auto;
+}
+
+.hotelListingDiv {
+  
 }
