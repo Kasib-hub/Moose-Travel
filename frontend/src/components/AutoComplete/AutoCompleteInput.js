@@ -23,7 +23,7 @@ function AutoCompleteInput({name, placeholder}) {
   return (
     <>
       <Autocomplete options={options}>
-        <input id={name} type='text' placeholder={placeholder} onBlur={handleOriginSelection} onChange={handleOriginInput} value={origin}/>
+        <input id={name} type='text' placeholder={placeholder} onBlur={handleOriginSelection} onChange={handleOriginInput} value={origin} required/>
       </Autocomplete>
     </>
 

@@ -70,7 +70,7 @@ const HotelSearchBar = ({ChangeRoute}) => {
         return;
       }
       if (cityCode.length !== 3) {
-        setError("Please choose a valid city with airport that contains a 3 letter IATA code in parenthesis");
+        setError("Please choose a valid city with airport that contains a 3 letter IATA code.");
         return;
       }
       const datenow = new Date();

@@ -39,7 +39,10 @@ function EditPersonalInfo() {
         else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
         else {
           setResponse("User updated!")
-          setTimeout(() => {navigate(`/itinerary/${userID}/your-itineraries`)}, 1500)
+          setTimeout(() => {
+            navigate(`/itinerary/${userID}/your-itineraries`)
+            window.location.reload();
+          }, 1500)
         }
       }
       // make PUT request to rest API 

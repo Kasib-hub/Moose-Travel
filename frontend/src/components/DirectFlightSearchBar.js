@@ -5,7 +5,9 @@ import Card from 'react-bootstrap/Card';
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
 import { createFlight } from '../api/Flight/Flight';
+import FormSelect from 'react-bootstrap/esm/FormSelect';
 import AutoCompleteInput from './AutoComplete/AutoCompleteInput';
+import Alert from 'react-bootstrap/Alert';
 import Moose from '../assets/moose.svg';
 
 
@@ -18,6 +20,7 @@ function DirectFlightSearchBar({ChangeRoute}) {
     //authTokens.access to be passed into create flight
 
     const [searchedFlights, setSearchedFlights] = useState(null)
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false)
     let flightOffers = []
 
@@ -29,11 +32,25 @@ function DirectFlightSearchBar({ChangeRoute}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
+
         const origin = e.target.elements.origin.value;
         const destination = e.target.elements.destination.value;
         const departureDate = e.target.elements.departureDate.value;
         const guests = e.target.elements.guests.value;
+
+        const datenow = new Date()
+        if (new Date(departureDate) < datenow) {
+            setError("Departure date must be in the future")
+            e.target.elements.departureDate.value = ""
+            return
+        }
+        if (origin.length !== 3 || destination.length !== 3) {
+            setError("Please choose a valid city with airport that contains a 3 letter IATA code")
+            e.target.elements.destination.value = ""
+            e.target.elements.origin.value = ""
+            return
+        }
+        setLoading(true)
       
         fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${guests}&max=15`, {
             method: 'GET',
@@ -73,30 +90,33 @@ function DirectFlightSearchBar({ChangeRoute}) {
     return (
         <div>
         <div className="search-div">
-
+        {error && (
+          <Alert key="danger" variant="danger">
+            <h3>Error:</h3>
+            <pre>{error}</pre>
+          </Alert>
+        )}
                 <form className="search-form" onSubmit={handleSubmit}>
-                    <div className="search-input">
-                        <label className='label'>Origin</label>
-                        <AutoCompleteInput name="origin" placeholder="Where are you flying from?"/>
+                    <div className='direct-flight'>
+                        <div className="search-input">
+                            <label className='label'>Origin</label>
+                            <AutoCompleteInput name="origin" placeholder="Where are you flying from?" required/>
+                            <label className='label'>Destination</label>
+                            <AutoCompleteInput name="destination" placeholder="Where do you want to go?" required/>
+                        </div>
+                        <div className="search-input">
+                            <label className='label'>Departure Date</label>
+                            <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')}  required/>
+                            <label className='label'>Guests</label>
+                            <FormSelect name="guests">
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                            </FormSelect>
+                        </div>
                     </div>
-                    <div className="search-input">
-                        <label className='label'>Destination</label>
-                        <AutoCompleteInput name="destination" placeholder="Where do you want to go?"/>
-                    </div>
-                    <div className="search-input">
-                        <label className='label'>Departure Date</label>
-                        <input type="date" name="departureDate" placeholder="Check-in" min={moment().format('YYYY-MM-DD')} />
-                    </div>
-
-                    <div className="search-input">
-                        <label className='label'>Guests</label>
-                        <select name="guests">
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4 Guests</option>
-                        </select>
-                    </div>
+                    
 
                     <div className="search-button">
                         <button className='submit-btn' type="submit">Search</button>

@@ -87,3 +87,15 @@ input::placeholder {
   justify-content: center;
   margin: 0 5rem;
 }
+
+.direct-flight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 80%;
+}
+
+.direct-flight input[type=date] {
+  margin: 1.3rem auto;
+}
