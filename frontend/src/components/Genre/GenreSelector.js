@@ -30,7 +30,7 @@ function GenreSelector ({likes, setLikes}) {
         "itinerary_id" : itineraryID,
         "affinity_type" : like
       };
-      createAffinity(authTokens.access, dataToSend, itineraryID);
+      return createAffinity(authTokens.access, dataToSend, itineraryID);
     });
     window.location.href = `/itinerary/${itineraryID}/trip-summary`;
   }

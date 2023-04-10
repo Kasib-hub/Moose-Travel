@@ -127,7 +127,7 @@ function ChatGPTSummaryRequest () {
             putSummary()
           }
         }
-    }, [itinerary, summary])
+    }, [itinerary, summary, authTokens.access, isItineraryLoaded, itineraryID, user.user_id])
 
 
     //Convert the flights to a readble string 
