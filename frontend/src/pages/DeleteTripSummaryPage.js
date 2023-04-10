@@ -19,7 +19,7 @@ function DeleteTripSummaryPage() {
 
 
   const removeItinerary = async () => {
-    const fetchedItinerary = await deleteItinerary(authTokens.access, itineraryID)
+    deleteItinerary(authTokens.access, itineraryID)
   }
   
 

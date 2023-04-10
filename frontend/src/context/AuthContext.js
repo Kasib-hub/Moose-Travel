@@ -172,7 +172,7 @@ useEffect(() => {
     if(avisToken) getAvisToken();
   }, 60000);
   return () => clearInterval(avisTokenInterval);
-}, [avisToken]);
+}, [avisToken, getAvisToken]);
 
 let contextData = {
   loginUser: loginUser,

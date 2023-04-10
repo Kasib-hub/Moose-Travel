@@ -6,7 +6,6 @@ import { createFlight } from '../api/Flight/Flight';
 import { Autocomplete } from "@react-google-maps/api"
 import Alert from 'react-bootstrap/Alert';
 import Moose from '../assets/moose.svg';
-import Card from 'react-bootstrap/Card';
 
 const MultiFlightSearchBar = ({ChangeRoute}) => {
 
@@ -66,12 +65,12 @@ const MultiFlightSearchBar = ({ChangeRoute}) => {
         setError("Please choose a valid city with airport that contains a 3 letter IATA code")
         flight.from = ''
         flight.to = ''
-        return
+        return ""
       }
       if (new Date(flight.departureDate) < new Date()) {
         setError("Please choose a valid departure date in the future")
         flight.departureDate = ''
-        return
+        return ""
       }
 
      return ({

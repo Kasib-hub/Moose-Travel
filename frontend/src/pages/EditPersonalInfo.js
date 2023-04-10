@@ -21,7 +21,7 @@ function EditPersonalInfo() {
           .then(res => {return res.json()}) 
           .then(data => {setUserInfo(data)})
           .catch((err)=>{console.log(err.message)})
-          }, []) 
+          }, [BASE_URL, userID]) 
       // make PUT request to rest API 
       const putUser = async (data) => {
         const url = `http://${BASE_URL}/api/user/${userID}/`

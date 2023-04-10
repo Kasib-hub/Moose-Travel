@@ -17,7 +17,7 @@ function NavBar() {
       .then(res => {return res.json()}) 
       .then(data => {setUsername(data.username)})
       .catch((err)=>{console.log(err.message)})
-      }, [username]) 
+      }, [username, user.user_id]) 
 
   return (
     <div className='navbar'>
