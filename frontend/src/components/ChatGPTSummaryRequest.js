@@ -6,41 +6,53 @@ import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
 // import { getAllRentalsByItinerary } from "../api/Rental/Rental"
 // import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
+import { getAllSightsByItinerary } from "../api/Sight/Sight"
+import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 
-
-
-function ChatGPTSummaryRequest ({ likes }) {
+function ChatGPTSummaryRequest () {
 
     let {itineraryID} = useParams()
     let {user, authTokens} = useContext(AuthContext)
-    const apiKey = "1234";
+    const apiKey = "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"
   
     const [itinerary, setItinerary] = useState()
     const [flights, setFlights] = useState()
+    const [sites, setSites] = useState()
     const [hotels, setHotels] = useState()
     const [summary, setSummary] = useState()
-    // const [rentals, setRentals] = useState()
-    // const [affinities, setAffinities] = useState()
-    // const [sights, setSights] = useState()
+    const [affinities, setAffinities] = useState()
+    const [isItineraryLoaded, setIsItineraryLoaded] = useState(false);
 
+    //When authTokens.access and itineraryID change...
     useEffect(() => {
-        const fetchItinerary = async () => {
-        const fetchedItinerary = await getItineraryByID(authTokens.access, itineraryID)
-        setItinerary(fetchedItinerary)
-        }
-        fetchItinerary()
 
+        //set Itinerary
+        const fetchItinerary = async () => {
+            const fetchedItinerary = await getItineraryByID(authTokens.access, itineraryID);
+            setItinerary(fetchedItinerary);
+            setIsItineraryLoaded(true);
+        };
+        fetchItinerary();
+
+        //set Flights
         const fetchFlights = async () => {
         const fetchedFlights = await getAllFlightsByItinerary(authTokens.access, itineraryID)
         setFlights(fetchedFlights)
         }
         fetchFlights()
 
+        //set Hotels
         const fetchHotels = async () => {
         const fetchedHotels = await getAllHotelsByItinerary(authTokens.access, itineraryID)
         setHotels(fetchedHotels)
         }
         fetchHotels()
+
+        const fetchAffinities = async () => {
+            const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
+            setAffinities(fetchedAffinities)
+        }
+        fetchAffinities();
 
         // const fetchRentals = async () => {
         // const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
@@ -48,27 +60,26 @@ function ChatGPTSummaryRequest ({ likes }) {
         // }
         // fetchRentals()
 
-        // const fetchAffinities = async () => {
-        // const fetchedAffinities = await getAllAffinitiesByItinerary(authTokens.access, itineraryID)
-        // setAffinities(fetchedAffinities)
-        // }
-        // fetchAffinities()
-
-        // const fetchSights = async () => {
-        // const fetchedSights = await getAllSightsByItinerary(authTokens.access, itineraryID)
-        // setSights(fetchedSights)
-        // }
-        // fetchSights()
+        //set Sites
+        const fetchSites = async () => {
+            const fetchedSites = await getAllSightsByItinerary(authTokens.access, itineraryID)
+            setSites(fetchedSites)
+        }
+        fetchSites()
 
 
     }, [authTokens.access, itineraryID])
 
-    useEffect(() => {
-        if (flights || hotels) {
 
+    //If flights or hotels change..
+    useEffect(() => {
+
+        //if either flights or hotels exists..
+        if (flights || hotels || affinities) {
+
+            //send the request to GPT with itinerary information
             const getSummary = async () => {
-                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${likes} `;
-                console.log(likes)
+                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${affinityStringToSend(affinities)}; Sites I must see: ${siteStringToSend(sites)} `;
                 const requestOptions = {
                   method: "POST",
                   headers: {
@@ -83,7 +94,10 @@ function ChatGPTSummaryRequest ({ likes }) {
                 try {
                   const response = await fetch("https://api.openai.com/v1/chat/completions",requestOptions);
                   const jsonresponse = await response.json();
-                  setSummary(jsonresponse.choices["0"].message.content);
+                  if (jsonresponse.choices && jsonresponse.choices.length > 0) {
+                    console.log(jsonresponse.choices["0"].message.content);
+                    setSummary(jsonresponse.choices["0"].message.content);
+                }
                 } catch (error) {
                     console.error(error);
                 }
@@ -91,48 +105,51 @@ function ChatGPTSummaryRequest ({ likes }) {
 
             getSummary()
         }
-    }, [flights, hotels, likes])
+    }, [flights, hotels, affinities, sites])
 
+    //if summary changes...
     useEffect(() => {
 
+        if (itinerary && summary && isItineraryLoaded) {
         // Edit Itinerary
-        const putSummary = async () => {
-            const data = {
+        if (itinerary && summary) {
+            const putSummary = async () => {
+              const data = {
                 "itinerary_name": itinerary.itinerary_name,
                 "user_id": user.user_id,
                 "summary": summary,
+              }
+              const fixedItinerary = await editItinerary(authTokens.access, data, itineraryID)
+              console.log("Edited Itinerary:")
+              console.log(fixedItinerary)
             }
-            const fixedItinerary = await editItinerary(authTokens.access, data, itineraryID)
-            console.log("Edited Itinerary:")
-            console.log(fixedItinerary)
-        }
-
-        putSummary()
-
-    }, [summary, authTokens.access, itinerary.itinerary_name, itineraryID, user.user_id])
-
-
-
-    function flightStringToSend(flights) {
-        if (flights == null) {
-            return "None";
-        } else {
-            const flightStrings = flights.map(flight =>
-                Object.entries(flight)
-                  .filter(([key, value]) => key !== "price") // exclude price key
-                  .slice(1, 6) // select remaining keys and values
-                  .map(([key, value]) => `${key}:${value}`).join(',')
-              );
-            
-              const flightStingToSend = flightStrings.join('/');
-              return flightStingToSend;
-        }
         
+            putSummary()
+          }
+        }
+    }, [itinerary, summary, authTokens.access, isItineraryLoaded, itineraryID, user.user_id])
+
+
+    //Convert the flights to a readble string 
+    function flightStringToSend(flights) {
+        if (!flights || flights.length === 0) {
+          return "None";
+        } else {
+          const flightStrings = flights.map(flight =>
+            Object.entries(flight)
+              .filter(([key, value]) => key !== "price") // exclude price key
+              .slice(1, 6) // select remaining keys and values
+              .map(([key, value]) => `${key}:${value}`).join(',')
+          );
+          const flightStringToSend = flightStrings.join('/');
+          return flightStringToSend;
+        }
       }
 
 
+    //Convert the hotels to a readble string 
     function hotelStringToSend(hotels) {
-        if (hotels == null) {
+        if (!hotels || hotels == null) {
             return "None";
         } else {
             const hotelStrings = hotels.map(hotel =>
@@ -146,12 +163,38 @@ function ChatGPTSummaryRequest ({ likes }) {
         
     }
 
+    //Convert the sites to a readble string 
+    const siteStringToSend = (sites) => {
+        if (!sites || sites == null) {;
+            return "None"
+        } else {
+            const siteStrings = []
+            sites.map(site =>
+                siteStrings.push(site.sight_name)
+            )
+            const siteStingToSend = siteStrings.join('/')
+            return siteStingToSend
+        }
+    }
 
+    //Convert the sites to a readble string 
+    const affinityStringToSend = (affinities) => {
+        if (!affinities|| affinities == null) {;
+            return "None"
+        } else {
+            const affinityStrings = []
+            affinities.map(affinity =>
+                affinityStrings.push(affinity.affinity_type)
+            )
+            const affinityStingToSend = affinityStrings.join('/')
+            return affinityStingToSend
+        }
+    }
 
     return (
 
         <div>
-            
+            {summary ? <p>{ summary }</p> : <p>Loading... (This may take some time)</p>}
         </div>
 
 

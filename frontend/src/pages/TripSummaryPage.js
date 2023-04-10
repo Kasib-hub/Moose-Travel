@@ -7,13 +7,14 @@ import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
 import { getAllCarsByItinerary } from "../api/Rental/Rental"
 import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getAllSightsByItinerary } from "../api/Sight/Sight"
-import ItineraryDisplay from "../components/TripSummary/ItineraryDisplay"
+// import ItineraryDisplay from "../components/TripSummary/ItineraryDisplay"
 import FlightsDisplay from "../components/TripSummary/FlightsDisplay"
 import HotelsDisplay from "../components/TripSummary/HotelsDisplay"
 import CarsDisplay from "../components/TripSummary/CarsDisplay"
 import AffinitiesDisplay from "../components/TripSummary/AffinitiesDisplay"
 import SightsDisplay from "../components/TripSummary/SightsDisplay"
 import './TripSummaryPage.css'
+import ChatGPTSummaryRequest from "../components/ChatGPTSummaryRequest"
 
 function TripSummaryPage () {
 
@@ -26,6 +27,7 @@ function TripSummaryPage () {
   const [cars, setCars] = useState()
   const [affinities, setAffinities] = useState()
   const [sights, setSights] = useState()
+  
   // goal here is to get all entries from each model that are associated
   // with the given itinarary ID
   useEffect(() => {
@@ -76,6 +78,7 @@ function TripSummaryPage () {
     fetchSights()
   }, [authTokens.access, itineraryID])
 
+
   
 
   return (
@@ -90,7 +93,7 @@ function TripSummaryPage () {
           {sights && <SightsDisplay sights={sights}/>}
         </div>
         <div className="summary">
-          {itinerary && <ItineraryDisplay itinerary={itinerary}/>}
+        {itinerary && itinerary.summary ? <p>{itinerary.summary}</p> : <ChatGPTSummaryRequest />}
         </div>  
       </div>
     </>

@@ -1,9 +1,10 @@
 import ChosenActivities from "../components/ChosenActivities"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from 'react-router-dom';
 
 
-function ChooseActivityPage ({selections, setSelections}) {
-  
+
+function ChooseActivityPage({selections, setSelections}) {
+
   let {itineraryID} = useParams()
   let navigate = useNavigate()
 
@@ -18,9 +19,11 @@ function ChooseActivityPage ({selections, setSelections}) {
   }
 
   return (
-
-      <ChosenActivities ChangeRoute={ChangeRoute} />
-
+    <>
+      <h1>Activity Page</h1>
+      <ChosenActivities ChangeRoute = {ChangeRoute} />
+    </>
+    
   )
 
 }
