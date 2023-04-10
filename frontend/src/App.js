@@ -17,6 +17,7 @@ import ChooseActivityPage from './pages/ChooseActivityPage'
 import RentalCarPage from './pages/RentalCarPage'
 import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage'
+import ChatGPTSummaryRequest from './components/ChatGPTSummaryRequest';
 // import SupportEngine from './components/SupportEngine/SupportEngine';
 
 function App() {
