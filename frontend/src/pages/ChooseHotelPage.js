@@ -18,7 +18,7 @@ function ChooseHotelPage ({selections, setSelections}) {
 
   return (
     <>
-      <h1>Hotel Page</h1>
+      <h1>Hotel Search</h1>
       <HotelSearchBar ChangeRoute={ChangeRoute}/>
     </>
     

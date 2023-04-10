@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState(null);
 
   const getAmadeusToken = async () => {
-    console.log('amadeus!')
     const client_id = process.env.REACT_APP_CLIENT_ID
     const client_secret = process.env.REACT_APP_CLIENT_SECRET
     const url = `https://test.api.amadeus.com/v1/security/oauth2/token`
@@ -56,7 +55,6 @@ export const AuthProvider = ({ children }) => {
     const resp = await fetch(url, context)
     const body = await resp.json()
     if (resp.status === 200) {
-      console.log('token updated')
       setAmadeusToken(body.access_token)
       localStorage.setItem('amadeusToken', body.access_token)
     } else {
@@ -86,11 +84,11 @@ export const AuthProvider = ({ children }) => {
       setErrors(body);
     } else {
       console.log(body);
-      alert("Login Successful!");
       setAuthTokens(body);
       setUser(jwt_decode(body.access));
       localStorage.setItem("authTokens", JSON.stringify(body));
       getAmadeusToken();
+      getAvisToken()
       navigate("/");
     }
      // Call getAmadeusToken regardless of whether login was successful
@@ -165,16 +163,16 @@ useEffect(() => {
 useEffect(() => {
   const amadeusTokenInterval = setInterval(() => {
     if(amadeusToken) getAmadeusToken();
-  }, 30000);
+  }, 60000);
   return () => clearInterval(amadeusTokenInterval);
 }, [amadeusToken]);
 
 useEffect(() => {
   const avisTokenInterval = setInterval(() => {
-    getAvisToken();
-  }, 7200000);
+    if(avisToken) getAvisToken();
+  }, 60000);
   return () => clearInterval(avisTokenInterval);
-}, [getAvisToken]);
+}, [avisToken, getAvisToken]);
 
 let contextData = {
   loginUser: loginUser,

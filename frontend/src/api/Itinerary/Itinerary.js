@@ -49,7 +49,6 @@ const createItinerary = async (token, data) => {
   if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
   else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
   else {
-    alert("Itinerary Created")
     return body
   }
 }
