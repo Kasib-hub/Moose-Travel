@@ -12,7 +12,8 @@ function ItineraryCard ({id, itinerary_name, summary}) {
             {summary ? `${summary.slice(0, 100)}...` : "No Summary Created"}
           </Card.Text>
           {/* navigate to a detail page of the summary */}
-          <Link to={`/itinerary/${id}/trip-summary`}><button className='submit-btn'>Details</button></Link>
+          <Link to={`/itinerary/${id}/trip-summary`}><button className='detail-btn'>Details</button></Link>
+          <Link to={`/itinerary/${id}/trip-summary/delete`}><button className='other-btn'>Delete</button></Link>
         </Card.Body>
       </Card>
     

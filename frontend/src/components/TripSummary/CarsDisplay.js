@@ -1,16 +1,23 @@
-function CarsDisplay ({rentals}) {
+function CarsDisplay ({cars}) {
 // I'm getting the rental properties from models.py in the backend
 
+  if (cars.length === 0) return null
+
   return (
-      rentals.map((rental, idx) => {
-        return(
-          <div key={idx}>
-            <h3>{rental.rental_company}</h3>
-            <p>{rental.pick_up_location} - {rental.pick_up_date}</p>
-            <p>{rental.return_location} - {rental.return_date}</p>
-          </div>
-        )
-      })
+    <>
+      <h2>Rentals</h2>
+      {
+        cars.map((car, idx) => {
+          return(
+            <div key={idx}>
+              <h3>{car.rental_company} - {car.make} {car.model}</h3>
+              <p><strong>PICKUP: </strong>{car.pick_up_location} - {car.pick_up_date}</p>
+              <p><strong>RETURN: </strong>{car.return_location} - {car.return_date}</p>
+            </div>
+          )
+        })
+      }<br></br>
+    </>
   )
 
 }
