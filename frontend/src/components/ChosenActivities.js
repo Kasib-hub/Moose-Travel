@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
  import { useParams } from "react-router-dom"
  import AuthContext from '../context/AuthContext';
  import { createSight } from "../api/Sight/Sight";
+ import Restaurant from '../assets/restaurant.svg';
 
  export default function ChosenActivities({ ChangeRoute }) {
 
@@ -57,7 +58,8 @@ import React, { useState, useContext } from "react";
 
      return (
          <div>
-         <h1>Choose some sites you already have planned on your trip!</h1>
+            <img src={Restaurant} alt='restaurant'/>
+         <h1>Choose some sites you already have planned on your trip! </h1>
          <br/>
          <PlacesAutocomplete
              value={address}
@@ -69,8 +71,8 @@ import React, { useState, useContext } from "react";
                  {/* <p>Latitude: {coordinates.lat}</p>
                  <p>Longitude: {coordinates.lng}</p> */}
 
-                 <input {...getInputProps({ placeholder: "Type address" })} />
-
+                 <input className="activity-input" {...getInputProps({ placeholder: "Type address" })} />
+                 <hr></hr>
                  <div>
                  {loading ? <div>...loading</div> : null}
 
@@ -98,15 +100,13 @@ import React, { useState, useContext } from "react";
              {sitesToSubmit.map((site, index) => (
                  <div key={index}>
                  <p>{site.sight_name}</p>
-                 <button onClick={() => handleRemove(index)}>Remove</button>
+                 <button onClick={() => handleRemove(index)} className='other-btn'>Remove</button>
                  </div>
              ))}
              </div>
          )}
 
-         <p>---------------------------------</p>
-
-         <button onClick={() => submitActivitiesToBackend()}>Next</button>
+         <button onClick={() => submitActivitiesToBackend()} className='submit-btn'>Next</button>
 
          </div>
      );

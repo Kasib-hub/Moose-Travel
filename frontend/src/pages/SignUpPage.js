@@ -8,7 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 
 function SignUpPage() {
 
-  const [errors, setErrors] = useState()
+  const [errors, setErrors] = useState(null)
+  const [success, setSuccess] = useState(null)
 
   const navigate = useNavigate()
 
@@ -38,8 +39,10 @@ function SignUpPage() {
     if (resp.status === 400) {
       setErrors(body)
     } else {
-      alert('Signed Up Successfully!')
-      navigate("/")
+      setTimeout(() => {
+        setSuccess('Signed Up Successfully!')
+        navigate("/")
+      }, 1500)
     }
   }
 
@@ -49,6 +52,12 @@ function SignUpPage() {
         errors && 
         <Alert key="danger" variant="danger">
           {errors.username}
+        </Alert>
+      }
+      {
+        success &&
+        <Alert key="success" variant="success">
+          {success}
         </Alert>
       }
       <h2>&#9992; Sign up for Flights! &#9992;</h2>

@@ -19,9 +19,8 @@ import ChooseGenrePage from './pages/ChooseGenrePage';
 import TripSummaryPage from './pages/TripSummaryPage';
 import DeleteTripSummaryPage from './pages/DeleteTripSummaryPage';
 import Moose from './assets/moose.svg'
-// import SupportEngine from './components/SupportEngine/SupportEngine';
+import SupportEngine from './components/SupportEngine/SupportEngine';
 import ChosenActivities from './components/ChosenActivities';
-
 
 function App() {
 
@@ -63,8 +62,9 @@ function App() {
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            
           </Routes>
-          {/* {user && <SupportEngine />} */}
+          <SupportEngine />
         </AuthProvider>
       </Router>
     </div>

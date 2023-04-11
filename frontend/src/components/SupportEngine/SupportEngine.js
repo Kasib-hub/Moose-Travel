@@ -1,9 +1,11 @@
-import {useState, useRef, useEffect} from "react";
+import {useState, useRef, useEffect, useContext} from "react";
 import Avatar from './Avatar';
 import SupportWindow from "./SupportWindow/SupportWindow";
+import AuthContext from "../../context/AuthContext";
 import './SupportEngine.css'
 
 const SupportEngine = () => {
+    const {user} = useContext(AuthContext)
 
     const ref = useRef(null)
     const [visable, setVisable] = useState(false)
@@ -19,7 +21,7 @@ const SupportEngine = () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [ref])
-
+    if (!user) return null;
     return (
         <div ref={ref}>
 

@@ -8,12 +8,13 @@ import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
 import { getAllSightsByItinerary } from "../api/Sight/Sight"
 import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
+import Moose from '../assets/moose.svg';
 
 function ChatGPTSummaryRequest () {
 
     let {itineraryID} = useParams()
     let {user, authTokens} = useContext(AuthContext)
-    const apiKey = "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"
+    const apiKey = process.env.REACT_APP_GPT_API_KEY
   
     const [itinerary, setItinerary] = useState()
     const [flights, setFlights] = useState()
@@ -105,7 +106,7 @@ function ChatGPTSummaryRequest () {
 
             getSummary()
         }
-    }, [flights, hotels, affinities, sites])
+    }, [flights, hotels, affinities, sites, apiKey])
 
     //if summary changes...
     useEffect(() => {
@@ -194,7 +195,13 @@ function ChatGPTSummaryRequest () {
     return (
 
         <div>
-            {summary ? <p>{ summary }</p> : <p>Loading... (This may take some time)</p>}
+            {summary ? <p>{ summary }</p> 
+            : (
+                <>
+                    <p>Loading... (This may take some time)</p>
+                    <img src={Moose} alt="loading" className='loading'/>
+                </>
+            )}
         </div>
 
 

@@ -20,7 +20,6 @@ function ChooseActivityPage({selections, setSelections}) {
 
   return (
     <>
-      <h1>Activity Page</h1>
       <ChosenActivities ChangeRoute = {ChangeRoute} />
     </>
     

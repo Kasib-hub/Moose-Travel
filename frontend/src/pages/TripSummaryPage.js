@@ -93,7 +93,8 @@ function TripSummaryPage () {
           {sights && <SightsDisplay sights={sights}/>}
         </div>
         <div className="summary">
-        {itinerary && itinerary.summary ? <p>{itinerary.summary}</p> : <ChatGPTSummaryRequest />}
+          {itinerary && <h2>{itinerary.itinerary_name}</h2>}
+          {itinerary && itinerary.summary ? <p>{itinerary.summary}</p> : <ChatGPTSummaryRequest />}
         </div>  
       </div>
     </>
