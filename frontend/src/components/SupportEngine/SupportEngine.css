@@ -1,6 +1,6 @@
 
 .cs-message__content {
-  background-color: var(--cream);
+  background-color: var(--celery);
   color: var(--forest);
 }
 
@@ -15,4 +15,25 @@
 
 .cs-typing-indicator__dot {
   background-color: var(--forest);
+}
+
+.cs-message-list {
+  background-color: var(--leaf) !important; 
+  color: var(--forest);
+}
+
+.cs-message-input {
+  background-color: var(--forest) !important;
+  color: var(--forest);
+}
+
+.cs-message-input__content-editor-wrapper, .cs-message-input__content-editor {
+  background-color: var(--cream) !important;
+  color: var(--forest);
+}
+
+.cs-message--outgoing div.cs-message__content {
+  border-radius: 1rem;
+  background-color: var(--cream) !important;
+  color: var(--forest);
 }

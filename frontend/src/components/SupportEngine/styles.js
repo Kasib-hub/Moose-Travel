@@ -1,4 +1,4 @@
-import image1 from './moose.jpeg'
+import image1 from '../../assets/LogoNoText.svg'
 
 export const styles = {
     chatWithMeButton: {
