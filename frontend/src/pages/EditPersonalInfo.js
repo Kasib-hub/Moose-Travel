@@ -9,60 +9,63 @@ import Alert from 'react-bootstrap/Alert';
 
 
 function EditPersonalInfo() {
-      let {authTokens} = useContext(AuthContext)
-      const {userID} = useParams()
-      //GET request to get user's info 
-      const [userInfo, setUserInfo] = useState({})
-      const [response, setResponse] = useState()
-      const navigate = useNavigate()
-      const BASE_URL = process.env.REACT_APP_BASE_URL
-      useEffect(() => {
-        fetch(`http://${BASE_URL}/api/user/${userID}/`)
-          .then(res => {return res.json()}) 
-          .then(data => {setUserInfo(data)})
-          .catch((err)=>{console.log(err.message)})
-          }, [BASE_URL, userID]) 
-      // make PUT request to rest API 
-      const putUser = async (data) => {
-        const url = `http://${BASE_URL}/api/user/${userID}/`
-        const context = {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${authTokens.access}`
-          },
-          body: JSON.stringify(data)
-        }
-        const res = await fetch(url, context)
-        const body = await res.json()
-        if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
-        else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
-        else {
-          setResponse("User updated!")
-          setTimeout(() => {
-            navigate(`/itinerary/${userID}/your-itineraries`)
-            window.location.reload();
-          }, 1500)
-        }
-      }
-      // make PUT request to rest API 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const newinfo = {
-          "username": e.target.username.value,
-          "email": e.target.email.value,
-          "password": e.target.password.value
-        }
+  let {authTokens, logoutUser} = useContext(AuthContext)
+  const {userID} = useParams()
+  //GET request to get user's info 
+  const [userInfo, setUserInfo] = useState({})
+  const [response, setResponse] = useState()
+  const navigate = useNavigate()
+  const BASE_URL = process.env.REACT_APP_BASE_URL
 
-        putUser(newinfo)
+  useEffect(() => {
+    fetch(`http://${BASE_URL}/api/user/${userID}/`)
+      .then(res => {return res.json()}) 
+      .then(data => {setUserInfo(data)})
+      .catch((err)=>{console.log(err.message)})
+      }, [BASE_URL, userID]) 
 
-      }
-  
-      const handleChange = (e) => {
-        setUserInfo((prevState) => ({
-          ...prevState, [e.target.name]: e.target.value
-        }))
-      }
+  // make PUT request to rest API 
+  const putUser = async (data) => {
+    const url = `http://${BASE_URL}/api/user/${userID}/`
+    const context = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authTokens.access}`
+      },
+      body: JSON.stringify(data)
+    }
+    const res = await fetch(url, context)
+    const body = await res.json()
+    if (res.status === 400) {alert(`Error: ${JSON.stringify(body)}`)} 
+    else if (!res.ok) {alert(`${res.status} (${res.statusText})`)} 
+    else {
+      setResponse("User updated!")
+      setTimeout(() => {
+        logoutUser()
+      }, 1500)
+    }
+  }
+
+
+  // make PUT request to rest API 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newinfo = {
+      "username": e.target.username.value,
+      "email": e.target.email.value,
+      "password": e.target.password.value
+    }
+
+    putUser(newinfo)
+
+  }
+
+  const handleChange = (e) => {
+    setUserInfo((prevState) => ({
+      ...prevState, [e.target.name]: e.target.value
+    }))
+  }
 
     // adding camouglage to password input
     const eye = <FontAwesomeIcon icon={faEye} />;

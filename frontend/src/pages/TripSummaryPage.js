@@ -78,9 +78,6 @@ function TripSummaryPage () {
     fetchSights()
   }, [authTokens.access, itineraryID])
 
-
-  
-
   return (
     <>
       <h1>Trip Summary</h1><br></br>
@@ -94,7 +91,7 @@ function TripSummaryPage () {
         </div>
         <div className="summary">
           {itinerary && <h2>{itinerary.itinerary_name}</h2>}
-          {itinerary && itinerary.summary ? <p>{itinerary.summary}</p> : <ChatGPTSummaryRequest />}
+          {itinerary && itinerary.summary ? <p className="gpt-summary">{itinerary.summary}</p> : <ChatGPTSummaryRequest />}
         </div>  
       </div>
     </>

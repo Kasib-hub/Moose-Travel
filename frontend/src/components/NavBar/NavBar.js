@@ -11,13 +11,7 @@ function NavBar() {
   // const [username, setUsername] = useState('')
 
   // needs to detect updated user state
-  // useEffect(() => {
-  //   const BASE_URL = process.env.REACT_APP_BASE_URL
-  //   fetch(`http://${BASE_URL}/api/user/${user.user_id}/`)
-  //     .then(res => {return res.json()}) 
-  //     .then(data => {setUsername(data.username)})
-  //     .catch((err)=>{console.log(err.message)})
-  //     }, [username, user.user_id]) 
+
 
   return (
     <div className='navbar'>

@@ -3,8 +3,6 @@ import AuthContext from "../context/AuthContext"
 import { useEffect, useState, useContext } from "react"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
-// import { getAllRentalsByItinerary } from "../api/Rental/Rental"
-// import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
 import { getAllSightsByItinerary } from "../api/Sight/Sight"
 import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
@@ -54,12 +52,6 @@ function ChatGPTSummaryRequest () {
             setAffinities(fetchedAffinities)
         }
         fetchAffinities();
-
-        // const fetchRentals = async () => {
-        // const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
-        // setRentals(fetchedRentals)
-        // }
-        // fetchRentals()
 
         //set Sites
         const fetchSites = async () => {

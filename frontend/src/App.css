@@ -324,3 +324,9 @@ hr {
   width: 70%;
   margin: auto;
 }
+
+.gpt-summary {
+  font-size: 1.2rem;
+  text-align: left;
+  white-space: pre-line;
+}
