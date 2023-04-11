@@ -94,6 +94,7 @@ const RentalCarForm = ({ChangeRoute}) => {
       setPickupDate('')
       return
     }
+    setLoading(true)
 
     try {
       const searchData = {
