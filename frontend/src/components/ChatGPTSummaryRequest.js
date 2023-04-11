@@ -106,7 +106,7 @@ function ChatGPTSummaryRequest () {
 
             getSummary()
         }
-    }, [flights, hotels, affinities, sites])
+    }, [flights, hotels, affinities, sites, apiKey])
 
     //if summary changes...
     useEffect(() => {

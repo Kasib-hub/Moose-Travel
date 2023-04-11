@@ -1,14 +1,14 @@
 import './NavBar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 // dummy NavBar - we'll have these in a navBar
 function NavBar() {
 
   let {user, logoutUser} = useContext(AuthContext)
 
-  const [username, setUsername] = useState('')
+  // const [username, setUsername] = useState('')
 
   // needs to detect updated user state
   // useEffect(() => {
