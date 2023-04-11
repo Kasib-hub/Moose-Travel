@@ -1,7 +1,7 @@
 import './NavBar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 // dummy NavBar - we'll have these in a navBar
 function NavBar() {
@@ -33,7 +33,7 @@ function NavBar() {
         
       </div>
       <div className='user-text'>
-        {user && <p>Welcome {username}!</p>}
+        {user && <p>Welcome {user.username}!</p>}
         <button onClick={logoutUser} className='logout'>Logout</button>
       </div>
 
