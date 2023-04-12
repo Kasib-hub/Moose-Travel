@@ -64,7 +64,7 @@ function TripSelector({selections, setSelections}) {
           <img src={Sight} alt="Sight Icon"/>
           <div className='labels'>
             <input type="checkbox" name='trip-selections' onChange={handleChange} value={`/itinerary/${itineraryID}/choose-activity`}/>
-            <label>Activites</label>
+            <label>Activities</label>
           </div>
         </div>
       </div>

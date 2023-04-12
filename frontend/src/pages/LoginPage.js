@@ -38,7 +38,7 @@ function LoginPage() {
         Login
       </Button>
     </Form>
-    <p>Doesn't have an account with us? <Link to={'/signup'} className="link">Signup</Link> now!</p>
+    <p>Don't have an account with us? <Link to={'/signup'} className="link">Signup</Link> now!</p>
     </>
   );
 }

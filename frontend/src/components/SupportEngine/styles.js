@@ -66,7 +66,7 @@ export const styles = {
         fontWeight: '600',
     },
     chatEngineWindow: {
-        width: '100%',  
+        width: '80%',  
         backgroundColor: '#fff',
     }
 }
