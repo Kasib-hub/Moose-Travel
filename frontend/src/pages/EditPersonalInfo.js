@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { React, useState, useContext, useEffect} from 'react';
 import AuthContext from '../context/AuthContext';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Alert from 'react-bootstrap/Alert';
