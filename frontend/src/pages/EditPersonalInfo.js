@@ -14,7 +14,6 @@ function EditPersonalInfo() {
   //GET request to get user's info 
   const [userInfo, setUserInfo] = useState({})
   const [response, setResponse] = useState()
-  const navigate = useNavigate()
   const BASE_URL = process.env.REACT_APP_BASE_URL
 
   useEffect(() => {
