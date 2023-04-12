@@ -186,8 +186,8 @@ function ChatGPTSummaryRequest () {
 
     return (
 
-        <div>
-            {summary ? <p>{ summary }</p> 
+        <div >
+            {summary ? <p className="gpt-summary">{ summary }</p> 
             : (
                 <>
                     <p>Loading... (This may take some time)</p>
