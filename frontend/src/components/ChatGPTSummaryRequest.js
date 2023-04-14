@@ -68,11 +68,11 @@ function ChatGPTSummaryRequest () {
     useEffect(() => {
 
         //if either flights or hotels exists..
-        if (flights || hotels || affinities) {
+        if (flights || hotels || affinities || sites) {
 
             //send the request to GPT with itinerary information
             const getSummary = async () => {
-                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${affinityStringToSend(affinities)}; Sites I must see: ${siteStringToSend(sites)} `;
+                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${await flightStringToSend(flights)}; Hotels:${await hotelStringToSend(hotels)}; These are the things I like do when I travel: ${await affinityStringToSend(affinities)}; Sites I must see: ${await siteStringToSend(sites)} `;
                 const requestOptions = {
                   method: "POST",
                   headers: {
