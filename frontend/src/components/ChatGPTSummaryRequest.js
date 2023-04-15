@@ -15,11 +15,11 @@ function ChatGPTSummaryRequest () {
     const apiKey = process.env.REACT_APP_GPT_API_KEY
   
     const [itinerary, setItinerary] = useState()
-    const [flights, setFlights] = useState()
-    const [sites, setSites] = useState()
-    const [hotels, setHotels] = useState()
+    const [flights, setFlights] = useState("none")
+    const [sites, setSites] = useState("none")
+    const [hotels, setHotels] = useState("none")
     const [summary, setSummary] = useState()
-    const [affinities, setAffinities] = useState()
+    const [affinities, setAffinities] = useState("none")
     const [isItineraryLoaded, setIsItineraryLoaded] = useState(false);
 
     //When authTokens.access and itineraryID change...
@@ -68,7 +68,6 @@ function ChatGPTSummaryRequest () {
     useEffect(() => {
 
         //if either flights or hotels exists..
-        if (flights || hotels || affinities || sites) {
 
             //send the request to GPT with itinerary information
             const getSummary = async () => {
@@ -97,7 +96,7 @@ function ChatGPTSummaryRequest () {
             };
 
             getSummary()
-        }
+        
     }, [flights, hotels, affinities, sites, apiKey])
 
     //if summary changes...

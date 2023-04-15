@@ -13,7 +13,7 @@ function SignUpPage() {
   const [signUpErrors, setSignUpErrors] = useState(null)
   const [success, setSuccess] = useState(null)
 
-  const {setErrors} = useContext(AuthContext)
+  const setErrors = useContext(AuthContext)
 
   const navigate = useNavigate()
 
