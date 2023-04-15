@@ -1,6 +1,6 @@
 function HotelsDisplay ({hotels}) {
 
-  if (hotels.legnth === 0) return null
+  if (hotels.length === 0) return null
 
   return (
     <>

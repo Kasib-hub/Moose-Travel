@@ -1,15 +1,19 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert';
+import AuthContext from '../context/AuthContext';
+
 
 
 
 function SignUpPage() {
 
-  const [errors, setErrors] = useState(null)
+  const [signUpErrors, setSignUpErrors] = useState(null)
   const [success, setSuccess] = useState(null)
+
+  const setErrors = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -37,11 +41,13 @@ function SignUpPage() {
     const resp = await fetch(url, context)
     const body = await resp.json()
     if (resp.status === 400) {
-      setErrors(body)
+      setSignUpErrors(body)
     } else {
+      setErrors(null)
       setTimeout(() => {
         setSuccess('Signed Up Successfully!')
         navigate("/")
+        window.location.reload();
       }, 1500)
     }
   }
@@ -49,9 +55,9 @@ function SignUpPage() {
   return (
     <>
       {
-        errors && 
+        signUpErrors && 
         <Alert key="danger" variant="danger">
-          {errors.username}
+          {signUpErrors.username}
         </Alert>
       }
       {

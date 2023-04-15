@@ -3,8 +3,6 @@ import AuthContext from "../context/AuthContext"
 import { useEffect, useState, useContext } from "react"
 import { getAllFlightsByItinerary } from "../api/Flight/Flight"
 import { getAllHotelsByItinerary } from "../api/Hotel/Hotel"
-// import { getAllRentalsByItinerary } from "../api/Rental/Rental"
-// import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
 import { getItineraryByID, editItinerary} from '../api/Itinerary/Itinerary';
 import { getAllSightsByItinerary } from "../api/Sight/Sight"
 import { getAllAffinitiesByItinerary } from "../api/Affinity/Affinity"
@@ -17,11 +15,11 @@ function ChatGPTSummaryRequest () {
     const apiKey = process.env.REACT_APP_GPT_API_KEY
   
     const [itinerary, setItinerary] = useState()
-    const [flights, setFlights] = useState()
-    const [sites, setSites] = useState()
-    const [hotels, setHotels] = useState()
+    const [flights, setFlights] = useState("none")
+    const [sites, setSites] = useState("none")
+    const [hotels, setHotels] = useState("none")
     const [summary, setSummary] = useState()
-    const [affinities, setAffinities] = useState()
+    const [affinities, setAffinities] = useState("none")
     const [isItineraryLoaded, setIsItineraryLoaded] = useState(false);
 
     //When authTokens.access and itineraryID change...
@@ -55,12 +53,6 @@ function ChatGPTSummaryRequest () {
         }
         fetchAffinities();
 
-        // const fetchRentals = async () => {
-        // const fetchedRentals = await getAllRentalsByItinerary(authTokens.access, itineraryID)
-        // setRentals(fetchedRentals)
-        // }
-        // fetchRentals()
-
         //set Sites
         const fetchSites = async () => {
             const fetchedSites = await getAllSightsByItinerary(authTokens.access, itineraryID)
@@ -76,11 +68,10 @@ function ChatGPTSummaryRequest () {
     useEffect(() => {
 
         //if either flights or hotels exists..
-        if (flights || hotels || affinities) {
 
             //send the request to GPT with itinerary information
             const getSummary = async () => {
-                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${flightStringToSend(flights)}; Hotels:${hotelStringToSend(hotels)}; These are the things I like do when I travel: ${affinityStringToSend(affinities)}; Sites I must see: ${siteStringToSend(sites)} `;
+                const prompt = `I am going on a trip. Use the following information to create an itinerary. Only respond with the itenerary and  call places only by their names (not iata codes). Flights:${await flightStringToSend(flights)}; Hotels:${await hotelStringToSend(hotels)}; These are the things I like do when I travel: ${await affinityStringToSend(affinities)}; Sites I must see: ${await siteStringToSend(sites)} `;
                 const requestOptions = {
                   method: "POST",
                   headers: {
@@ -105,7 +96,7 @@ function ChatGPTSummaryRequest () {
             };
 
             getSummary()
-        }
+        
     }, [flights, hotels, affinities, sites, apiKey])
 
     //if summary changes...
@@ -194,8 +185,8 @@ function ChatGPTSummaryRequest () {
 
     return (
 
-        <div>
-            {summary ? <p>{ summary }</p> 
+        <div >
+            {summary ? <p className="gpt-summary">{ summary }</p> 
             : (
                 <>
                     <p>Loading... (This may take some time)</p>

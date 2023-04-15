@@ -94,6 +94,7 @@ const RentalCarForm = ({ChangeRoute}) => {
       setPickupDate('')
       return
     }
+    setLoading(true)
 
     try {
       const searchData = {
@@ -241,9 +242,6 @@ const RentalCarForm = ({ChangeRoute}) => {
               <img src={car.category.image_url} alt={`${car.category.model} view`} className='car-image' />
               <h4>{car.category.make} {car.category.model}</h4>
               <p>Price: {`$${car.rate_totals.pay_later.reservation_total}`}</p>
-              {/* <p>Seats: {car.vehicle_info.seating_capacity}</p>
-              <p>Pickup Date: {formatDate(car.reservation.pickup_date)}</p>
-              <p>Dropoff Date: {formatDate(car.reservation.dropoff_date)}</p> */}
             </Card>
           ))}
          

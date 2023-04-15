@@ -2,6 +2,7 @@ import './NavBar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
 import { useContext } from 'react';
+import LogoCelery from '../../assets/LogoCelery.svg'
 
 // dummy NavBar - we'll have these in a navBar
 function NavBar() {
@@ -11,18 +12,12 @@ function NavBar() {
   // const [username, setUsername] = useState('')
 
   // needs to detect updated user state
-  // useEffect(() => {
-  //   const BASE_URL = process.env.REACT_APP_BASE_URL
-  //   fetch(`http://${BASE_URL}/api/user/${user.user_id}/`)
-  //     .then(res => {return res.json()}) 
-  //     .then(data => {setUsername(data.username)})
-  //     .catch((err)=>{console.log(err.message)})
-  //     }, [username, user.user_id]) 
+
 
   return (
     <div className='navbar'>
       <div>
-        <h2>Moose Travel</h2>
+        <img src={LogoCelery} alt='Moose Travel Logo'/>
         {user && <Link to='/'>New Itinerary</Link>}
         {user && <Link to={`/itinerary/${user.user_id}/your-itineraries`}>Your Itineraries</Link>}
         {user && <Link to={`/itinerary/${user.user_id}/user-information`}>Personal Information</Link>}

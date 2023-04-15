@@ -23,7 +23,7 @@ const SupportEngine = () => {
     }, [ref])
     if (!user) return null;
     return (
-        <div ref={ref}>
+        <div ref={ref} className='support'>
 
             <SupportWindow 
                 visable={visable}

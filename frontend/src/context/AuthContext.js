@@ -81,8 +81,10 @@ export const AuthProvider = ({ children }) => {
     const resp = await fetch(url, context);
     const body = await resp.json();
     if (!resp.ok) {
+      
       setErrors(body);
     } else {
+      setErrors(null)
       console.log(body);
       setAuthTokens(body);
       setUser(jwt_decode(body.access));
@@ -183,6 +185,7 @@ let contextData = {
   user: user,
   avisToken: avisToken,
   getAvisToken: getAvisToken,
+  setErrors: setErrors
 };
 
   return (

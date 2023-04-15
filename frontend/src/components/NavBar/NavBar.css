@@ -1,3 +1,4 @@
+
 .navbar {
   background-color: var(--leaf);
   color: var(--cream);
@@ -16,7 +17,7 @@
   margin: 0;
 }
 
-.navbar h2 {
+.navbar img {
   color: var(--celery);
   display: inline-block;
   margin-right: 4rem;
